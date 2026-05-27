@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель — mischenko.edu</title>
+    <style>
+        :root {
+            --bg: #0f0f0f; --card: #1a1a1a; --border: #2a2a2a;
+            --accent: #4ade80; --red: #ef4444; --blue: #60a5fa; --yellow: #facc15;
+            --text: #e5e5e5; --text-dim: #a3a3a3;
+            --radius: 14px; --radius-sm: 10px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg); color: var(--text);
+            max-width: 800px; margin: 0 auto; min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 220px; background: var(--card); border-right: 1px solid var(--border);
+            padding: 20px; position: fixed; top: 0; left: 0; bottom: 0;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .sidebar h2 { font-size: 16px; margin-bottom: 16px; color: var(--accent); }
+        .nav-item {
+            padding: 12px; border-radius: var(--radius-sm); cursor: pointer;
+            font-size: 14px; color: var(--text-dim);
+        }
+        .nav-item:hover, .nav-item.active { background: #222; color: #fff; }
+        .main {
+            margin-left: 220px; flex: 1; padding: 24px;
+        }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        h1 { font-size: 22px; margin-bottom: 20px; }
+
+        .card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .card:hover { border-color: #555; }
+        .card-title { font-weight: 700; font-size: 16px; }
+        .card-sub { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+        .tracker-row, .hw-row {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 12px; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .tracker-bar-wrap { width: 80px; height: 6px; background: #2a2a2a; border-radius: 3px; }
+        .tracker-fill { height: 100%; border-radius: 3px; }
+        .tracker-info { flex: 1; }
+        .tracker-topic { font-size: 14px; font-weight: 500; }
+
+        .btn {
+            padding: 10px 20px; border-radius: var(--radius-sm); font-size: 14px;
+            font-weight: 600; cursor: pointer; border: none; font-family: inherit;
+        }
+        .btn-primary { background: var(--accent); color: #000; margin-right: 8px; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+
+        .back-btn { background: none; border: none; color: var(--accent); font-size: 18px; cursor: pointer; margin-bottom: 16px; }
+
+        .input-group { margin-bottom: 12px; }
+        .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: #fff; font-size: 14px; font-family: inherit;
+        }
+        textarea { min-height: 60px; resize: vertical; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>mischenko.edu</h2>
+    <div class="nav-item active" onclick="showAdminScreen('studentsScreen')">👥 Ученики</div>
+    <div class="nav-item" onclick="showAdminScreen('tasksScreen')">📝 Банк задач</div>
+    <div class="nav-item" onclick="showAdminScreen('cheatsScreen')">📘 Шпаргалки</div>
+    <div class="nav-item" style="margin-top:auto;color:var(--red);" onclick="logout()">Выйти</div>
+</div>
+
+<div class="main">
+    <!-- STUDENTS LIST -->
+    <div id="studentsScreen" class="screen active">
+        <h1>👥 Ученики</h1>
+        <div id="studentsList">Загрузка...</div>
+    </div>
+
+    <!-- STUDENT DETAIL -->
+    <div id="studentDetail" class="screen">
+        <button class="back-btn" onclick="showAdminScreen('studentsScreen')">← Назад</button>
+        <h1 id="detailName">Ученик</h1>
+        <p id="detailCourse" style="color:var(--text-dim);margin-bottom:16px;"></p>
+
+        <button class="btn btn-primary" onclick="showTab('trackerTab')">📈 Трекер</button>
+        <button class="btn btn-outline" onclick="showTab('hwTab')">📝 Домашки</button>
+        <button class="btn btn-outline" onclick="showTab('reportTab')">📊 Отчёты</button>
+
+        <div id="trackerTab" class="tab" style="margin-top:16px;"></div>
+        <div id="hwTab" class="tab" style="margin-top:16px;display:none;"></div>
+        <div id="reportTab" class="tab" style="margin-top:16px;display:none;">
+            <button class="btn btn-primary" onclick="addReport()" style="margin-top:8px;">+ Новый отчёт</button>
+            <div id="reportsList" style="margin-top:12px;"></div>
+        </div>
+    </div>
+
+    <!-- TASKS BANK -->
+    <div id="tasksScreen" class="screen">
+        <h1>📝 Банк задач</h1>
+        <p style="color:var(--text-dim);">Скоро</p>
+    </div>
+
+    <!-- CHEATSHEETS -->
+    <div id="cheatsScreen" class="screen">
+        <h1>📘 Шпаргалки</h1>
+        <p style="color:var(--text-dim);">Скоро</p>
+    </div>
+</div>
+
+<script>
+    const API = 'http://localhost:8000/api';
+    let studentsCache = [];
+
+    // ─── NAVIGATION ───
+    function showAdminScreen(id) {
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        if (id === 'studentsScreen') {
+            document.querySelector('.nav-item:nth-child(1)').classList.add('active');
+            loadStudents();
+        }
+        if (id === 'tasksScreen') document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+        if (id === 'cheatsScreen') document.querySelector('.nav-item:nth-child(3)').classList.add('active');
+    }
+
+    function showTab(id) {
+        document.querySelectorAll('.tab').forEach(el => el.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function logout() {
+        window.location.href = 'admin.html';
+    }
+
+    // ─── LOAD STUDENTS ───
+    async function loadStudents() {
+        const container = document.getElementById('studentsList');
+        try {
+            const res = await fetch(`${API}/admin/students`);
+            const data = await res.json();
+            studentsCache = data.data || [];
+            container.innerHTML = studentsCache.map(s => `
+                <div class="card" onclick="openStudent(${s.id})">
+                    <div class="card-title">${s.name}</div>
+                    <div class="card-sub">${s.course}</div>
+                </div>
+            `).join('') || 'Нет учеников';
+        } catch (e) {
+            container.innerHTML = 'Ошибка загрузки. Проверьте, что сервер запущен.';
+        }
+    }
+
+    // ─── OPEN STUDENT ───
+    async function openStudent(id) {
+        const s = studentsCache.find(u => u.id === id);
+        if (!s) return;
+        document.getElementById('detailName').textContent = s.name;
+        document.getElementById('detailCourse').textContent = s.course;
+        showAdminScreen('studentDetail');
+        document.getElementById('studentDetail').classList.add('active');
+        document.getElementById('studentsScreen').classList.remove('active');
+
+        // Load tracker
+        const tRes = await fetch(`${API}/tracker/${id}`);
+        const tData = await tRes.json();
+        const tracker = tData.data || [];
+        document.getElementById('trackerTab').innerHTML = tracker.map(t => {
+            let color = '#4ade80';
+            if (t.understanding < 50) color = '#ef4444';
+            else if (t.understanding < 80) color = '#facc15';
+            return `
+            <div class="tracker-row">
+                <span>${t.status === 'Пройдено' ? '✅' : t.status === 'В процессе' ? '🔄' : '⬜'}</span>
+                <div class="tracker-info">
+                    <div class="tracker-topic">${t.topic}</div>
+                </div>
+                <div class="tracker-bar-wrap"><div class="tracker-fill" style="width:${t.understanding}%;background:${color};"></div></div>
+                <span style="font-size:12px;font-weight:600;">${t.understanding}%</span>
+            </div>`;
+        }).join('') || 'Нет данных';
+
+        // Load homework
+        const hRes = await fetch(`${API}/homework/${id}`);
+        const hData = await hRes.json();
+        const hw = hData.data || [];
+        document.getElementById('hwTab').innerHTML = hw.map(h => `
+            <div class="hw-row">
+                <span class="hw-dot" style="width:10px;height:10px;border-radius:50%;flex-shrink:0;background:${h.status==='Принято'?'#4ade80':h.status==='Просрочено'?'#ef4444':'#facc15'};"></span>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:500;">${h.title}</div>
+                    <div style="font-size:11px;color:var(--text-dim);">${h.deadline || ''} — ${h.status}</div>
+                </div>
+            </div>
+        `).join('') || 'Нет заданий';
+
+        // Load reports
+        const rRes = await fetch(`${API}/reports/${id}`);
+        const rData = await rRes.json();
+        const reports = rData.data || [];
+        document.getElementById('reportsList').innerHTML = reports.map(r => `
+            <div class="card">
+                <div class="card-title">📅 ${r.month}</div>
+                <div class="card-sub">Занятий: ${r.lessons_done} | Домашек: ${r.homework_done} | Балл: ${r.score}</div>
+                <div class="card-sub">План: ${r.plan || '-'}</div>
+            </div>
+        `).join('') || 'Нет отчётов';
+    }
+
+    // ─── ADD REPORT ───
+    function addReport() {
+        const month = prompt('Месяц (например: Июнь 2026):');
+        if (!month) return;
+        const lessons = prompt('Проведено занятий:');
+        const hwDone = prompt('Сдано домашек:');
+        const topics = prompt('Новых тем:');
+        const score = prompt('Текущий балл:');
+        const plan = prompt('План на следующий месяц:');
+
+        // Find current student
+        const detailName = document.getElementById('detailName').textContent;
+        const student = studentsCache.find(s => s.name === detailName);
+        if (!student) return;
+
+        fetch(`${API}/admin/reports`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: student.id,
+                month, lessons, hwDone, topics, score, plan
+            })
+        }).then(() => openStudent(student.id));
+    }
+
+    // Init
+    loadStudents();
+</script>
+</body>
+</html>
