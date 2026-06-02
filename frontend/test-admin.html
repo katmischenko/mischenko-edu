@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Тест админки</h1>
+<div id="out">Загрузка...</div>
+<script>
+fetch('http://localhost:8000/api/admin/students')
+.then(r => r.json())
+.then(d => {
+    document.getElementById('out').innerHTML = JSON.stringify(d);
+})
+.catch(e => {
+    document.getElementById('out').innerHTML = 'Ошибка: ' + e.message;
+});
+</script>
+</body>
+</html>
