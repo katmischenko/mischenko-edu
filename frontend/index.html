@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mischenko.edu</title>
+    <style>
+        :root {
+            --bg: #060b14;
+            --surface: rgba(12, 20, 40, 0.75);
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #4ade80;
+            --text: #e8ecf2;
+            --text-dim: #7a8ba6;
+            --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .logo span { color: var(--accent); }
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px 24px;
+            backdrop-filter: blur(12px);
+        }
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-parent {
+            background: rgba(96, 165, 250, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+        }
+        .btn-parent:hover { background: rgba(96, 165, 250, 0.2); }
+        .btn-student {
+            background: rgba(74, 222, 128, 0.12);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: var(--accent);
+        }
+        .btn-student:hover { background: rgba(74, 222, 128, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">mischenko<span>.edu</span></div>
+        <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
+        <div class="card">
+            <h2>Кто вы?</h2>
+            <button class="btn btn-parent" onclick="selectRole('parent')">👨‍👩‍👧 Я родитель</button>
+            <button class="btn btn-student" onclick="selectRole('student')">🧑 Я ученик</button>
+        </div>
+    </div>
+
+    <script>
+        function selectRole(role) {
+            if (role === 'parent') {
+                window.location.href = 'parent.html';
+            } else {
+                window.location.href = 'student.html';
+            }
+        }
+    </script>
+</body>
+</html>
