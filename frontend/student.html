@@ -13,9 +13,13 @@
             --surface: rgba(12, 20, 40, 0.75);
             --border: rgba(255, 255, 255, 0.06);
             --accent: #4ade80;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --blue: #60a5fa;
             --text: #e8ecf2;
             --text-dim: #7a8ba6;
             --radius: 14px;
+            --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -46,21 +50,19 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 28px 22px;
+            padding: 22px 18px;
             backdrop-filter: blur(12px);
             text-align: left;
             margin-bottom: 14px;
         }
         .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
         .card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
-        .card ul { font-size: 14px; color: var(--text-dim); line-height: 1.7; padding-left: 18px; }
-        .card ul li { margin-bottom: 4px; }
         .input-group { margin-bottom: 12px; text-align: left; }
         .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
         .input-group input {
             width: 100%; padding: 12px;
             background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text); font-size: 15px; font-family: inherit;
+            border-radius: var(--radius-sm); color: var(--text); font-size: 15px; font-family: inherit;
         }
         .btn {
             display: block; width: 100%; padding: 14px; margin-top: 8px;
@@ -69,8 +71,68 @@
             -webkit-tap-highlight-color: transparent;
         }
         .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
+        .btn-accent:active { background: rgba(74,222,128,0.25); }
         .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
-        .error { color: #ef4444; font-size: 12px; margin-top: 6px; display: none; }
+        .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
+        .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
+        .error.show { display: block; }
+
+        /* Дашборд */
+        .greeting { font-size: 13px; color: var(--text-dim); margin-bottom: 4px; }
+        .greeting .name { font-size: 24px; font-weight: 800; color: var(--text); display: block; }
+        .progress-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 10px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; box-shadow: 0 0 10px rgba(74,222,128,0.3); }
+        .widget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+        .widget {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 14px; text-align: center;
+        }
+        .widget .w-icon { font-size: 22px; margin-bottom: 4px; }
+        .widget .w-value { font-size: 20px; font-weight: 800; }
+        .widget .w-label { font-size: 10px; color: var(--text-dim); }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .menu-item {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 14px 8px; text-align: center;
+            cursor: pointer; font-size: 12px; font-weight: 600;
+        }
+        .menu-item:active { background: rgba(255,255,255,0.05); }
+        .menu-item .m-icon { font-size: 24px; margin-bottom: 4px; display: block; }
+
+        /* Разделы */
+        .section-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+        }
+        .back-btn { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; }
+        .section-title { font-weight: 700; font-size: 17px; }
+        .tracker-row {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px;
+            display: flex; align-items: center; gap: 10px; font-size: 13px;
+        }
+        .tracker-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .tracker-fill { height: 100%; border-radius: 3px; }
+        .tracker-pct { font-weight: 600; font-size: 12px; width: 32px; text-align: right; }
+        .hw-row {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px;
+            display: flex; align-items: center; gap: 10px; font-size: 13px;
+        }
+        .hw-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .hw-info { flex: 1; }
+        .hw-title { font-weight: 600; }
+        .hw-date { font-size: 11px; color: var(--text-dim); }
+        .hw-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+        .cheat-item {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; cursor: pointer;
+        }
+        .cheat-item summary { font-weight: 600; font-size: 14px; }
+        .cheat-item pre {
+            background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;
+            margin-top: 8px; font-size: 11px; color: var(--accent); white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
     </style>
 </head>
 <body>
@@ -79,14 +141,8 @@
 <div class="screen active" id="screen-welcome">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
-        <h2>Добро пожаловать в личный кабинет!</h2>
-        <p>Здесь ты найдёшь всё для учёбы: трекер прогресса, домашние задания, шпаргалки, расписание и отчёты.</p>
-        <ul>
-            <li>📈 Следи за прогрессом по темам</li>
-            <li>📝 Получай и сдавай домашки</li>
-            <li>📘 Пользуйся шпаргалками</li>
-            <li>📅 Смотри расписание</li>
-        </ul>
+        <h2>Добро пожаловать!</h2>
+        <p>Это твой личный кабинет. Здесь ты найдёшь всё для учёбы: трекер прогресса, домашние задания, шпаргалки, расписание и отчёты.</p>
     </div>
     <button class="btn btn-accent" id="btn-register">📝 Зарегистрироваться</button>
     <button class="btn btn-ghost" id="btn-login">🔑 У меня уже есть аккаунт</button>
@@ -97,14 +153,8 @@
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Регистрация</h2>
-        <div class="input-group">
-            <label>Имя</label>
-            <input type="text" id="reg-name" placeholder="Как тебя зовут?">
-        </div>
-        <div class="input-group">
-            <label>Пароль</label>
-            <input type="password" id="reg-pass" placeholder="Придумай пароль">
-        </div>
+        <div class="input-group"><label>Имя</label><input type="text" id="reg-name" placeholder="Как тебя зовут?"></div>
+        <div class="input-group"><label>Пароль</label><input type="password" id="reg-pass" placeholder="Придумай пароль"></div>
         <div class="error" id="reg-error"></div>
     </div>
     <button class="btn btn-accent" id="btn-reg-submit">Зарегистрироваться</button>
@@ -116,31 +166,205 @@
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Вход</h2>
-        <div class="input-group">
-            <label>Имя</label>
-            <input type="text" id="login-name" placeholder="Твоё имя">
-        </div>
-        <div class="input-group">
-            <label>Пароль</label>
-            <input type="password" id="login-pass" placeholder="Твой пароль">
-        </div>
+        <div class="input-group"><label>Имя</label><input type="text" id="login-name" placeholder="Твоё имя"></div>
+        <div class="input-group"><label>Пароль</label><input type="password" id="login-pass" placeholder="Твой пароль"></div>
         <div class="error" id="login-error"></div>
     </div>
     <button class="btn btn-accent" id="btn-login-submit">Войти</button>
     <button class="btn btn-ghost" id="btn-login-back">← Назад</button>
 </div>
 
+<!-- ЭКРАН ДАШБОРД -->
+<div class="screen" id="screen-dashboard">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="greeting"><span class="name" id="dash-greeting"></span><span id="dash-hint"></span></div>
+    <div class="progress-bar"><div class="progress-fill" id="dash-progress" style="width:0%"></div></div>
+    <div class="widget-grid">
+        <div class="widget"><div class="w-icon">📈</div><div class="w-value" id="dash-topics">-</div><div class="w-label">Тем пройдено</div></div>
+        <div class="widget"><div class="w-icon">📝</div><div class="w-value" id="dash-homework">-</div><div class="w-label">Домашек сдано</div></div>
+        <div class="widget"><div class="w-icon">🏆</div><div class="w-value" id="dash-achievements">-</div><div class="w-label">Ачивок</div></div>
+        <div class="widget"><div class="w-icon">📅</div><div class="w-value" id="dash-lessons">-</div><div class="w-label">Занятий на неделе</div></div>
+    </div>
+    <div class="menu-grid">
+        <div class="menu-item" id="menu-tracker"><span class="m-icon">📈</span>Трекер</div>
+        <div class="menu-item" id="menu-homework"><span class="m-icon">📝</span>Домашки</div>
+        <div class="menu-item" id="menu-cheatsheet"><span class="m-icon">📘</span>Шпаргалки</div>
+        <div class="menu-item" id="menu-reports"><span class="m-icon">📊</span>Отчёты</div>
+        <div class="menu-item" id="menu-calendar"><span class="m-icon">📅</span>Календарь</div>
+        <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
+    </div>
+</div>
+
+<!-- РАЗДЕЛЫ -->
+<div class="screen" id="screen-section">
+    <div class="section-header">
+        <button class="back-btn" id="btn-section-back">←</button>
+        <div class="section-title" id="section-title"></div>
+    </div>
+    <div id="section-content"></div>
+</div>
+
 <script>
     (function() {
+        const API = 'https://mischenko-edu-api.onrender.com/api';
+        let user = null;
+
         function show(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
+        // Приветствие → регистрация / вход
         document.getElementById('btn-register').addEventListener('click', () => show('screen-register'));
         document.getElementById('btn-login').addEventListener('click', () => show('screen-login'));
         document.getElementById('btn-reg-back').addEventListener('click', () => show('screen-welcome'));
         document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
+
+        // Регистрация
+        document.getElementById('btn-reg-submit').addEventListener('click', async () => {
+            const name = document.getElementById('reg-name').value.trim();
+            const pass = document.getElementById('reg-pass').value;
+            if (!name || !pass) return;
+            try {
+                const res = await fetch(API + '/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, course: 'Индивидуальный курс', password: pass })
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                user = data.user;
+                loadDashboard();
+                show('screen-dashboard');
+            } catch(e) {
+                document.getElementById('reg-error').textContent = 'Ошибка регистрации';
+                document.getElementById('reg-error').classList.add('show');
+            }
+        });
+
+        // Вход
+        document.getElementById('btn-login-submit').addEventListener('click', async () => {
+            const name = document.getElementById('login-name').value.trim();
+            const pass = document.getElementById('login-pass').value;
+            if (!name || !pass) return;
+            try {
+                const res = await fetch(API + '/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, password: pass })
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                user = data.user;
+                loadDashboard();
+                show('screen-dashboard');
+            } catch(e) {
+                document.getElementById('login-error').textContent = 'Неверное имя или пароль';
+                document.getElementById('login-error').classList.add('show');
+            }
+        });
+
+        // Дашборд
+        function loadDashboard() {
+            const hour = new Date().getHours();
+            let time = 'Доброй ночи';
+            if (hour >= 6 && hour < 12) time = 'Доброе утро';
+            else if (hour >= 12 && hour < 17) time = 'Добрый день';
+            else if (hour >= 17 && hour < 23) time = 'Добрый вечер';
+
+            document.getElementById('dash-greeting').textContent = `${time}, ${user.name}!`;
+            document.getElementById('dash-hint').textContent = `Курс: ${user.course || 'Не выбран'}`;
+
+            // Загружаем трекер
+            fetch(API + '/tracker/' + user.id)
+                .then(r => r.json())
+                .then(d => {
+                    const topics = d.data || [];
+                    const done = topics.filter(t => t.status === 'Пройдено').length;
+                    const total = topics.length;
+                    const avg = total > 0 ? Math.round(topics.reduce((s,t) => s + t.understanding, 0) / total) : 0;
+                    document.getElementById('dash-topics').textContent = `${done}/${total}`;
+                    document.getElementById('dash-progress').style.width = avg + '%';
+                });
+
+            // Загружаем домашки
+            fetch(API + '/homework/' + user.id)
+                .then(r => r.json())
+                .then(d => {
+                    const hw = d.data || [];
+                    const done = hw.filter(h => h.status === 'Принято').length;
+                    document.getElementById('dash-homework').textContent = `${done}/${hw.length}`;
+                });
+
+            document.getElementById('dash-achievements').textContent = '0';
+            document.getElementById('dash-lessons').textContent = '0';
+        }
+
+        // Меню
+        document.getElementById('menu-tracker').addEventListener('click', () => loadSection('📈 Трекер', 'tracker'));
+        document.getElementById('menu-homework').addEventListener('click', () => loadSection('📝 Домашки', 'homework'));
+        document.getElementById('menu-cheatsheet').addEventListener('click', () => loadSection('📘 Шпаргалки', 'cheatsheet'));
+        document.getElementById('menu-reports').addEventListener('click', () => loadSection('📊 Отчёты', 'reports'));
+        document.getElementById('menu-calendar').addEventListener('click', () => loadSection('📅 Календарь', 'calendar'));
+        document.getElementById('menu-logout').addEventListener('click', () => { user = null; show('screen-welcome'); });
+
+        document.getElementById('btn-section-back').addEventListener('click', () => show('screen-dashboard'));
+
+        function loadSection(title, type) {
+            document.getElementById('section-title').textContent = title;
+            const content = document.getElementById('section-content');
+
+            if (type === 'tracker') {
+                fetch(API + '/tracker/' + user.id)
+                    .then(r => r.json())
+                    .then(d => {
+                        const topics = d.data || [];
+                        content.innerHTML = topics.map(t => {
+                            let color = '#4ade80';
+                            if (t.understanding < 50) color = '#ef4444';
+                            else if (t.understanding < 80) color = '#facc15';
+                            return `<div class="tracker-row">
+                                <span>${t.status === 'Пройдено' ? '✅' : t.status === 'В процессе' ? '🔄' : '⬜'}</span>
+                                <span style="flex:1;">${t.topic}</span>
+                                <div class="tracker-bar"><div class="tracker-fill" style="width:${t.understanding}%;background:${color};"></div></div>
+                                <span class="tracker-pct">${t.understanding}%</span>
+                            </div>`;
+                        }).join('') || '<p style="color:var(--text-dim);">Нет данных</p>';
+                    });
+            } else if (type === 'homework') {
+                fetch(API + '/homework/' + user.id)
+                    .then(r => r.json())
+                    .then(d => {
+                        const hw = d.data || [];
+                        content.innerHTML = hw.map(h => {
+                            let dot = '#4ade80', tag = 'Принято', bg = 'rgba(74,222,128,0.15)', tc = '#4ade80';
+                            if (h.status === 'В процессе') { dot = '#facc15'; tag = 'В процессе'; bg = 'rgba(250,204,21,0.15)'; tc = '#facc15'; }
+                            if (h.status === 'Просрочено') { dot = '#ef4444'; tag = 'Срочно'; bg = 'rgba(239,68,68,0.15)'; tc = '#ef4444'; }
+                            return `<div class="hw-row">
+                                <span class="hw-dot" style="background:${dot};"></span>
+                                <div class="hw-info"><div class="hw-title">${h.title}</div><div class="hw-date">${h.deadline || ''}</div></div>
+                                <span class="hw-tag" style="background:${bg};color:${tc};">${tag}</span>
+                            </div>`;
+                        }).join('') || '<p style="color:var(--text-dim);">Нет заданий</p>';
+                    });
+            } else if (type === 'cheatsheet') {
+                fetch(API + '/cheatsheets/' + encodeURIComponent(user.course || 'Индивидуальный курс'))
+                    .then(r => r.json())
+                    .then(d => {
+                        const items = d.data || [];
+                        content.innerHTML = items.map(c => `
+                            <details class="cheat-item">
+                                <summary>${c.title}</summary>
+                                <pre>${c.content}</pre>
+                            </details>
+                        `).join('') || '<p style="color:var(--text-dim);">Нет шпаргалок</p>';
+                    });
+            } else {
+                content.innerHTML = '<p style="color:var(--text-dim);text-align:center;">Скоро появится</p>';
+            }
+
+            show('screen-section');
+        }
     })();
 </script>
 
