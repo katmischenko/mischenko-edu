@@ -9,88 +9,261 @@
     <title>mischenko.edu</title>
     <style>
         :root {
-            --bg: #060b14; --surface: rgba(12,20,40,0.75); --border: rgba(255,255,255,0.06);
-            --accent: #4ade80; --red: #ef4444; --yellow: #facc15; --blue: #60a5fa;
-            --text: #e8ecf2; --text-dim: #7a8ba6; --radius: 14px; --radius-sm: 10px;
+            --bg: #060b14;
+            --surface: rgba(12, 20, 40, 0.75);
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #4ade80;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --blue: #60a5fa;
+            --text: #e8ecf2;
+            --text-dim: #7a8ba6;
+            --radius: 14px;
+            --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; width: 100%; overflow: hidden; }
         body {
             font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
-            background: var(--bg); color: var(--text);
-            display: flex; justify-content: center; align-items: center; padding: 20px;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .screen { display: none; width: 100%; max-width: 400px; text-align: center; }
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
         .screen.active { display: block; }
-        .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
-        .logo span { color: var(--accent); }
-        .subtitle { font-size: 14px; color: var(--text-dim); margin-bottom: 24px; }
-        .card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 22px 18px;
-            backdrop-filter: blur(12px); text-align: left; margin-bottom: 14px;
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
-        .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
-        .card p { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 12px; }
-        .card ul { font-size: 14px; color: var(--text-dim); line-height: 1.8; padding-left: 18px; margin: 8px 0 12px; }
+        .logo span { color: var(--accent); }
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 18px;
+            backdrop-filter: blur(12px);
+            text-align: left;
+            margin-bottom: 14px;
+        }
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .card p {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .card ul {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            padding-left: 18px;
+            margin: 8px 0 12px;
+        }
         .card ul li { margin-bottom: 6px; }
         .input-group { margin-bottom: 12px; text-align: left; }
-        .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
+        .input-group label {
+            font-size: 12px;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 4px;
+        }
         .input-group input, .input-group select {
-            width: 100%; padding: 12px; background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border); border-radius: var(--radius-sm);
-            color: var(--text); font-size: 15px; font-family: inherit; outline: none;
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
         }
         .input-group input:focus, .input-group select:focus { border-color: var(--accent); }
         .btn {
-            display: block; width: 100%; padding: 14px; margin-top: 8px;
-            border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
-            border: none; font-family: inherit; text-align: center; -webkit-tap-highlight-color: transparent;
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
-        .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
-        .btn-accent:active { background: rgba(74,222,128,0.25); }
-        .btn-blue { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.2); color: var(--blue); }
-        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+        .btn-accent {
+            background: rgba(74, 222, 128, 0.12);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: var(--accent);
+        }
+        .btn-accent:active { background: rgba(74, 222, 128, 0.25); }
+        .btn-blue {
+            background: rgba(96, 165, 250, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            color: var(--blue);
+        }
+        .btn-blue:active { background: rgba(96, 165, 250, 0.25); }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+        }
         .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
         .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
         .error.show { display: block; }
         .dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
         .dot.active { background: var(--accent); }
-        .help-link { display: block; margin-top: 20px; font-size: 13px; color: var(--text-dim); cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; }
+        .help-link {
+            display: block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-dim);
+            cursor: pointer;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+        }
         .emoji-big { font-size: 40px; margin-bottom: 10px; }
-        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 8px; cursor: pointer; }
-        .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
-        .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .faq-q {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+        .faq-a {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            display: none;
+            line-height: 1.6;
+        }
         .faq-item.open .faq-a { display: block; }
         .greeting { margin-bottom: 12px; }
         .greeting .name { font-size: 22px; font-weight: 800; display: block; }
         .greeting .sub { font-size: 12px; color: var(--text-dim); }
-        .quote-box { background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.1); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--accent); font-style: italic; text-align: center; }
-        .progress-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 8px 0 14px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; box-shadow: 0 0 10px rgba(74,222,128,0.3); }
+        .quote-box {
+            background: rgba(74,222,128,0.05);
+            border: 1px solid rgba(74,222,128,0.1);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: var(--accent);
+            font-style: italic;
+            text-align: center;
+        }
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            margin: 8px 0 14px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(74,222,128,0.3);
+        }
         .widget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-        .widget { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+        .widget {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+        }
         .widget .w-icon { font-size: 20px; margin-bottom: 2px; }
         .widget .w-value { font-size: 18px; font-weight: 800; }
         .widget .w-label { font-size: 10px; color: var(--text-dim); }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-        .menu-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 600; }
+        .menu-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
         .menu-item:active { background: rgba(255,255,255,0.05); }
         .menu-item .m-icon { font-size: 22px; margin-bottom: 4px; display: block; }
         .section-placeholder { text-align: center; padding: 30px 20px; }
         .section-placeholder .emoji { font-size: 48px; margin-bottom: 12px; }
         .section-placeholder p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+        /* Тест */
+        .test-q {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 10px;
+        }
+        .test-q-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; text-align: left; }
+        .test-opt {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 6px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-dim);
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .test-opt:active { background: rgba(255,255,255,0.05); }
+        .test-opt.chosen {
+            border-color: var(--accent);
+            background: rgba(74,222,128,0.1);
+            color: var(--text);
+        }
     </style>
 </head>
-
 <body>
 
 <!-- ЭКРАН 0: ВЫБОР РОЛИ -->
 <div class="screen active" id="screen-0">
     <div class="logo">mischenko<span>.edu</span></div>
     <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
-    <div class="card"><h2>Кто вы?</h2>
+    <div class="card">
+        <h2>Кто вы?</h2>
         <button class="btn btn-blue" id="btn-parent">👨‍👩‍👧 Я родитель</button>
         <button class="btn btn-accent" id="btn-student">🧑 Я ученик</button>
     </div>
@@ -98,10 +271,26 @@
 </div>
 
 <!-- УЧЕНИК: МЕНЮ -->
-<div class="screen" id="student-menu"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Выберите действие</h2><button class="btn btn-accent" id="btn-student-intro">📖 Знакомство</button><button class="btn btn-blue" id="btn-student-reg">📝 Регистрация</button><button class="btn btn-ghost" id="btn-student-login">🔑 Вход</button></div></div>
+<div class="screen" id="student-menu">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Выберите действие</h2>
+        <button class="btn btn-accent" id="btn-student-intro">📖 Знакомство</button>
+        <button class="btn btn-blue" id="btn-student-reg">📝 Регистрация</button>
+        <button class="btn btn-ghost" id="btn-student-login">🔑 Вход</button>
+    </div>
+</div>
 
 <!-- РОДИТЕЛЬ: МЕНЮ -->
-<div class="screen" id="parent-menu"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Выберите действие</h2><button class="btn btn-accent" id="btn-parent-intro">📖 Знакомство</button><button class="btn btn-blue" id="btn-parent-course">🧭 Подобрать курс</button><button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button></div></div>
+<div class="screen" id="parent-menu">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Выберите действие</h2>
+        <button class="btn btn-accent" id="btn-parent-intro">📖 Знакомство</button>
+        <button class="btn btn-blue" id="btn-parent-test-start">🧭 Пройти тест</button>
+        <button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button>
+    </div>
+</div>
 <!-- УЧЕНИК: ЗНАКОМСТВО -->
 <div class="screen" id="student-1">
     <div class="logo">mischenko<span>.edu</span></div>
@@ -159,7 +348,6 @@
     </div>
     <button class="btn btn-accent" id="btn-student-to-menu">← В главное меню</button>
 </div>
-
 <!-- РОДИТЕЛЬ: ЗНАКОМСТВО -->
 <div class="screen" id="parent-1">
     <div class="logo">mischenko<span>.edu</span></div>
@@ -268,20 +456,30 @@
     <button class="btn btn-ghost" id="btn-student-login-back">← В главное меню</button>
 </div>
 
-<!-- РОДИТЕЛЬ: КУРСЫ -->
-<div class="screen" id="parent-course">
+<!-- РОДИТЕЛЬ: ТЕСТ -->
+<div class="screen" id="parent-test">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Подобрать курс</h2>
-        <button class="btn btn-accent" style="margin-bottom:6px;">🎓 ЕГЭ информатика</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">📋 ОГЭ информатика</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">🐍 Python с нуля</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">🌐 Веб-разработка</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">🐱 Scratch</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">💻 Цифровая грамотность</button>
-        <button class="btn btn-accent" style="margin-bottom:6px;">⭐ Индивидуальный курс</button>
+        <p>Ответьте на 5 вопросов, чтобы определить подходящее направление.</p>
+        <div id="test-questions"></div>
+        <div class="error" id="test-error"></div>
+        <button class="btn btn-accent" id="btn-test-next" style="display:none;">Далее →</button>
+        <button class="btn btn-accent" id="btn-test-finish" style="display:none;">Узнать результат</button>
     </div>
-    <button class="btn btn-ghost" id="btn-parent-course-back">← В главное меню</button>
+    <button class="btn btn-ghost" id="btn-parent-test-back">← В главное меню</button>
+</div>
+
+<!-- РОДИТЕЛЬ: РЕЗУЛЬТАТ ТЕСТА -->
+<div class="screen" id="parent-test-result">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Ваш результат</h2>
+        <p id="test-result-text"></p>
+    </div>
+    <button class="btn btn-accent" id="btn-test-to-reg">📝 Записаться на пробное занятие</button>
+    <button class="btn btn-ghost" id="btn-test-to-login">🔑 Уже есть аккаунт? Войти</button>
+    <button class="btn btn-ghost" id="btn-parent-test-result-back">← В главное меню</button>
 </div>
 <!-- ДАШБОРД -->
 <div class="screen" id="screen-dashboard">
@@ -295,10 +493,26 @@
         <div class="progress-fill" id="dash-progress" style="width:0%"></div>
     </div>
     <div class="widget-grid">
-        <div class="widget"><div class="w-icon">📈</div><div class="w-value" id="dash-topics">-</div><div class="w-label">Тем пройдено</div></div>
-        <div class="widget"><div class="w-icon">📝</div><div class="w-value" id="dash-homework">-</div><div class="w-label">Домашек сдано</div></div>
-        <div class="widget"><div class="w-icon">🏆</div><div class="w-value" id="dash-achievements">-</div><div class="w-label">Ачивок</div></div>
-        <div class="widget"><div class="w-icon">📅</div><div class="w-value" id="dash-lessons">-</div><div class="w-label">Занятий на неделе</div></div>
+        <div class="widget">
+            <div class="w-icon">📈</div>
+            <div class="w-value" id="dash-topics">-</div>
+            <div class="w-label">Тем пройдено</div>
+        </div>
+        <div class="widget">
+            <div class="w-icon">📝</div>
+            <div class="w-value" id="dash-homework">-</div>
+            <div class="w-label">Домашек сдано</div>
+        </div>
+        <div class="widget">
+            <div class="w-icon">🏆</div>
+            <div class="w-value" id="dash-achievements">-</div>
+            <div class="w-label">Ачивок</div>
+        </div>
+        <div class="widget">
+            <div class="w-icon">📅</div>
+            <div class="w-value" id="dash-lessons">-</div>
+            <div class="w-label">Занятий на неделе</div>
+        </div>
     </div>
     <div class="menu-grid" id="main-menu-grid">
         <div class="menu-item" id="menu-tracker"><span class="m-icon">📈</span>Трекер</div>
@@ -331,7 +545,9 @@
 <script>
 (function() {
     const API = 'https://mischenko-edu-api.onrender.com/api';
-    let user = null, prevScreen = 'screen-0';
+    let user = null;
+    let prevScreen = 'screen-0';
+
     const quotes = [
         '«Не бойся ошибаться — бойся не пробовать.»',
         '«Код работает не магией, а твоим трудом.»',
@@ -339,8 +555,37 @@
         '«Ты уже на шаг ближе к цели, чем вчера.»'
     ];
 
+    // Вопросы теста для родителя
+    const testQuestions = [
+        {
+            q: '1. Сколько лет ребёнку?',
+            opts: ['7–9 лет', '10–12 лет', '13–15 лет', '16–17 лет']
+        },
+        {
+            q: '2. Чем ребёнок любит заниматься?',
+            opts: ['Играть в игры', 'Смотреть видео', 'Узнавать новое', 'Рисовать и творить']
+        },
+        {
+            q: '3. Какая цель занятий?',
+            opts: ['Поступление в вуз', 'Общее развитие', 'Создавать проекты', 'Подтянуть успеваемость']
+        },
+        {
+            q: '4. Есть ли опыт в программировании?',
+            opts: ['Ничего не пробовал', 'Пробовал сам', 'Занимался с преподавателем', 'Уверенно владеет']
+        },
+        {
+            q: '5. Какой темп обучения комфортнее?',
+            opts: ['Медленно и дотошно', 'Средне', 'Быстро, любит интенсив', 'По-разному']
+        }
+    ];
+
+    let testAnswers = [];
+    let testStep = 0;
+
     function show(id) {
-        document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+        document.querySelectorAll('.screen').forEach(function(s) {
+            s.classList.remove('active');
+        });
         document.getElementById(id).classList.add('active');
     }
 
@@ -366,8 +611,12 @@
     });
 
     // Роли
-    document.getElementById('btn-parent').addEventListener('click', function() { show('parent-menu'); });
-    document.getElementById('btn-student').addEventListener('click', function() { show('student-menu'); });
+    document.getElementById('btn-parent').addEventListener('click', function() {
+        show('parent-menu');
+    });
+    document.getElementById('btn-student').addEventListener('click', function() {
+        show('student-menu');
+    });
 
     // Кнопки "Далее"
     document.querySelectorAll('[data-next]').forEach(function(btn) {
@@ -377,21 +626,127 @@
     });
 
     // Ученик: меню
-    document.getElementById('btn-student-intro').addEventListener('click', function() { show('student-1'); });
-    document.getElementById('btn-student-reg').addEventListener('click', function() { show('student-reg'); });
-    document.getElementById('btn-student-login').addEventListener('click', function() { show('student-login'); });
-    document.getElementById('btn-student-to-menu').addEventListener('click', function() { show('student-menu'); });
-    document.getElementById('btn-student-reg-back').addEventListener('click', function() { show('student-menu'); });
-    document.getElementById('btn-student-login-back').addEventListener('click', function() { show('student-menu'); });
+    document.getElementById('btn-student-intro').addEventListener('click', function() {
+        show('student-1');
+    });
+    document.getElementById('btn-student-reg').addEventListener('click', function() {
+        show('student-reg');
+    });
+    document.getElementById('btn-student-login').addEventListener('click', function() {
+        show('student-login');
+    });
+    document.getElementById('btn-student-to-menu').addEventListener('click', function() {
+        show('student-menu');
+    });
+    document.getElementById('btn-student-reg-back').addEventListener('click', function() {
+        show('student-menu');
+    });
+    document.getElementById('btn-student-login-back').addEventListener('click', function() {
+        show('student-menu');
+    });
 
     // Родитель: меню
-    document.getElementById('btn-parent-intro').addEventListener('click', function() { show('parent-1'); });
-    document.getElementById('btn-parent-course').addEventListener('click', function() { show('parent-course'); });
-    document.getElementById('btn-parent-login').addEventListener('click', function() { show('student-login'); });
-    document.getElementById('btn-parent-to-menu').addEventListener('click', function() { show('parent-menu'); });
-    document.getElementById('btn-parent-course-back').addEventListener('click', function() { show('parent-menu'); });
+    document.getElementById('btn-parent-intro').addEventListener('click', function() {
+        show('parent-1');
+    });
+    document.getElementById('btn-parent-test-start').addEventListener('click', function() {
+        startTest();
+    });
+    document.getElementById('btn-parent-login').addEventListener('click', function() {
+        show('student-login');
+    });
+    document.getElementById('btn-parent-to-menu').addEventListener('click', function() {
+        show('parent-menu');
+    });
+    document.getElementById('btn-parent-test-back').addEventListener('click', function() {
+        show('parent-menu');
+    });
+    document.getElementById('btn-parent-test-result-back').addEventListener('click', function() {
+        show('parent-menu');
+    });
 
-    // Регистрация
+    // Тест для родителя
+    function startTest() {
+        testAnswers = [];
+        testStep = 0;
+        document.getElementById('test-error').style.display = 'none';
+        document.getElementById('btn-test-next').style.display = 'none';
+        document.getElementById('btn-test-finish').style.display = 'none';
+        showTestQuestion();
+        show('parent-test');
+    }
+
+    function showTestQuestion() {
+        var container = document.getElementById('test-questions');
+        var q = testQuestions[testStep];
+        var html = '<div class="test-q"><div class="test-q-title">' + q.q + '</div>';
+        q.opts.forEach(function(opt, i) {
+            html += '<button class="test-opt" data-opt="' + i + '">' + opt + '</button>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
+
+        container.querySelectorAll('.test-opt').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                container.querySelectorAll('.test-opt').forEach(function(b) {
+                    b.classList.remove('chosen');
+                });
+                this.classList.add('chosen');
+                testAnswers[testStep] = this.textContent;
+
+                if (testStep < testQuestions.length - 1) {
+                    document.getElementById('btn-test-next').style.display = 'block';
+                    document.getElementById('btn-test-finish').style.display = 'none';
+                } else {
+                    document.getElementById('btn-test-next').style.display = 'none';
+                    document.getElementById('btn-test-finish').style.display = 'block';
+                }
+            });
+        });
+    }
+
+    document.getElementById('btn-test-next').addEventListener('click', function() {
+        testStep++;
+        showTestQuestion();
+        document.getElementById('btn-test-next').style.display = 'none';
+    });
+
+    document.getElementById('btn-test-finish').addEventListener('click', function() {
+        if (testAnswers.length < testQuestions.length) {
+            document.getElementById('test-error').textContent = 'Ответьте на все вопросы';
+            document.getElementById('test-error').style.display = 'block';
+            return;
+        }
+        // Определяем курс
+        var age = testAnswers[0];
+        var interest = testAnswers[1].toLowerCase();
+        var goal = testAnswers[2].toLowerCase();
+        var course = 'Python с нуля';
+
+        if (age.indexOf('7') !== -1 || age.indexOf('9') !== -1 || interest.indexOf('игр') !== -1) {
+            course = 'Scratch';
+        } else if (age.indexOf('16') !== -1 || age.indexOf('17') !== -1 || goal.indexOf('вуз') !== -1) {
+            course = 'ЕГЭ информатика';
+        } else if (interest.indexOf('творить') !== -1 || interest.indexOf('рисовать') !== -1) {
+            course = 'Веб-разработка';
+        } else if (goal.indexOf('успеваемость') !== -1) {
+            course = 'Цифровая грамотность';
+        } else if (goal.indexOf('проект') !== -1) {
+            course = 'Python с нуля';
+        }
+
+        document.getElementById('test-result-text').textContent = 'Рекомендованный курс: ' + course + '. Запишитесь на пробное занятие или войдите, если уже есть аккаунт.';
+        show('parent-test-result');
+    });
+
+    // Кнопки результата теста
+    document.getElementById('btn-test-to-reg').addEventListener('click', function() {
+        show('student-reg');
+    });
+    document.getElementById('btn-test-to-login').addEventListener('click', function() {
+        show('student-login');
+    });
+        // Регистрация
     document.getElementById('btn-sreg-submit').addEventListener('click', async function() {
         var phone = document.getElementById('sreg-phone').value.trim();
         var pass = document.getElementById('sreg-pass').value;
@@ -409,7 +764,10 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone: phone, name: name, course: 'Индивидуальный курс', password: pass })
             });
-            if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка регистрации');
+            if (!res.ok) {
+                var errData = await res.json().catch(function() { return {}; });
+                throw new Error(errData.detail || 'Ошибка регистрации');
+            }
             var data = await res.json();
             user = data.user;
             localStorage.setItem('user_phone', phone);
@@ -457,7 +815,10 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone: phone, password: pass })
             });
-            if (!res.ok) throw new Error((await res.json()).detail || 'Неверный пароль');
+            if (!res.ok) {
+                var errData = await res.json().catch(function() { return {}; });
+                throw new Error(errData.detail || 'Неверный пароль');
+            }
             var data = await res.json();
             user = data.user;
             localStorage.setItem('user_phone', phone);
@@ -528,14 +889,19 @@
     document.getElementById('menu-cheatsheet').addEventListener('click', function() { loadSection('cheatsheet'); });
     document.getElementById('menu-achievements').addEventListener('click', function() { loadSection('achievements'); });
     document.getElementById('menu-calendar').addEventListener('click', function() { loadSection('calendar'); });
+
+    // Выход
     document.getElementById('menu-logout').addEventListener('click', function() {
         user = null;
         localStorage.clear();
         show('screen-0');
     });
+
+    // Чат с учителем
     document.getElementById('btn-chat').addEventListener('click', function() {
         window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
     });
+
 })();
 </script>
 </body>
