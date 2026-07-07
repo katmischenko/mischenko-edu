@@ -33,6 +33,12 @@ class RegisterRequest(BaseModel):
     password: str
 
 
+class ProfileUpdate(BaseModel):
+    age: str = ""
+    course: str = ""
+    goal: str = ""
+
+
 class TrackerUpdate(BaseModel):
     status: str = None
     understanding: int = None
@@ -57,6 +63,28 @@ class ReportCreate(BaseModel):
     topics: str = "0"
     score: str = ""
     plan: str = ""
+
+
+# ─── ПРОВЕРКА АККАУНТА ───
+
+
+@app.get("/api/check/{telegram_id}")
+def check_account(telegram_id: int):
+    result = (
+        db.supabase.table("users").select("*").eq("telegram_id", telegram_id).execute()
+    )
+    if not result.data:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
+    user_data = result.data[0]
+    return {
+        "success": True,
+        "user": {
+            "id": user_data["id"],
+            "name": user_data["name"],
+            "course": user_data["course"],
+            "telegram_id": user_data["telegram_id"],
+        },
+    }
 
 
 # ─── АВТОРИЗАЦИЯ ───
@@ -90,7 +118,6 @@ def login(data: LoginRequest):
 
 @app.post("/api/register")
 def register(data: RegisterRequest):
-    # Проверяем, нет ли уже такого telegram_id
     existing = (
         db.supabase.table("users")
         .select("*")
@@ -125,6 +152,18 @@ def register(data: RegisterRequest):
             "telegram_id": user_data["telegram_id"],
         },
     }
+
+
+# ─── АНКЕТА ───
+
+
+@app.put("/api/profile/{user_id}")
+def update_profile(user_id: int, data: ProfileUpdate):
+    update_data = {}
+    if data.course:
+        update_data["course"] = data.course
+    result = db.supabase.table("users").update(update_data).eq("id", user_id).execute()
+    return {"success": True}
 
 
 # ─── ТРЕКЕР ───
