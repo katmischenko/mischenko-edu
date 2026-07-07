@@ -92,6 +92,90 @@
             text-decoration: none;
         }
         .help-link:hover { color: var(--text); }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: #0d1528;
+            border: 1px solid var(--border);
+            border-radius: var(--radius) var(--radius) 0 0;
+            padding: 24px 20px 30px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .faq-q {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-a {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            display: none;
+            line-height: 1.5;
+        }
+        .faq-item.open .faq-a { display: block; }
+        .modal-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            text-align: center;
+            background: rgba(74, 222, 128, 0.12);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: var(--accent);
+        }
+        .modal-close {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-dim);
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+        }
     </style>
 </head>
 <body>
@@ -104,20 +188,69 @@
             <button class="btn btn-student" onclick="selectRole('student')">🧑 Я ученик</button>
         </div>
     </div>
-    <a class="help-link" onclick="showHelp()">💬 Помощь</a>
+    <a class="help-link" onclick="openHelp()">💬 Помощь</a>
+
+    <div class="modal-overlay" id="helpModal" onclick="closeHelpOutside(event)">
+        <div class="modal">
+            <h3>💬 Помощь</h3>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
+                <div class="faq-a">Это помогает настроить приложение под вас. Для родителя — информация о курсах, стоимости, отчёты о прогрессе ребёнка. Для ученика — тест на направление, трекер, домашки, бонусы.</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Что будет после выбора? <span>▾</span></div>
+                <div class="faq-a">Вы познакомитесь с платформой: кто я, как проходит обучение, чем я отличаюсь от других. Затем — тест или выбор курса.</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Это бесплатно? <span>▾</span></div>
+                <div class="faq-a">Само приложение — да. Занятия — платные. Первое занятие со скидкой 5%. Цены зависят от курса — от 800 до 2 000 ₽/час.</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Нужно ли устанавливать что-то дополнительно? <span>▾</span></div>
+                <div class="faq-a">Нет. Приложение работает прямо в Telegram. Для занятий понадобится компьютер или ноутбук с интернетом.</div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Мои данные в безопасности? <span>▾</span></div>
+                <div class="faq-a">Да. Данные защищены, доступ к ним есть только у вас и у преподавателя. Никакие данные не передаются третьим лицам.</div>
+            </div>
+
+            <button class="modal-btn" onclick="openChat()">💬 Написать в Telegram</button>
+            <button class="modal-close" onclick="closeHelp()">Закрыть</button>
+        </div>
+    </div>
 
     <script>
         const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
 
         function selectRole(role) {
-            if (role === 'parent') {
-                window.location.href = BASE + '/parent.html';
-            } else {
-                window.location.href = BASE + '/student.html';
+            localStorage.setItem('role', role);
+            window.location.href = BASE + '/intro.html';
+        }
+
+        function openHelp() {
+            document.getElementById('helpModal').classList.add('open');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('open');
+        }
+
+        function closeHelpOutside(event) {
+            if (event.target === event.currentTarget) {
+                closeHelp();
             }
         }
 
-        function showHelp() {
+        function toggleFaq(item) {
+            item.classList.toggle('open');
+        }
+
+        function openChat() {
             window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
         }
     </script>
