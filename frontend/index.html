@@ -71,7 +71,6 @@
         .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
         .faq-item.open .faq-a { display: block; }
 
-        /* Дашборд */
         .greeting { margin-bottom: 12px; }
         .greeting .name { font-size: 22px; font-weight: 800; display: block; }
         .greeting .sub { font-size: 12px; color: var(--text-dim); }
@@ -87,23 +86,9 @@
         .menu-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 600; }
         .menu-item:active { background: rgba(255,255,255,0.05); }
         .menu-item .m-icon { font-size: 22px; margin-bottom: 4px; display: block; }
-
-        .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-        .back-btn { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; padding: 4px; }
-        .section-title { font-weight: 700; font-size: 17px; }
-        .tracker-row, .hw-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; font-size: 13px; }
-        .tracker-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
-        .tracker-fill { height: 100%; border-radius: 3px; }
-        .tracker-pct { font-weight: 600; font-size: 12px; width: 32px; text-align: right; }
-        .hw-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .hw-info { flex: 1; } .hw-title { font-weight: 600; } .hw-date { font-size: 11px; color: var(--text-dim); }
-        .hw-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
-        .cheat-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; cursor: pointer; }
-        .cheat-item summary { font-weight: 600; font-size: 14px; }
-        .cheat-item pre { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-top: 8px; font-size: 11px; color: var(--accent); white-space: pre-wrap; font-family: 'Courier New', monospace; }
-        .achievement-card { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px; }
-        .achievement-card.locked { opacity: 0.4; } .ach-icon { font-size: 28px; } .ach-info { flex: 1; }
-        .ach-title { font-size: 13px; font-weight: 600; } .ach-desc { font-size: 11px; color: var(--text-dim); }
+        .section-placeholder { text-align: center; padding: 30px 20px; }
+        .section-placeholder .emoji { font-size: 48px; margin-bottom: 12px; }
+        .section-placeholder p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -125,7 +110,7 @@
 <!-- РОДИТЕЛЬ: МЕНЮ -->
 <div class="screen" id="parent-menu"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Выберите действие</h2><button class="btn btn-accent" id="btn-parent-intro">📖 Знакомство</button><button class="btn btn-blue" id="btn-parent-course">🧭 Подобрать курс</button><button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button></div></div>
 
-<!-- ЗНАКОМСТВА (сокращённые) -->
+<!-- ЗНАКОМСТВА -->
 <div class="screen" id="student-1"><div class="logo">mischenko<span>.edu</span></div><div class="card"><div class="emoji-big">🚀</div><h2>Привет! Я Екатерина</h2><p>8 лет учу ребят программировать — так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов. Работала в школе, Skyeng и Pixel. 650+ учеников.</p></div><button class="btn btn-accent" data-next="student-2">Далее →</button><div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></div>
 <div class="screen" id="student-2"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Что такое mischenko.edu?</h2><p>Твой учебный центр в Telegram. Тест, курсы, трекер, домашки, шпаргалки — всё в одном месте.</p></div><button class="btn btn-accent" data-next="student-3">Далее →</button><div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div></div>
 <div class="screen" id="student-3"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Как проходят занятия?</h2><p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один. Домашки с проверкой, шпаргалки, поддержка.</p></div><button class="btn btn-accent" data-next="student-4">Далее →</button><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div></div>
@@ -157,7 +142,7 @@
         <div class="widget"><div class="w-icon">🏆</div><div class="w-value" id="dash-achievements">-</div><div class="w-label">Ачивок</div></div>
         <div class="widget"><div class="w-icon">📅</div><div class="w-value" id="dash-lessons">-</div><div class="w-label">Занятий на неделе</div></div>
     </div>
-    <div class="menu-grid">
+    <div class="menu-grid" id="main-menu-grid">
         <div class="menu-item" id="menu-tracker"><span class="m-icon">📈</span>Трекер</div>
         <div class="menu-item" id="menu-homework"><span class="m-icon">📝</span>Домашки</div>
         <div class="menu-item" id="menu-cheatsheet"><span class="m-icon">📘</span>Шпаргалки</div>
@@ -166,6 +151,7 @@
         <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
     </div>
     <button class="btn btn-blue" id="btn-chat">💬 Написать учителю</button>
+    <div id="section-content" style="display:none;"></div>
 </div>
 
 <!-- ПОМОЩЬ -->
@@ -178,6 +164,8 @@
     const quotes = ['«Не бойся ошибаться — бойся не пробовать.»','«Код работает не магией, а твоим трудом.»','«Каждая ошибка — шаг к пониманию.»','«Ты уже на шаг ближе к цели, чем вчера.»'];
 
     function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    function hideMainMenu() { document.getElementById('main-menu-grid').style.display = 'none'; document.getElementById('btn-chat').style.display = 'none'; document.getElementById('quote-box').style.display = 'none'; }
+    function showMainMenu() { document.getElementById('main-menu-grid').style.display = ''; document.getElementById('btn-chat').style.display = ''; document.getElementById('quote-box').style.display = ''; }
 
     // Помощь
     document.getElementById('help-link').addEventListener('click', () => { prevScreen = 'screen-0'; show('screen-help'); });
@@ -209,13 +197,12 @@
         return prompt('Введите номер телефона:');
     }
 
-    // Регистрация — телефон
+    // Регистрация
     document.getElementById('btn-student-reg-phone').addEventListener('click', async () => {
         phone = await requestPhone(); if (!phone) return;
         document.getElementById('btn-student-reg-phone').style.display = 'none';
         document.getElementById('student-reg-form').style.display = 'block';
     });
-    // Регистрация — отправка
     document.getElementById('btn-sreg-submit').addEventListener('click', async () => {
         const name = document.getElementById('sreg-name').value.trim(), pass = document.getElementById('sreg-pass').value, err = document.getElementById('sreg-error');
         err.classList.remove('show');
@@ -229,13 +216,12 @@
         } catch(e) { err.textContent = e.message; err.classList.add('show'); }
     });
 
-    // Вход — телефон
+    // Вход
     document.getElementById('btn-student-login-phone').addEventListener('click', async () => {
         phone = await requestPhone(); if (!phone) return;
         document.getElementById('btn-student-login-phone').style.display = 'none';
         document.getElementById('student-login-form').style.display = 'block';
     });
-    // Вход — отправка
     document.getElementById('btn-slogin-submit').addEventListener('click', async () => {
         const pass = document.getElementById('slogin-pass').value, err = document.getElementById('slogin-error');
         err.classList.remove('show');
@@ -266,68 +252,44 @@
             const h = d.data||[]; document.getElementById('dash-homework').textContent = `${h.filter(x=>x.status==='Принято').length}/${h.length}`;
         }).catch(()=>{});
         document.getElementById('dash-lessons').textContent = '0';
+        showMainMenu();
+        document.getElementById('section-content').style.display = 'none';
     }
 
-    // Меню дашборда
-    document.getElementById('menu-tracker').addEventListener('click', () => loadDashSection('📈 Трекер', 'tracker'));
-    document.getElementById('menu-homework').addEventListener('click', () => loadDashSection('📝 Домашки', 'homework'));
-    document.getElementById('menu-cheatsheet').addEventListener('click', () => loadDashSection('📘 Шпаргалки', 'cheatsheet'));
-    document.getElementById('menu-achievements').addEventListener('click', () => loadDashSection('🏆 Ачивки', 'achievements'));
-    document.getElementById('menu-calendar').addEventListener('click', () => loadDashSection('📅 Календарь', 'calendar'));
+    // Разделы с заглушкой
+    const placeholders = {
+        tracker: { emoji: '📈', text: 'Трекер прогресса появится здесь, когда учитель добавит темы. А пока — ожидайте.' },
+        homework: { emoji: '📝', text: 'Домашние задания появятся здесь, когда учитель назначит их. Ожидайте.' },
+        cheatsheet: { emoji: '📘', text: 'Шпаргалки появятся здесь, когда учитель добавит материалы по вашему курсу.' },
+        achievements: { emoji: '🏆', text: 'Ачивки появятся здесь, когда вы начнёте проходить темы и выполнять задания.' },
+        calendar: { emoji: '📅', text: 'Расписание занятий появится здесь, когда учитель назначит время. Ожидайте.' }
+    };
+
+    function loadSection(type) {
+        hideMainMenu();
+        const content = document.getElementById('section-content');
+        const p = placeholders[type];
+        content.innerHTML = `
+            <div class="section-placeholder">
+                <div class="emoji">${p.emoji}</div>
+                <p>${p.text}</p>
+                <button class="btn btn-ghost" id="btn-section-back-dash" style="margin-top:16px;">← Назад в кабинет</button>
+            </div>
+        `;
+        content.style.display = 'block';
+        document.getElementById('btn-section-back-dash').addEventListener('click', () => {
+            content.style.display = 'none';
+            showMainMenu();
+        });
+    }
+
+    document.getElementById('menu-tracker').addEventListener('click', () => loadSection('tracker'));
+    document.getElementById('menu-homework').addEventListener('click', () => loadSection('homework'));
+    document.getElementById('menu-cheatsheet').addEventListener('click', () => loadSection('cheatsheet'));
+    document.getElementById('menu-achievements').addEventListener('click', () => loadSection('achievements'));
+    document.getElementById('menu-calendar').addEventListener('click', () => loadSection('calendar'));
     document.getElementById('menu-logout').addEventListener('click', () => { user=null; localStorage.clear(); show('screen-0'); });
     document.getElementById('btn-chat').addEventListener('click', () => { window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko'); });
-
-    // Загружаем разделы прямо внутри index.html
-    function loadDashSection(title, type) {
-        const content = document.createElement('div');
-        content.id = 'dash-section-content';
-        const old = document.getElementById('dash-section-content');
-        if (old) old.remove();
-        const dash = document.getElementById('screen-dashboard');
-
-        if (type === 'tracker') {
-            fetch(API+'/tracker/'+user.id).then(r=>r.json()).then(d=>{
-                content.innerHTML = (d.data||[]).map(t => {
-                    let c = t.understanding<50?'#ef4444':t.understanding<80?'#facc15':'#4ade80';
-                    return `<div class="tracker-row"><span>${t.status==='Пройдено'?'✅':t.status==='В процессе'?'🔄':'⬜'}</span><span style="flex:1;">${t.topic}</span><div class="tracker-bar"><div class="tracker-fill" style="width:${t.understanding}%;background:${c};"></div></div><span class="tracker-pct">${t.understanding}%</span></div>`;
-                }).join('')||'<p style="color:var(--text-dim);">Нет данных</p>';
-            }).catch(()=>{ content.innerHTML='<p style="color:var(--text-dim);">Ошибка</p>'; });
-        } else if (type === 'homework') {
-            fetch(API+'/homework/'+user.id).then(r=>r.json()).then(d=>{
-                content.innerHTML = (d.data||[]).map(h => {
-                    let dot='#4ade80',tag='Принято',bg='rgba(74,222,128,0.15)',tc='#4ade80';
-                    if (h.status==='В процессе') { dot='#facc15'; tag='В процессе'; bg='rgba(250,204,21,0.15)'; tc='#facc15'; }
-                    if (h.status==='Просрочено') { dot='#ef4444'; tag='Срочно'; bg='rgba(239,68,68,0.15)'; tc='#ef4444'; }
-                    return `<div class="hw-row"><span class="hw-dot" style="background:${dot};"></span><div class="hw-info"><div class="hw-title">${h.title}</div><div class="hw-date">${h.deadline||''}</div></div><span class="hw-tag" style="background:${bg};color:${tc};">${tag}</span></div>`;
-                }).join('')||'<p style="color:var(--text-dim);">Нет заданий</p>';
-            }).catch(()=>{ content.innerHTML='<p style="color:var(--text-dim);">Ошибка</p>'; });
-        } else if (type === 'cheatsheet') {
-            fetch(API+'/cheatsheets/'+encodeURIComponent(user.course||'Индивидуальный курс')).then(r=>r.json()).then(d=>{
-                content.innerHTML = (d.data||[]).map(c => `<details class="cheat-item"><summary>${c.title}</summary><pre>${c.content}</pre></details>`).join('')||'<p style="color:var(--text-dim);">Нет шпаргалок</p>';
-            }).catch(()=>{ content.innerHTML='<p style="color:var(--text-dim);">Ошибка</p>'; });
-        } else if (type === 'achievements') {
-            content.innerHTML = '<div class="card"><h3>⭐ Заработанные</h3><div class="achievement-card"><span class="ach-icon">⭐</span><div class="ach-info"><div class="ach-title">Первая программа</div><div class="ach-desc">Написал свой первый код</div></div></div></div><div class="card"><h3>🔒 Не открыты</h3><div class="achievement-card locked"><span class="ach-icon">💫</span><div class="ach-info"><div class="ach-title">Мастер циклов</div><div class="ach-desc">Решить 20 задач на циклы</div></div></div></div>';
-        } else {
-            content.innerHTML = '<p style="color:var(--text-dim);text-align:center;">📅 Скоро появится</p>';
-        }
-
-        // Прячем меню, показываем контент
-        document.querySelectorAll('#screen-dashboard > *').forEach(el => { if (!el.id || el.id === 'dash-section-content') el.style.display = 'none'; });
-        content.style.marginTop = '10px';
-        dash.appendChild(content);
-        content.style.display = 'block';
-
-        // Кнопка Назад
-        const back = document.createElement('button');
-        back.textContent = '← Назад';
-        back.className = 'btn btn-ghost';
-        back.style.marginTop = '12px';
-        back.addEventListener('click', () => {
-            content.remove();
-            document.querySelectorAll('#screen-dashboard > *').forEach(el => el.style.display = '');
-        });
-        content.appendChild(back);
-    }
 })();
 </script>
 </body>
