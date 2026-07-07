@@ -30,28 +30,17 @@
             display: flex;
             justify-content: center;
         }
-        .screen {
-            display: none;
-            max-width: 420px;
-            width: 100%;
-        }
+        .screen { display: none; max-width: 420px; width: 100%; }
         .screen.active { display: block; }
         .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+            margin-bottom: 20px; text-align: center;
         }
         .logo span { color: var(--accent); }
         .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 22px 18px;
-            backdrop-filter: blur(12px);
-            text-align: left;
-            margin-bottom: 14px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px 18px;
+            backdrop-filter: blur(12px); text-align: left; margin-bottom: 14px;
         }
         .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
         .card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
@@ -60,8 +49,8 @@
         .input-group input, .input-group select {
             width: 100%; padding: 12px;
             background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); color: var(--text); font-size: 15px; font-family: inherit;
-            outline: none;
+            border-radius: var(--radius-sm); color: var(--text); font-size: 15px;
+            font-family: inherit; outline: none;
         }
         .input-group select { appearance: none; }
         .input-group input:focus, .input-group select:focus { border-color: var(--accent); }
@@ -101,9 +90,7 @@
         .menu-item:active { background: rgba(255,255,255,0.05); }
         .menu-item .m-icon { font-size: 24px; margin-bottom: 4px; display: block; }
 
-        .section-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 8px;
-        }
+        .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 8px; }
         .back-btn { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; padding: 4px; }
         .section-title { font-weight: 700; font-size: 17px; }
         .tracker-row {
@@ -144,17 +131,17 @@
     <div class="card">
         <h2>Добро пожаловать!</h2>
         <p>Это твой личный кабинет. Здесь ты найдёшь всё для учёбы: трекер прогресса, домашние задания, шпаргалки, расписание и отчёты.</p>
+        <p>Для входа понадобится твой номер телефона.</p>
     </div>
-    <button class="btn btn-blue" id="btn-telegram-login">🔵 Войти через Telegram</button>
-    <button class="btn btn-ghost" id="btn-password-login">🔑 У меня уже есть аккаунт</button>
+    <button class="btn btn-blue" id="btn-phone-login">📱 Войти по номеру телефона</button>
 </div>
 
-<!-- ЭКРАН РЕГИСТРАЦИИ (имя + пароль) -->
+<!-- ЭКРАН РЕГИСТРАЦИИ -->
 <div class="screen" id="screen-register">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Регистрация</h2>
-        <p>Твой Telegram подтверждён. Придумай имя и пароль для входа.</p>
+        <p>Ты здесь впервые. Придумай имя и пароль.</p>
         <div class="input-group"><label>Имя (ник)</label><input type="text" id="reg-name" placeholder="Как к тебе обращаться?"></div>
         <div class="input-group"><label>Пароль</label><input type="password" id="reg-pass" placeholder="Придумай пароль"></div>
         <div class="error" id="reg-error"></div>
@@ -162,7 +149,7 @@
     <button class="btn btn-accent" id="btn-reg-submit">Зарегистрироваться</button>
 </div>
 
-<!-- ЭКРАН АНКЕТЫ (после регистрации) -->
+<!-- ЭКРАН АНКЕТЫ -->
 <div class="screen" id="screen-profile">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -180,18 +167,18 @@
                 <option>Индивидуальный курс</option>
             </select>
         </div>
-        <div class="input-group"><label>Цель</label><input type="text" id="prof-goal" placeholder="Например: сдать ЕГЭ на 90+ или написать бота"></div>
+        <div class="input-group"><label>Цель</label><input type="text" id="prof-goal" placeholder="Например: сдать ЕГЭ на 90+"></div>
     </div>
     <button class="btn btn-accent" id="btn-prof-save">Сохранить и продолжить</button>
     <button class="btn btn-ghost" id="btn-prof-skip">Пропустить</button>
 </div>
 
-<!-- ЭКРАН ВХОДА ПО ПАРОЛЮ (для существующих) -->
+<!-- ЭКРАН ВХОДА -->
 <div class="screen" id="screen-login">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Вход</h2>
-        <p>Твой Telegram подтверждён. Введи пароль.</p>
+        <p>Твой номер подтверждён. Введи пароль.</p>
         <div class="input-group"><label>Пароль</label><input type="password" id="login-pass" placeholder="Твой пароль"></div>
         <div class="error" id="login-error"></div>
     </div>
@@ -237,46 +224,50 @@
     (function() {
         const API = 'https://mischenko-edu-api.onrender.com/api';
         let user = null;
-        let telegram_id = null;
-
-        try {
-            const initData = window.Telegram.WebApp.initDataUnsafe;
-            if (initData && initData.user) {
-                telegram_id = initData.user.id;
-            }
-        } catch(e) {}
-
-        if (!telegram_id) {
-            document.body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#e8ecf2;font-family:sans-serif;"><h2 style="margin-bottom:12px;">📱 Откройте через Telegram</h2><p style="color:#7a8ba6;">Нажмите кнопку <b>🚀 Открыть приложение</b> в боте<br><b>@mischenko_edu_bot</b></p></div>';
-            return;
-        }
+        let phone = null;
 
         function show(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        // Проверяем, есть ли уже аккаунт
-        async function checkAccount() {
+        // Кнопка "Войти по номеру телефона"
+        document.getElementById('btn-phone-login').addEventListener('click', async () => {
             try {
-                const res = await fetch(API + '/check/' + telegram_id);
-                if (res.ok) {
-                    const data = await res.json();
-                    user = data.user;
-                    loadDashboard();
-                    show('screen-dashboard');
-                } else {
-                    show('screen-welcome');
+                // Запрашиваем номер телефона через Telegram API
+                const result = await window.Telegram.WebApp.requestContact();
+                if (result && result.contact && result.contact.phone_number) {
+                    phone = result.contact.phone_number;
                 }
             } catch(e) {
-                show('screen-welcome');
+                // Если не в Telegram — запрашиваем вручную
+                phone = prompt('Введите номер телефона (в формате +79001234567):');
+                if (!phone) return;
             }
-        }
 
-        // Кнопки
-        document.getElementById('btn-telegram-login').addEventListener('click', () => show('screen-register'));
-        document.getElementById('btn-password-login').addEventListener('click', () => show('screen-login'));
-        document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
+            if (!phone) return;
+
+            // Проверяем, есть ли такой номер в базе
+            try {
+                const res = await fetch(API + '/check-phone', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone })
+                });
+                const data = await res.json();
+
+                if (data.exists) {
+                    // Пользователь есть — вход
+                    user = data.user;
+                    show('screen-login');
+                } else {
+                    // Новый пользователь — регистрация
+                    show('screen-register');
+                }
+            } catch(e) {
+                alert('Ошибка соединения. Попробуйте позже.');
+            }
+        });
 
         // Регистрация
         document.getElementById('btn-reg-submit').addEventListener('click', async () => {
@@ -289,7 +280,7 @@
                 const res = await fetch(API + '/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ telegram_id, name, course: 'Индивидуальный курс', password: pass })
+                    body: JSON.stringify({ phone, name, course: 'Индивидуальный курс', password: pass })
                 });
                 if (!res.ok) {
                     const errData = await res.json().catch(() => ({}));
@@ -297,7 +288,7 @@
                 }
                 const data = await res.json();
                 user = data.user;
-                localStorage.setItem('user_id', user.id);
+                localStorage.setItem('user_phone', phone);
                 show('screen-profile');
             } catch(e) {
                 errEl.textContent = e.message;
@@ -307,14 +298,12 @@
 
         // Анкета
         document.getElementById('btn-prof-save').addEventListener('click', async () => {
-            const age = document.getElementById('prof-age').value;
             const course = document.getElementById('prof-course').value;
-            const goal = document.getElementById('prof-goal').value;
             try {
                 await fetch(API + '/profile/' + user.id, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ age, course, goal })
+                    body: JSON.stringify({ course })
                 });
                 if (course) user.course = course;
             } catch(e) {}
@@ -337,7 +326,7 @@
                 const res = await fetch(API + '/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ telegram_id, password: pass })
+                    body: JSON.stringify({ phone, password: pass })
                 });
                 if (!res.ok) {
                     const errData = await res.json().catch(() => ({}));
@@ -345,7 +334,7 @@
                 }
                 const data = await res.json();
                 user = data.user;
-                localStorage.setItem('user_id', user.id);
+                localStorage.setItem('user_phone', phone);
                 loadDashboard();
                 show('screen-dashboard');
             } catch(e) {
@@ -353,6 +342,8 @@
                 errEl.classList.add('show');
             }
         });
+
+        document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
 
         function loadDashboard() {
             const hour = new Date().getHours();
@@ -388,7 +379,7 @@
         document.getElementById('menu-cheatsheet').addEventListener('click', () => loadSection('📘 Шпаргалки', 'cheatsheet'));
         document.getElementById('menu-reports').addEventListener('click', () => loadSection('📊 Отчёты', 'reports'));
         document.getElementById('menu-calendar').addEventListener('click', () => loadSection('📅 Календарь', 'calendar'));
-        document.getElementById('menu-logout').addEventListener('click', () => { user = null; localStorage.removeItem('user_id'); show('screen-welcome'); });
+        document.getElementById('menu-logout').addEventListener('click', () => { user = null; show('screen-welcome'); });
         document.getElementById('btn-section-back').addEventListener('click', () => show('screen-dashboard'));
 
         function loadSection(title, type) {
@@ -436,10 +427,8 @@
             }
             show('screen-section');
         }
-
-        // При загрузке проверяем аккаунт
-        checkAccount();
     })();
 </script>
+
 </body>
 </html>

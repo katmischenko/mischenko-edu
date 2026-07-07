@@ -21,15 +21,19 @@ app.add_middleware(
 # ─── МОДЕЛИ ───
 
 
-class LoginRequest(BaseModel):
-    telegram_id: int
-    password: str
+class PhoneRequest(BaseModel):
+    phone: str
 
 
 class RegisterRequest(BaseModel):
-    telegram_id: int
+    phone: str
     name: str
     course: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    phone: str
     password: str
 
 
@@ -65,39 +69,32 @@ class ReportCreate(BaseModel):
     plan: str = ""
 
 
-# ─── ПРОВЕРКА АККАУНТА ───
+# ─── ПРОВЕРКА НОМЕРА ───
 
 
-@app.get("/api/check/{telegram_id}")
-def check_account(telegram_id: int):
-    result = (
-        db.supabase.table("users").select("*").eq("telegram_id", telegram_id).execute()
-    )
+@app.post("/api/check-phone")
+def check_phone(data: PhoneRequest):
+    result = db.supabase.table("users").select("*").eq("phone", data.phone).execute()
     if not result.data:
-        raise HTTPException(status_code=404, detail="Пользователь не найден")
+        return {"exists": False}
     user_data = result.data[0]
     return {
-        "success": True,
+        "exists": True,
         "user": {
             "id": user_data["id"],
             "name": user_data["name"],
             "course": user_data["course"],
-            "telegram_id": user_data["telegram_id"],
+            "phone": user_data["phone"],
         },
     }
 
 
-# ─── АВТОРИЗАЦИЯ ───
+# ─── ВХОД ───
 
 
 @app.post("/api/login")
 def login(data: LoginRequest):
-    result = (
-        db.supabase.table("users")
-        .select("*")
-        .eq("telegram_id", data.telegram_id)
-        .execute()
-    )
+    result = db.supabase.table("users").select("*").eq("phone", data.phone).execute()
     if not result.data:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
@@ -111,29 +108,25 @@ def login(data: LoginRequest):
             "id": user_data["id"],
             "name": user_data["name"],
             "course": user_data["course"],
-            "telegram_id": user_data["telegram_id"],
+            "phone": user_data["phone"],
         },
     }
 
 
+# ─── РЕГИСТРАЦИЯ ───
+
+
 @app.post("/api/register")
 def register(data: RegisterRequest):
-    existing = (
-        db.supabase.table("users")
-        .select("*")
-        .eq("telegram_id", data.telegram_id)
-        .execute()
-    )
+    existing = db.supabase.table("users").select("*").eq("phone", data.phone).execute()
     if existing.data:
-        raise HTTPException(
-            status_code=409, detail="Пользователь с таким Telegram уже существует"
-        )
+        raise HTTPException(status_code=409, detail="Этот номер уже зарегистрирован")
 
     result = (
         db.supabase.table("users")
         .insert(
             {
-                "telegram_id": data.telegram_id,
+                "phone": data.phone,
                 "name": data.name,
                 "course": data.course,
                 "password_hash": data.password,
@@ -149,7 +142,7 @@ def register(data: RegisterRequest):
             "id": user_data["id"],
             "name": user_data["name"],
             "course": user_data["course"],
-            "telegram_id": user_data["telegram_id"],
+            "phone": user_data["phone"],
         },
     }
 
