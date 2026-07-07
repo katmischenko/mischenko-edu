@@ -15,6 +15,7 @@
             --accent: #4ade80;
             --red: #ef4444;
             --yellow: #facc15;
+            --blue: #60a5fa;
             --text: #e8ecf2;
             --text-dim: #7a8ba6;
             --radius: 14px;
@@ -39,11 +40,12 @@
         .logo span { color: var(--accent); }
         .card {
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 22px 18px;
-            backdrop-filter: blur(12px); text-align: left; margin-bottom: 14px;
+            border-radius: var(--radius); padding: 18px 16px;
+            backdrop-filter: blur(12px); text-align: left; margin-bottom: 12px;
         }
-        .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
-        .card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
+        .card h2 { font-size: 16px; margin-bottom: 10px; font-weight: 700; text-align: center; }
+        .card h3 { font-size: 14px; margin-bottom: 8px; font-weight: 600; }
+        .card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 8px; }
         .input-group { margin-bottom: 12px; text-align: left; }
         .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
         .input-group input, .input-group select {
@@ -52,7 +54,6 @@
             border-radius: var(--radius-sm); color: var(--text); font-size: 15px;
             font-family: inherit; outline: none;
         }
-        .input-group select { appearance: none; }
         .input-group input:focus, .input-group select:focus { border-color: var(--accent); }
         .btn {
             display: block; width: 100%; padding: 14px; margin-top: 8px;
@@ -62,38 +63,51 @@
         }
         .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
         .btn-accent:active { background: rgba(74,222,128,0.25); }
-        .btn-blue { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.2); color: #60a5fa; }
+        .btn-blue { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.2); color: var(--blue); }
         .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
         .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
+        .btn-small {
+            display: inline-block; padding: 8px 14px; margin-top: 4px;
+            border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;
+            border: none; font-family: inherit;
+            background: rgba(74,222,128,0.12); color: var(--accent);
+        }
         .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
         .error.show { display: block; }
 
-        .greeting { margin-bottom: 16px; }
-        .greeting .name { font-size: 24px; font-weight: 800; display: block; }
-        .greeting .sub { font-size: 13px; color: var(--text-dim); }
-        .progress-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 10px 0 16px; overflow: hidden; }
+        /* Дашборд */
+        .greeting { margin-bottom: 12px; }
+        .greeting .name { font-size: 22px; font-weight: 800; display: block; }
+        .greeting .sub { font-size: 12px; color: var(--text-dim); }
+        .quote-box {
+            background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.1);
+            border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px;
+            font-size: 13px; color: var(--accent); font-style: italic; text-align: center;
+        }
+        .progress-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 8px 0 14px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; box-shadow: 0 0 10px rgba(74,222,128,0.3); }
-        .widget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .widget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
         .widget {
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 14px; text-align: center;
+            border-radius: var(--radius-sm); padding: 12px; text-align: center;
         }
-        .widget .w-icon { font-size: 22px; margin-bottom: 4px; }
-        .widget .w-value { font-size: 20px; font-weight: 800; }
+        .widget .w-icon { font-size: 20px; margin-bottom: 2px; }
+        .widget .w-value { font-size: 18px; font-weight: 800; }
         .widget .w-label { font-size: 10px; color: var(--text-dim); }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .menu-item {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-sm); padding: 14px 8px; text-align: center;
             cursor: pointer; font-size: 12px; font-weight: 600;
         }
         .menu-item:active { background: rgba(255,255,255,0.05); }
-        .menu-item .m-icon { font-size: 24px; margin-bottom: 4px; display: block; }
+        .menu-item .m-icon { font-size: 22px; margin-bottom: 4px; display: block; }
 
+        /* Секции */
         .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 8px; }
         .back-btn { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; padding: 4px; }
         .section-title { font-weight: 700; font-size: 17px; }
-        .tracker-row {
+        .tracker-row, .hw-row, .report-row {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px;
             display: flex; align-items: center; gap: 10px; font-size: 13px;
@@ -101,15 +115,10 @@
         .tracker-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
         .tracker-fill { height: 100%; border-radius: 3px; }
         .tracker-pct { font-weight: 600; font-size: 12px; width: 32px; text-align: right; }
-        .hw-row {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px;
-            display: flex; align-items: center; gap: 10px; font-size: 13px;
-        }
         .hw-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .hw-info { flex: 1; }
-        .hw-title { font-weight: 600; }
-        .hw-date { font-size: 11px; color: var(--text-dim); }
+        .hw-info, .report-info { flex: 1; }
+        .hw-title, .report-month { font-weight: 600; }
+        .hw-date, .report-detail { font-size: 11px; color: var(--text-dim); }
         .hw-tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
         .cheat-item {
             background: var(--surface); border: 1px solid var(--border);
@@ -121,6 +130,25 @@
             margin-top: 8px; font-size: 11px; color: var(--accent); white-space: pre-wrap;
             font-family: 'Courier New', monospace;
         }
+        .star-row { display: flex; gap: 10px; flex-wrap: wrap; }
+        .star-icon { font-size: 28px; }
+        .star-icon.locked { filter: grayscale(1); opacity: 0.25; }
+        .achievement-card {
+            display: flex; align-items: center; gap: 10px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 12px; margin-bottom: 6px;
+        }
+        .achievement-card.locked { opacity: 0.4; }
+        .ach-icon { font-size: 28px; }
+        .ach-info { flex: 1; }
+        .ach-title { font-size: 13px; font-weight: 600; }
+        .ach-desc { font-size: 11px; color: var(--text-dim); }
+        .goal-card {
+            background: rgba(74,222,128,0.05); border: 1px solid rgba(74,222,128,0.1);
+            border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px;
+        }
+        .goal-card .goal-title { font-size: 12px; color: var(--text-dim); }
+        .goal-card .goal-text { font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -193,6 +221,11 @@
         <span class="name" id="dash-greeting"></span>
         <span class="sub" id="dash-hint"></span>
     </div>
+    <div class="goal-card" id="goal-card" style="display:none;">
+        <div class="goal-title">🎯 Твоя цель</div>
+        <div class="goal-text" id="goal-text"></div>
+    </div>
+    <div class="quote-box" id="quote-box"></div>
     <div class="progress-bar"><div class="progress-fill" id="dash-progress" style="width:0%"></div></div>
     <div class="widget-grid">
         <div class="widget"><div class="w-icon">📈</div><div class="w-value" id="dash-topics">-</div><div class="w-label">Тем пройдено</div></div>
@@ -204,10 +237,12 @@
         <div class="menu-item" id="menu-tracker"><span class="m-icon">📈</span>Трекер</div>
         <div class="menu-item" id="menu-homework"><span class="m-icon">📝</span>Домашки</div>
         <div class="menu-item" id="menu-cheatsheet"><span class="m-icon">📘</span>Шпаргалки</div>
+        <div class="menu-item" id="menu-achievements"><span class="m-icon">🏆</span>Ачивки</div>
         <div class="menu-item" id="menu-reports"><span class="m-icon">📊</span>Отчёты</div>
         <div class="menu-item" id="menu-calendar"><span class="m-icon">📅</span>Календарь</div>
-        <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
     </div>
+    <button class="btn btn-blue" id="btn-chat">💬 Написать учителю</button>
+    <button class="btn btn-ghost" id="menu-logout" style="margin-top:4px;">🚪 Выйти</button>
 </div>
 
 <!-- РАЗДЕЛЫ -->
@@ -225,6 +260,16 @@
         const API = 'https://mischenko-edu-api.onrender.com/api';
         let user = null;
         let phone = null;
+        let userGoal = '';
+
+        const quotes = [
+            '«Не бойся ошибаться — бойся не пробовать.»',
+            '«Код работает не магией, а твоим трудом.»',
+            '«Каждая ошибка — шаг к пониманию.»',
+            '«Программирование — это искусство решения проблем.»',
+            '«Ты уже на шаг ближе к цели, чем вчера.»',
+            '«Сложные задачи — просто ещё не решённые.»'
+        ];
 
         function show(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -234,39 +279,24 @@
         // Кнопка "Войти по номеру телефона"
         document.getElementById('btn-phone-login').addEventListener('click', async () => {
             try {
-                // Запрашиваем номер телефона через Telegram API
                 const result = await window.Telegram.WebApp.requestContact();
                 if (result && result.contact && result.contact.phone_number) {
                     phone = result.contact.phone_number;
                 }
             } catch(e) {
-                // Если не в Telegram — запрашиваем вручную
                 phone = prompt('Введите номер телефона (в формате +79001234567):');
                 if (!phone) return;
             }
-
             if (!phone) return;
-
-            // Проверяем, есть ли такой номер в базе
             try {
                 const res = await fetch(API + '/check-phone', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone })
                 });
                 const data = await res.json();
-
-                if (data.exists) {
-                    // Пользователь есть — вход
-                    user = data.user;
-                    show('screen-login');
-                } else {
-                    // Новый пользователь — регистрация
-                    show('screen-register');
-                }
-            } catch(e) {
-                alert('Ошибка соединения. Попробуйте позже.');
-            }
+                if (data.exists) { user = data.user; show('screen-login'); }
+                else { show('screen-register'); }
+            } catch(e) { alert('Ошибка соединения.'); }
         });
 
         // Регистрация
@@ -278,43 +308,32 @@
             if (!name || !pass) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone, name, course: 'Индивидуальный курс', password: pass })
                 });
-                if (!res.ok) {
-                    const errData = await res.json().catch(() => ({}));
-                    throw new Error(errData.detail || 'Ошибка регистрации');
-                }
+                if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка');
                 const data = await res.json();
                 user = data.user;
                 localStorage.setItem('user_phone', phone);
                 show('screen-profile');
-            } catch(e) {
-                errEl.textContent = e.message;
-                errEl.classList.add('show');
-            }
+            } catch(e) { errEl.textContent = e.message; errEl.classList.add('show'); }
         });
 
         // Анкета
         document.getElementById('btn-prof-save').addEventListener('click', async () => {
             const course = document.getElementById('prof-course').value;
+            userGoal = document.getElementById('prof-goal').value;
             try {
                 await fetch(API + '/profile/' + user.id, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ course })
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ course, goal: userGoal })
                 });
                 if (course) user.course = course;
             } catch(e) {}
             loadDashboard();
             show('screen-dashboard');
         });
-
-        document.getElementById('btn-prof-skip').addEventListener('click', () => {
-            loadDashboard();
-            show('screen-dashboard');
-        });
+        document.getElementById('btn-prof-skip').addEventListener('click', () => { loadDashboard(); show('screen-dashboard'); });
 
         // Вход
         document.getElementById('btn-login-submit').addEventListener('click', async () => {
@@ -324,25 +343,16 @@
             if (!pass) { errEl.textContent = 'Введите пароль'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone, password: pass })
                 });
-                if (!res.ok) {
-                    const errData = await res.json().catch(() => ({}));
-                    throw new Error(errData.detail || 'Неверный пароль');
-                }
-                const data = await res.json();
-                user = data.user;
+                if (!res.ok) throw new Error((await res.json()).detail || 'Неверный пароль');
+                user = (await res.json()).user;
                 localStorage.setItem('user_phone', phone);
                 loadDashboard();
                 show('screen-dashboard');
-            } catch(e) {
-                errEl.textContent = e.message;
-                errEl.classList.add('show');
-            }
+            } catch(e) { errEl.textContent = e.message; errEl.classList.add('show'); }
         });
-
         document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
 
         function loadDashboard() {
@@ -355,6 +365,15 @@
             document.getElementById('dash-greeting').textContent = `${time}, ${user.name}!`;
             document.getElementById('dash-hint').textContent = `Курс: ${user.course || 'Не выбран'}`;
 
+            // Цитата
+            document.getElementById('quote-box').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+            // Цель
+            if (userGoal) {
+                document.getElementById('goal-card').style.display = 'block';
+                document.getElementById('goal-text').textContent = userGoal;
+            }
+
             fetch(API + '/tracker/' + user.id).then(r => r.json()).then(d => {
                 const topics = d.data || [];
                 const done = topics.filter(t => t.status === 'Пройдено').length;
@@ -362,6 +381,7 @@
                 const avg = total > 0 ? Math.round(topics.reduce((s,t) => s + t.understanding, 0) / total) : 0;
                 document.getElementById('dash-topics').textContent = `${done}/${total}`;
                 document.getElementById('dash-progress').style.width = avg + '%';
+                document.getElementById('dash-achievements').textContent = done >= 1 ? '1' : '0';
             }).catch(() => {});
 
             fetch(API + '/homework/' + user.id).then(r => r.json()).then(d => {
@@ -369,17 +389,20 @@
                 const done = hw.filter(h => h.status === 'Принято').length;
                 document.getElementById('dash-homework').textContent = `${done}/${hw.length}`;
             }).catch(() => {});
-
-            document.getElementById('dash-achievements').textContent = '0';
             document.getElementById('dash-lessons').textContent = '0';
         }
 
+        // Меню
         document.getElementById('menu-tracker').addEventListener('click', () => loadSection('📈 Трекер', 'tracker'));
         document.getElementById('menu-homework').addEventListener('click', () => loadSection('📝 Домашки', 'homework'));
         document.getElementById('menu-cheatsheet').addEventListener('click', () => loadSection('📘 Шпаргалки', 'cheatsheet'));
+        document.getElementById('menu-achievements').addEventListener('click', () => loadSection('🏆 Ачивки', 'achievements'));
         document.getElementById('menu-reports').addEventListener('click', () => loadSection('📊 Отчёты', 'reports'));
         document.getElementById('menu-calendar').addEventListener('click', () => loadSection('📅 Календарь', 'calendar'));
         document.getElementById('menu-logout').addEventListener('click', () => { user = null; show('screen-welcome'); });
+        document.getElementById('btn-chat').addEventListener('click', () => {
+            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
+        });
         document.getElementById('btn-section-back').addEventListener('click', () => show('screen-dashboard'));
 
         function loadSection(title, type) {
@@ -422,9 +445,30 @@
                         <details class="cheat-item"><summary>${c.title}</summary><pre>${c.content}</pre></details>
                     `).join('') || '<p style="color:var(--text-dim);">Нет шпаргалок</p>';
                 }).catch(() => { content.innerHTML = '<p style="color:var(--text-dim);">Ошибка загрузки</p>'; });
-            } else {
-                content.innerHTML = '<p style="color:var(--text-dim);text-align:center;">Скоро появится</p>';
+            } else if (type === 'achievements') {
+                content.innerHTML = `
+                    <div class="card"><h3>⭐ Заработанные</h3>
+                        <div class="achievement-card"><span class="ach-icon">⭐</span><div class="ach-info"><div class="ach-title">Первая программа</div><div class="ach-desc">Написал свой первый код</div></div></div>
+                        <div class="achievement-card"><span class="ach-icon">🌟</span><div class="ach-info"><div class="ach-title">5 домашек</div><div class="ach-desc">Сдал 5 заданий подряд</div></div></div>
+                    </div>
+                    <div class="card"><h3>🔒 Ещё не открыты</h3>
+                        <div class="achievement-card locked"><span class="ach-icon">💫</span><div class="ach-info"><div class="ach-title">Мастер циклов</div><div class="ach-desc">Решить 20 задач на циклы</div></div></div>
+                        <div class="achievement-card locked"><span class="ach-icon">✨</span><div class="ach-info"><div class="ach-title">Пробник 80+</div><div class="ach-desc">Набрать 80+ на пробнике</div></div></div>
+                    </div>`;
+            } else if (type === 'reports') {
+                fetch(API + '/reports/' + user.id).then(r => r.json()).then(d => {
+                    const items = d.data || [];
+                    content.innerHTML = items.map(r => `
+                        <div class="report-row">
+                            <div class="report-info"><div class="report-month">📅 ${r.month}</div>
+                            <div class="report-detail">Занятий: ${r.lessons_done} | Домашек: ${r.homework_done} | Балл: ${r.score || '-'}</div></div>
+                        </div>
+                    `).join('') || '<p style="color:var(--text-dim);">Нет отчётов</p>';
+                }).catch(() => { content.innerHTML = '<p style="color:var(--text-dim);">Ошибка загрузки</p>'; });
+            } else if (type === 'calendar') {
+                content.innerHTML = '<p style="color:var(--text-dim);text-align:center;">📅 Расписание появится здесь.<br><br>Пока запишись через чат с учителем.</p>';
             }
+
             show('screen-section');
         }
     })();
