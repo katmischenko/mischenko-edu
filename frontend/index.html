@@ -5,7 +5,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>mischenko.edu</title>
     <style>
         :root {
@@ -21,13 +21,14 @@
             --radius: 14px; --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
         body {
             font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
             background: var(--bg); color: var(--text);
-            min-height: 100vh; display: flex; justify-content: center;
-            align-items: center; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px;
         }
-        .screen { display: none; max-width: 400px; width: 100%; text-align: center; }
+        .screen { display: none; width: 100%; max-width: 400px; text-align: center; }
         .screen.active { display: block; }
         .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
         .logo span { color: var(--accent); }
@@ -70,7 +71,6 @@
         .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
         .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
         .faq-item.open .faq-a { display: block; }
-
         .greeting { margin-bottom: 12px; }
         .greeting .name { font-size: 22px; font-weight: 800; display: block; }
         .greeting .sub { font-size: 12px; color: var(--text-dim); }
@@ -122,10 +122,27 @@
 <div class="screen" id="parent-4"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Я на связи</h2><p>Пишите в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p></div><button class="btn btn-accent" id="btn-parent-to-menu">← В главное меню</button></div>
 
 <!-- РЕГИСТРАЦИЯ -->
-<div class="screen" id="student-reg"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Регистрация</h2><button class="btn btn-blue" id="btn-student-reg-phone">📱 Войти по номеру телефона</button><div id="student-reg-form" style="display:none;"><div class="input-group"><label>Имя (ник)</label><input type="text" id="sreg-name" placeholder="Как к тебе обращаться?"></div><div class="input-group"><label>Пароль</label><input type="password" id="sreg-pass" placeholder="Придумай пароль"></div><div class="error" id="sreg-error"></div><button class="btn btn-accent" id="btn-sreg-submit">Зарегистрироваться</button></div></div><button class="btn btn-ghost" id="btn-student-reg-back">← В главное меню</button></div>
+<div class="screen" id="student-reg"><div class="logo">mischenko<span>.edu</span></div>
+    <div class="card"><h2>Регистрация</h2>
+        <div class="input-group"><label>Номер телефона</label><input type="tel" id="sreg-phone" placeholder="Введите номер телефона"></div>
+        <div class="input-group"><label>Имя (ник)</label><input type="text" id="sreg-name" placeholder="Как к тебе обращаться?"></div>
+        <div class="input-group"><label>Пароль</label><input type="password" id="sreg-pass" placeholder="Придумай пароль"></div>
+        <div class="error" id="sreg-error"></div>
+        <button class="btn btn-accent" id="btn-sreg-submit">Зарегистрироваться</button>
+    </div>
+    <button class="btn btn-ghost" id="btn-student-reg-back">← В главное меню</button>
+</div>
 
 <!-- ВХОД -->
-<div class="screen" id="student-login"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Вход</h2><button class="btn btn-blue" id="btn-student-login-phone">📱 Войти по номеру телефона</button><div id="student-login-form" style="display:none;"><div class="input-group"><label>Пароль</label><input type="password" id="slogin-pass" placeholder="Твой пароль"></div><div class="error" id="slogin-error"></div><button class="btn btn-accent" id="btn-slogin-submit">Войти</button></div></div><button class="btn btn-ghost" id="btn-student-login-back">← В главное меню</button></div>
+<div class="screen" id="student-login"><div class="logo">mischenko<span>.edu</span></div>
+    <div class="card"><h2>Вход</h2>
+        <div class="input-group"><label>Номер телефона</label><input type="tel" id="slogin-phone" placeholder="Введите номер телефона"></div>
+        <div class="input-group"><label>Пароль</label><input type="password" id="slogin-pass" placeholder="Твой пароль"></div>
+        <div class="error" id="slogin-error"></div>
+        <button class="btn btn-accent" id="btn-slogin-submit">Войти</button>
+    </div>
+    <button class="btn btn-ghost" id="btn-student-login-back">← В главное меню</button>
+</div>
 
 <!-- РОДИТЕЛЬ: КУРСЫ -->
 <div class="screen" id="parent-course"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Подобрать курс</h2><button class="btn btn-accent" style="margin-bottom:6px;">🎓 ЕГЭ информатика</button><button class="btn btn-accent" style="margin-bottom:6px;">📋 ОГЭ информатика</button><button class="btn btn-accent" style="margin-bottom:6px;">🐍 Python с нуля</button><button class="btn btn-accent" style="margin-bottom:6px;">🌐 Веб-разработка</button><button class="btn btn-accent" style="margin-bottom:6px;">🐱 Scratch</button><button class="btn btn-accent" style="margin-bottom:6px;">💻 Цифровая грамотность</button><button class="btn btn-accent" style="margin-bottom:6px;">⭐ Индивидуальный курс</button></div><button class="btn btn-ghost" id="btn-parent-course-back">← В главное меню</button></div>
@@ -160,7 +177,7 @@
 <script>
 (function() {
     const API = 'https://mischenko-edu-api.onrender.com/api';
-    let user = null, phone = null, prevScreen = 'screen-0';
+    let user = null, prevScreen = 'screen-0';
     const quotes = ['«Не бойся ошибаться — бойся не пробовать.»','«Код работает не магией, а твоим трудом.»','«Каждая ошибка — шаг к пониманию.»','«Ты уже на шаг ближе к цели, чем вчера.»'];
 
     function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -191,22 +208,14 @@
     document.getElementById('btn-parent-to-menu').addEventListener('click', () => show('parent-menu'));
     document.getElementById('btn-parent-course-back').addEventListener('click', () => show('parent-menu'));
 
-    // Телефон
-    async function requestPhone() {
-        try { const r = await window.Telegram.WebApp.requestContact(); if (r?.contact?.phone_number) return r.contact.phone_number; } catch(e) {}
-        return prompt('Введите номер телефона:');
-    }
-
     // Регистрация
-    document.getElementById('btn-student-reg-phone').addEventListener('click', async () => {
-        phone = await requestPhone(); if (!phone) return;
-        document.getElementById('btn-student-reg-phone').style.display = 'none';
-        document.getElementById('student-reg-form').style.display = 'block';
-    });
     document.getElementById('btn-sreg-submit').addEventListener('click', async () => {
-        const name = document.getElementById('sreg-name').value.trim(), pass = document.getElementById('sreg-pass').value, err = document.getElementById('sreg-error');
+        const phone = document.getElementById('sreg-phone').value.trim();
+        const name = document.getElementById('sreg-name').value.trim();
+        const pass = document.getElementById('sreg-pass').value;
+        const err = document.getElementById('sreg-error');
         err.classList.remove('show');
-        if (!name || !pass) { err.textContent = 'Заполните все поля'; err.classList.add('show'); return; }
+        if (!phone || !name || !pass) { err.textContent = 'Заполните все поля'; err.classList.add('show'); return; }
         try {
             const res = await fetch(API+'/register', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({phone,name,course:'Индивидуальный курс',password:pass}) });
             if (!res.ok) throw new Error((await res.json()).detail||'Ошибка');
@@ -217,15 +226,12 @@
     });
 
     // Вход
-    document.getElementById('btn-student-login-phone').addEventListener('click', async () => {
-        phone = await requestPhone(); if (!phone) return;
-        document.getElementById('btn-student-login-phone').style.display = 'none';
-        document.getElementById('student-login-form').style.display = 'block';
-    });
     document.getElementById('btn-slogin-submit').addEventListener('click', async () => {
-        const pass = document.getElementById('slogin-pass').value, err = document.getElementById('slogin-error');
+        const phone = document.getElementById('slogin-phone').value.trim();
+        const pass = document.getElementById('slogin-pass').value;
+        const err = document.getElementById('slogin-error');
         err.classList.remove('show');
-        if (!pass) { err.textContent = 'Введите пароль'; err.classList.add('show'); return; }
+        if (!phone || !pass) { err.textContent = 'Заполните все поля'; err.classList.add('show'); return; }
         try {
             const res = await fetch(API+'/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({phone,password:pass}) });
             if (!res.ok) throw new Error((await res.json()).detail||'Неверный пароль');
