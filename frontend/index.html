@@ -142,71 +142,131 @@
     <span class="help-link" id="help-link">💬 Помощь</span>
 </div>
 
-<!-- ЭКРАН 1: ЗНАКОМСТВО -->
-<div class="screen" id="screen-1">
+<!-- ЭКРАНЫ ЗНАКОМСТВА: РОДИТЕЛЬ -->
+<div class="screen" id="parent-1">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <div class="emoji-big">👋</div>
-        <h2 id="s1-title"></h2>
-        <p id="s1-text"></p>
+        <h2>Здравствуйте! Я Екатерина</h2>
+        <p>Я преподаватель информатики с 8-летним опытом. Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel.</p>
+        <p>Более 650 учеников. Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
+        <p>Строю программу индивидуально под каждого ребёнка — без «общего потока».</p>
     </div>
-    <button class="btn btn-accent" id="btn-to-2">Далее →</button>
-    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <button class="btn btn-accent" data-next="parent-2">Далее →</button>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
 
-<!-- ЭКРАН 2: ПЛАТФОРМА -->
-<div class="screen" id="screen-2">
+<div class="screen" id="parent-2">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Что такое mischenko.edu?</h2>
-        <p>Это моя образовательная платформа. Здесь всё, что нужно для учёбы, в одном месте — прямо в Telegram.</p>
+        <p>Это моя образовательная платформа. Здесь всё, что нужно для учёбы, собрано в одном месте — в Telegram.</p>
         <ul>
-            <li>Тест на направление</li>
-            <li>Выбор курса</li>
-            <li>Личный кабинет: трекер, домашки, шпаргалки, отчёты</li>
-            <li>Расписание и запись на занятия</li>
-            <li>Бонусы за старт</li>
+            <li>Тест для подбора курса под запрос ребёнка</li>
+            <li>Выбор из 6 направлений: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
+            <li>Личный кабинет с отчётами о прогрессе</li>
+            <li>Понятные цены и пакеты занятий</li>
         </ul>
-        <p>Всё просто, прозрачно и с душой ✨</p>
     </div>
-    <button class="btn btn-accent" id="btn-to-3">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+    <button class="btn btn-accent" data-next="parent-3">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
 </div>
 
-<!-- ЭКРАН 3: КАК ПРОХОДЯТ ЗАНЯТИЯ -->
-<div class="screen" id="screen-3">
+<div class="screen" id="parent-3">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Как проходят занятия?</h2>
-        <p>Онлайн — в Яндекс.Телемосте или прямо в Telegram. Ты и я, один на один.</p>
+        <p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один с преподавателем.</p>
         <ul>
-            <li>Живое общение, никаких скучных лекций</li>
-            <li>После урока — домашнее задание с проверкой</li>
-            <li>В личном кабинете видно: что прошли, что задано, какой прогресс</li>
-            <li>Шпаргалки и полезные материалы по курсу</li>
-            <li>Поддержка между занятиями — пиши, если что-то непонятно</li>
+            <li>Индивидуальный подход — программа под ребёнка</li>
+            <li>Домашние задания с проверкой и комментариями</li>
+            <li>Ежемесячные отчёты для родителей</li>
+            <li>Личный кабинет: прогресс, оценки, расписание</li>
+            <li>Поддержка между занятиями</li>
         </ul>
     </div>
-    <button class="btn btn-accent" id="btn-to-4">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
+    <button class="btn btn-accent" data-next="parent-4">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
 </div>
 
-<!-- ЭКРАН 4: СВЯЗЬ И ВЫБОР -->
-<div class="screen" id="screen-4">
+<div class="screen" id="parent-4">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
-        <h2>Я на связи 🤙</h2>
-        <p>Напиши мне в Telegram — <b style="color:var(--accent);">@katerin_mischenko</b></p>
+        <h2>Я на связи</h2>
+        <p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
         <p style="margin-top:10px;">Там можно:</p>
         <ul>
-            <li>Задать вопрос</li>
-            <li>Договориться о занятии</li>
+            <li>Задать вопрос по курсу</li>
+            <li>Договориться о пробном занятии</li>
             <li>Уточнить расписание</li>
         </ul>
     </div>
-    <button class="btn btn-accent" id="btn-courses">🧭 Подобрать курс</button>
-    <button class="btn btn-ghost" id="btn-cabinet">🚀 Личный кабинет</button>
-    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
+    <button class="btn btn-accent" id="btn-parent-test">🧭 Подобрать курс через тест</button>
+    <button class="btn btn-ghost" id="btn-parent-cabinet">🚀 Личный кабинет</button>
+</div>
+
+<!-- ЭКРАНЫ ЗНАКОМСТВА: УЧЕНИК -->
+<div class="screen" id="student-1">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <div class="emoji-big">🚀</div>
+        <h2>Привет! Я Екатерина</h2>
+        <p>8 лет учу ребят программировать — так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.</p>
+        <p>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.</p>
+        <p>Строю программу под тебя — никаких скучных шаблонов. Будет интересно и понятно, обещаю! 😊</p>
+    </div>
+    <button class="btn btn-accent" data-next="student-2">Далее →</button>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+</div>
+
+<div class="screen" id="student-2">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Что такое mischenko.edu?</h2>
+        <p>Это твой учебный центр в Telegram. Всё нужное — в одном месте.</p>
+        <ul>
+            <li>Пройди тест — и узнаешь, какое направление твоё</li>
+            <li>Или выбери курс сам: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
+            <li>Твой личный кабинет: трекер прогресса, домашки, шпаргалки</li>
+            <li>Бонусы за старт — полезные материалы сразу</li>
+        </ul>
+        <p>Всё просто и по-честному ✨</p>
+    </div>
+    <button class="btn btn-accent" data-next="student-3">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
+</div>
+
+<div class="screen" id="student-3">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Как проходят занятия?</h2>
+        <p>Онлайн — в Яндекс.Телемосте или прямо в Telegram. Ты и я, один на один 👩‍💻</p>
+        <ul>
+            <li>Живое общение, без скучных лекций</li>
+            <li>После урока — домашка, я проверю и напишу, что поправить</li>
+            <li>В личном кабинете видно: что прошли, что задано, твой прогресс</li>
+            <li>Шпаргалки и полезные материалы — всегда под рукой</li>
+            <li>Напиши мне, если что-то непонятно — я отвечу</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" data-next="student-4">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
+</div>
+
+<div class="screen" id="student-4">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Я на связи 🤙</h2>
+        <p>Напиши мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
+        <p style="margin-top:10px;">Там можно:</p>
+        <ul>
+            <li>Спросить что угодно</li>
+            <li>Записаться на занятие</li>
+            <li>Узнать расписание</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" id="btn-student-courses">🧭 Подобрать курс</button>
+    <button class="btn btn-ghost" id="btn-student-cabinet">🚀 Личный кабинет</button>
 </div>
 
 <script>
@@ -219,38 +279,47 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Экран 0: кнопки роли
-        document.getElementById('btn-parent').addEventListener('click', function() {
-            role = 'parent';
-            document.getElementById('s1-title').textContent = 'Здравствуйте! Я Екатерина 👋';
-            document.getElementById('s1-text').innerHTML = 'Я преподаватель информатики с 8-летним опытом. Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel.<br><br>Более 650 учеников. Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.<br><br>Строю программу индивидуально под каждого ребёнка — без «общего потока».';
-            show('screen-1');
-        });
-
-        document.getElementById('btn-student').addEventListener('click', function() {
-            role = 'student';
-            document.getElementById('s1-title').textContent = 'Привет! Я Екатерина 👋';
-            document.getElementById('s1-text').innerHTML = 'Я преподаватель информатики. 8 лет учу ребят программировать так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.<br><br>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.<br><br>Строю программу под каждого — без скучных шаблонов. Будет интересно и понятно, обещаю!';
-            show('screen-1');
-        });
-
-        // Помощь
+        // Помощь — открывает Telegram
         document.getElementById('help-link').addEventListener('click', function() {
             window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
         });
 
-        // Кнопки Далее
-        document.getElementById('btn-to-2').addEventListener('click', function() { show('screen-2'); });
-        document.getElementById('btn-to-3').addEventListener('click', function() { show('screen-3'); });
-        document.getElementById('btn-to-4').addEventListener('click', function() { show('screen-4'); });
+        // Родитель
+        document.getElementById('btn-parent').addEventListener('click', function() {
+            role = 'parent';
+            show('parent-1');
+        });
 
-        // Подобрать курс
-        document.getElementById('btn-courses').addEventListener('click', function() {
+        // Ученик
+        document.getElementById('btn-student').addEventListener('click', function() {
+            role = 'student';
+            show('student-1');
+        });
+
+        // Кнопки Далее (все)
+        document.querySelectorAll('[data-next]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                show(this.getAttribute('data-next'));
+            });
+        });
+
+        // Родитель: тест
+        document.getElementById('btn-parent-test').addEventListener('click', function() {
             window.location.href = BASE + '/courses.html';
         });
 
-        // Личный кабинет
-        document.getElementById('btn-cabinet').addEventListener('click', function() {
+        // Родитель: кабинет
+        document.getElementById('btn-parent-cabinet').addEventListener('click', function() {
+            window.location.href = BASE + '/student.html';
+        });
+
+        // Ученик: курсы
+        document.getElementById('btn-student-courses').addEventListener('click', function() {
+            window.location.href = BASE + '/courses.html';
+        });
+
+        // Ученик: кабинет
+        document.getElementById('btn-student-cabinet').addEventListener('click', function() {
             window.location.href = BASE + '/student.html';
         });
 
