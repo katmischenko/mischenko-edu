@@ -21,22 +21,24 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             padding: 20px;
         }
-        .container {
-            text-align: center;
+        .screen {
+            display: none;
             max-width: 400px;
             width: 100%;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .screen.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .logo {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
@@ -45,54 +47,87 @@
         .subtitle {
             font-size: 14px;
             color: var(--text-dim);
-            margin-bottom: 40px;
+            margin-bottom: 24px;
         }
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 30px 24px;
+            padding: 28px 22px;
             backdrop-filter: blur(12px);
+            text-align: left;
+            margin-bottom: 16px;
         }
         .card h2 {
-            font-size: 20px;
-            margin-bottom: 24px;
+            font-size: 18px;
+            margin-bottom: 14px;
             font-weight: 700;
+            text-align: center;
         }
+        .card p {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        .card ul {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.7;
+            padding-left: 18px;
+            margin-top: 8px;
+        }
+        .card ul li { margin-bottom: 6px; }
         .btn {
             display: block;
             width: 100%;
             padding: 16px;
-            margin-bottom: 12px;
+            margin-top: 8px;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             border: none;
             font-family: inherit;
             transition: all 0.2s;
+            text-align: center;
         }
-        .btn-parent {
-            background: rgba(96, 165, 250, 0.12);
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            color: #60a5fa;
-        }
-        .btn-parent:active { background: rgba(96, 165, 250, 0.2); }
-        .btn-student {
+        .btn-accent {
             background: rgba(74, 222, 128, 0.12);
             border: 1px solid rgba(74, 222, 128, 0.2);
             color: var(--accent);
         }
-        .btn-student:active { background: rgba(74, 222, 128, 0.2); }
+        .btn-accent:active { background: rgba(74, 222, 128, 0.2); }
+        .btn-blue {
+            background: rgba(96, 165, 250, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+        }
+        .btn-blue:active { background: rgba(96, 165, 250, 0.2); }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+        .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.2s;
+        }
+        .dot.active { background: var(--accent); }
         .help-link {
-            margin-top: 30px;
+            margin-top: 20px;
             font-size: 13px;
             color: var(--text-dim);
             cursor: pointer;
-            text-decoration: none;
         }
-        .help-link:hover { color: var(--text); }
-
         .modal-overlay {
             display: none;
             position: fixed;
@@ -119,11 +154,7 @@
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
-        .modal h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            text-align: center;
-        }
+        .modal h3 { font-size: 18px; margin-bottom: 16px; text-align: center; }
         .faq-item {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -132,127 +163,173 @@
             margin-bottom: 8px;
             cursor: pointer;
         }
-        .faq-q {
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .faq-a {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-top: 8px;
-            display: none;
-            line-height: 1.5;
-        }
+        .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
+        .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.5; }
         .faq-item.open .faq-a { display: block; }
         .modal-btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            margin-top: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-            text-align: center;
-            background: rgba(74, 222, 128, 0.12);
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            color: var(--accent);
+            display: block; width: 100%; padding: 14px; margin-top: 12px;
+            border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none;
+            font-family: inherit; text-align: center;
+            background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent);
         }
         .modal-close {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-dim);
-            font-size: 14px;
-            cursor: pointer;
-            font-family: inherit;
+            display: block; width: 100%; padding: 12px; margin-top: 8px;
+            background: transparent; border: 1px solid var(--border);
+            border-radius: 10px; color: var(--text-dim); font-size: 14px; cursor: pointer; font-family: inherit;
         }
+        .emoji-big { font-size: 40px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">mischenko<span>.edu</span></div>
-        <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
-        <div class="card">
-            <h2>Кто вы?</h2>
-            <button class="btn btn-parent" onclick="selectRole('parent')">👨‍👩‍👧 Я родитель</button>
-            <button class="btn btn-student" onclick="selectRole('student')">🧑 Я ученик</button>
-        </div>
+
+<!-- ЭКРАН 0: ВЫБОР РОЛИ -->
+<div class="screen active" id="screen-role">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
+    <div class="card">
+        <h2>Кто вы?</h2>
+        <button class="btn btn-blue" onclick="startIntro('parent')">👨‍👩‍👧 Я родитель</button>
+        <button class="btn btn-accent" onclick="startIntro('student')">🧑 Я ученик</button>
     </div>
-    <a class="help-link" onclick="openHelp()">💬 Помощь</a>
+    <span class="help-link" onclick="openHelp()">💬 Помощь</span>
+</div>
 
-    <div class="modal-overlay" id="helpModal" onclick="closeHelpOutside(event)">
-        <div class="modal">
-            <h3>💬 Помощь</h3>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
-                <div class="faq-a">Это помогает настроить приложение под вас. Для родителя — информация о курсах, стоимости, отчёты о прогрессе ребёнка. Для ученика — тест на направление, трекер, домашки, бонусы.</div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-q">Что будет после выбора? <span>▾</span></div>
-                <div class="faq-a">Вы познакомитесь с платформой: кто я, как проходит обучение, чем я отличаюсь от других. Затем — тест или выбор курса.</div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-q">Это бесплатно? <span>▾</span></div>
-                <div class="faq-a">Само приложение — да. Занятия — платные. Первое занятие со скидкой 5%. Цены зависят от курса — от 800 до 2 000 ₽/час.</div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-q">Нужно ли устанавливать что-то дополнительно? <span>▾</span></div>
-                <div class="faq-a">Нет. Приложение работает прямо в Telegram. Для занятий понадобится компьютер или ноутбук с интернетом.</div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-q">Мои данные в безопасности? <span>▾</span></div>
-                <div class="faq-a">Да. Данные защищены, доступ к ним есть только у вас и у преподавателя. Никакие данные не передаются третьим лицам.</div>
-            </div>
-
-            <button class="modal-btn" onclick="openChat()">💬 Написать в Telegram</button>
-            <button class="modal-close" onclick="closeHelp()">Закрыть</button>
-        </div>
+<!-- ЭКРАН 1: ЗНАКОМСТВО -->
+<div class="screen" id="screen-1">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <div class="emoji-big">👋</div>
+        <h2 id="s1-title"></h2>
+        <p id="s1-text"></p>
     </div>
+    <button class="btn btn-accent" onclick="nextScreen(2)">Далее →</button>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+</div>
 
-    <script>
-        const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+<!-- ЭКРАН 2: ПЛАТФОРМА -->
+<div class="screen" id="screen-2">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Что такое mischenko.edu?</h2>
+        <p>Это моя образовательная платформа. Здесь всё, что нужно для учёбы, в одном месте — прямо в Telegram.</p>
+        <ul>
+            <li>Тест на направление</li>
+            <li>Выбор курса</li>
+            <li>Личный кабинет: трекер, домашки, шпаргалки, отчёты</li>
+            <li>Расписание и запись на занятия</li>
+            <li>Бонусы за старт</li>
+        </ul>
+        <p>Всё просто, прозрачно и с душой ✨</p>
+    </div>
+    <button class="btn btn-accent" onclick="nextScreen(3)">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+</div>
 
-        function selectRole(role) {
-            localStorage.setItem('role', role);
-            window.location.href = BASE + '/intro.html';
+<!-- ЭКРАН 3: КАК ПРОХОДЯТ ЗАНЯТИЯ -->
+<div class="screen" id="screen-3">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Как проходят занятия?</h2>
+        <p>Онлайн — в Яндекс.Телемосте или прямо в Telegram. Ты и я, один на один.</p>
+        <ul>
+            <li>Живое общение, никаких скучных лекций</li>
+            <li>После урока — домашнее задание с проверкой</li>
+            <li>В личном кабинете видно: что прошли, что задано, какой прогресс</li>
+            <li>Шпаргалки и полезные материалы по курсу</li>
+            <li>Поддержка между занятиями — пиши, если что-то непонятно</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" onclick="nextScreen(4)">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
+</div>
+
+<!-- ЭКРАН 4: СВЯЗЬ И ВЫБОР -->
+<div class="screen" id="screen-4">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Я на связи 🤙</h2>
+        <p>Напиши мне в Telegram — <b style="color:var(--accent);">@katerin_mischenko</b></p>
+        <p style="margin-top:10px;">Там можно:</p>
+        <ul>
+            <li>Задать вопрос</li>
+            <li>Договориться о занятии</li>
+            <li>Уточнить расписание</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" onclick="goNext()" id="btn-next"></button>
+    <button class="btn btn-ghost" onclick="openCabinet()">🚀 Личный кабинет</button>
+    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ПОМОЩИ -->
+<div class="modal-overlay" id="helpModal">
+    <div class="modal">
+        <h3>💬 Помощь</h3>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
+            <div class="faq-a">Для родителя — курсы, стоимость, отчёты. Для ученика — тест, трекер, домашки, бонусы.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q">Что будет после выбора? <span>▾</span></div>
+            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — тест или выбор курса.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q">Это бесплатно? <span>▾</span></div>
+            <div class="faq-a">Приложение — да. Занятия — платные. Первое со скидкой 5%. От 800 до 2 000 ₽/час.</div>
+        </div>
+        <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div>
+            <div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div>
+        </div>
+        <button class="modal-btn" onclick="window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko')">💬 Написать в Telegram</button>
+        <button class="modal-close" onclick="document.getElementById('helpModal').classList.remove('open')">Закрыть</button>
+    </div>
+</div>
+
+<script>
+    const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+    let role = '';
+    let current = 0;
+
+    function show(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        current = parseInt(id.split('-')[1]) || 0;
+    }
+
+    function openHelp() {
+        document.getElementById('helpModal').classList.add('open');
+    }
+
+    function startIntro(r) {
+        role = r;
+        const title = document.getElementById('s1-title');
+        const text = document.getElementById('s1-text');
+
+        if (role === 'student') {
+            title.textContent = 'Привет! Я Екатерина 👋';
+            text.innerHTML = 'Я преподаватель информатики. 8 лет учу ребят программировать так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.<br><br>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.<br><br>Строю программу под каждого — без скучных шаблонов. Будет интересно и понятно, обещаю!';
+            document.getElementById('btn-next').textContent = '🧭 Подобрать курс';
+        } else {
+            title.textContent = 'Здравствуйте! Я Екатерина 👋';
+            text.innerHTML = 'Я преподаватель информатики с 8-летним опытом. Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel.<br><br>Более 650 учеников. Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.<br><br>Строю программу индивидуально под каждого ребёнка — без «общего потока».';
+            document.getElementById('btn-next').textContent = '🧭 Подобрать курс';
         }
 
-        function openHelp() {
-            document.getElementById('helpModal').classList.add('open');
-        }
+        show('screen-1');
+    }
 
-        function closeHelp() {
-            document.getElementById('helpModal').classList.remove('open');
-        }
+    function nextScreen(n) {
+        show('screen-' + n);
+    }
 
-        function closeHelpOutside(event) {
-            if (event.target === event.currentTarget) {
-                closeHelp();
-            }
-        }
+    function goNext() {
+        window.location.href = BASE + '/courses.html';
+    }
 
-        function toggleFaq(item) {
-            item.classList.toggle('open');
-        }
-
-        function openChat() {
-            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
-        }
-    </script>
+    function openCabinet() {
+        window.location.href = BASE + '/student.html';
+    }
+</script>
 </body>
 </html>
