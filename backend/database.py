@@ -18,7 +18,7 @@ def get_user_by_id(user_id: int):
 
 
 def get_user_by_name(name: str):
-    return supabase.table("users").select("*").eq("name", name).single().execute()
+    return supabase.table("users").select("*").eq("name", name).execute()
 
 
 def create_user(name: str, course: str, password_hash: str):

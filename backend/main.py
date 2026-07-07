@@ -1,6 +1,6 @@
 import os
 
-#import bcrypt
+import bcrypt
 import database as db
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -49,44 +49,47 @@ class DiagnosticRequest(BaseModel):
     gaps: str
 
 
+class ReportCreate(BaseModel):
+    user_id: int
+    month: str
+    lessons: str = "0"
+    hwDone: str = "0"
+    topics: str = "0"
+    score: str = ""
+    plan: str = ""
+
+
 # ─── АВТОРИЗАЦИЯ ───
 
 
 @app.post("/api/login")
 def login(data: LoginRequest):
-    try:
-        user = db.get_user_by_name(data.name)
-    except:
+    result = db.supabase.table("users").select("*").eq("name", data.name).execute()
+    if not result.data:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
-    user_data = user.data
+    # Ищем пользователя с подходящим паролем
+    user_data = None
+    for u in result.data:
+        if u["password_hash"] == data.password:
+            user_data = u
+            break
 
-    # Для демо — сравнение без хэша (потом заменим на bcrypt)
-    if user_data["password_hash"] == data.password:
-        return {
-            "success": True,
-            "user": {
-                "id": user_data["id"],
-                "name": user_data["name"],
-                "course": user_data["course"],
-            },
-        }
-    else:
+    if not user_data:
         raise HTTPException(status_code=401, detail="Неверный пароль")
+
+    return {
+        "success": True,
+        "user": {
+            "id": user_data["id"],
+            "name": user_data["name"],
+            "course": user_data["course"],
+        },
+    }
 
 
 @app.post("/api/register")
 def register(data: RegisterRequest):
-    try:
-        existing = db.get_user_by_name(data.name)
-        if existing.data:
-            raise HTTPException(status_code=409, detail="Пользователь уже существует")
-    except HTTPException:
-        raise
-    except:
-        pass
-
-    # Для демо — пароль без хэша
     result = db.create_user(data.name, data.course, data.password)
     user_data = result.data[0]
     return {
@@ -182,16 +185,6 @@ def admin_students():
     return {"success": True, "data": result.data}
 
 
-class ReportCreate(BaseModel):
-    user_id: int
-    month: str
-    lessons: str = "0"
-    hwDone: str = "0"
-    topics: str = "0"
-    score: str = ""
-    plan: str = ""
-
-
 @app.post("/api/admin/reports")
 def admin_create_report(data: ReportCreate):
     result = (
@@ -212,6 +205,15 @@ def admin_create_report(data: ReportCreate):
         .execute()
     )
     return {"success": True}
+
+
+# ─── ТЕСТЫ ───
+
+
+@app.get("/api/tests/{course}")
+def get_tests(course: str):
+    result = db.supabase.table("tests").select("*").eq("course", course).execute()
+    return {"success": True, "data": result.data}
 
 
 # ─── ЗАПУСК ───
