@@ -21,6 +21,7 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -29,6 +30,10 @@
             text-align: center;
             max-width: 400px;
             width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .logo {
             font-size: 32px;
@@ -72,13 +77,21 @@
             border: 1px solid rgba(96, 165, 250, 0.2);
             color: #60a5fa;
         }
-        .btn-parent:hover { background: rgba(96, 165, 250, 0.2); }
+        .btn-parent:active { background: rgba(96, 165, 250, 0.2); }
         .btn-student {
             background: rgba(74, 222, 128, 0.12);
             border: 1px solid rgba(74, 222, 128, 0.2);
             color: var(--accent);
         }
-        .btn-student:hover { background: rgba(74, 222, 128, 0.2); }
+        .btn-student:active { background: rgba(74, 222, 128, 0.2); }
+        .help-link {
+            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-dim);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .help-link:hover { color: var(--text); }
     </style>
 </head>
 <body>
@@ -91,14 +104,21 @@
             <button class="btn btn-student" onclick="selectRole('student')">🧑 Я ученик</button>
         </div>
     </div>
+    <a class="help-link" onclick="showHelp()">💬 Помощь</a>
 
     <script>
+        const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+
         function selectRole(role) {
             if (role === 'parent') {
-                window.location.href = 'parent.html';
+                window.location.href = BASE + '/parent.html';
             } else {
-                window.location.href = 'student.html';
+                window.location.href = BASE + '/student.html';
             }
+        }
+
+        function showHelp() {
+            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
         }
     </script>
 </body>
