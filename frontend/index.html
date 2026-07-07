@@ -32,29 +32,15 @@
             align-items: center;
             padding: 20px;
         }
-        .screen {
-            display: none;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
+        .screen { display: none; max-width: 400px; width: 100%; text-align: center; }
         .screen.active { display: block; }
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
+        .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
         .logo span { color: var(--accent); }
         .subtitle { font-size: 14px; color: var(--text-dim); margin-bottom: 24px; }
         .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 22px 18px;
-            backdrop-filter: blur(12px);
-            text-align: left;
-            margin-bottom: 14px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px 18px;
+            backdrop-filter: blur(12px); text-align: left; margin-bottom: 14px;
         }
         .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
         .card p { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 12px; }
@@ -72,13 +58,11 @@
         .btn {
             display: block; width: 100%; padding: 14px; margin-top: 8px;
             border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
-            border: none; font-family: inherit; text-align: center;
-            -webkit-tap-highlight-color: transparent;
+            border: none; font-family: inherit; text-align: center; -webkit-tap-highlight-color: transparent;
         }
         .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
         .btn-accent:active { background: rgba(74,222,128,0.25); }
         .btn-blue { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.2); color: var(--blue); }
-        .btn-blue:active { background: rgba(96,165,250,0.25); }
         .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
         .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
         .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
@@ -86,16 +70,9 @@
         .dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
         .dot.active { background: var(--accent); }
-        .help-link {
-            display: block; margin-top: 20px; font-size: 13px;
-            color: var(--text-dim); cursor: pointer; text-align: center;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .help-link { display: block; margin-top: 20px; font-size: 13px; color: var(--text-dim); cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; }
         .emoji-big { font-size: 40px; margin-bottom: 10px; }
-        .faq-item {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 10px; padding: 14px; margin-bottom: 8px; cursor: pointer;
-        }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 8px; cursor: pointer; }
         .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
         .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
         .faq-item.open .faq-a { display: block; }
@@ -107,95 +84,43 @@
 <div class="screen active" id="screen-0">
     <div class="logo">mischenko<span>.edu</span></div>
     <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
-    <div class="card">
-        <h2>Кто вы?</h2>
+    <div class="card"><h2>Кто вы?</h2>
         <button class="btn btn-blue" id="btn-parent">👨‍👩‍👧 Я родитель</button>
         <button class="btn btn-accent" id="btn-student">🧑 Я ученик</button>
     </div>
     <span class="help-link" id="help-link">💬 Помощь</span>
 </div>
 
-<!-- ==================== УЧЕНИК: МЕНЮ ==================== -->
+<!-- УЧЕНИК: МЕНЮ -->
 <div class="screen" id="student-menu">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Выберите действие</h2>
+    <div class="card"><h2>Выберите действие</h2>
         <button class="btn btn-accent" id="btn-student-intro">📖 Знакомство</button>
         <button class="btn btn-blue" id="btn-student-reg">📝 Регистрация</button>
         <button class="btn btn-ghost" id="btn-student-login">🔑 Вход</button>
     </div>
 </div>
 
-<!-- ==================== РОДИТЕЛЬ: МЕНЮ ==================== -->
+<!-- РОДИТЕЛЬ: МЕНЮ -->
 <div class="screen" id="parent-menu">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Выберите действие</h2>
+    <div class="card"><h2>Выберите действие</h2>
         <button class="btn btn-accent" id="btn-parent-intro">📖 Знакомство</button>
         <button class="btn btn-blue" id="btn-parent-course">🧭 Подобрать курс</button>
         <button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button>
     </div>
 </div>
 
-<!-- ==================== УЧЕНИК: ЗНАКОМСТВО ==================== -->
-<div class="screen" id="student-1">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <div class="emoji-big">🚀</div>
-        <h2>Привет! Я Екатерина</h2>
-        <p>8 лет учу ребят программировать — так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.</p>
-        <p>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.</p>
-        <p>Строю программу под тебя — никаких скучных шаблонов. Будет интересно и понятно, обещаю! 😊</p>
-    </div>
-    <button class="btn btn-accent" data-next="student-2">Далее →</button>
-    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-</div>
-<div class="screen" id="student-2">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Что такое mischenko.edu?</h2>
-        <p>Это твой учебный центр в Telegram. Всё нужное — в одном месте.</p>
-        <ul>
-            <li>Пройди тест — узнаешь, какое направление твоё</li>
-            <li>Выбери курс: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
-            <li>Твой личный кабинет: трекер, домашки, шпаргалки</li>
-            <li>Бонусы за старт</li>
-        </ul>
-    </div>
-    <button class="btn btn-accent" data-next="student-3">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
-</div>
-<div class="screen" id="student-3">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Как проходят занятия?</h2>
-        <p>Онлайн — в Яндекс.Телемосте или Telegram. Ты и я, один на один 👩‍💻</p>
-        <ul>
-            <li>Живое общение, без скучных лекций</li>
-            <li>После урока — домашка с проверкой</li>
-            <li>Личный кабинет: прогресс, оценки, расписание</li>
-            <li>Шпаргалки и полезные материалы</li>
-            <li>Поддержка между занятиями</li>
-        </ul>
-    </div>
-    <button class="btn btn-accent" data-next="student-4">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
-</div>
-<div class="screen" id="student-4">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Я на связи 🤙</h2>
-        <p>Напиши мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
-        <p>Там можно спросить что угодно, записаться на занятие, узнать расписание.</p>
-    </div>
-    <button class="btn btn-accent" id="btn-student-to-menu">← В главное меню</button>
-</div>
+<!-- УЧЕНИК: ЗНАКОМСТВО -->
+<div class="screen" id="student-1"><div class="logo">mischenko<span>.edu</span></div><div class="card"><div class="emoji-big">🚀</div><h2>Привет! Я Екатерина</h2><p>8 лет учу ребят программировать — так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.</p><p>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.</p><p>Строю программу под тебя — никаких скучных шаблонов. Будет интересно и понятно, обещаю! 😊</p></div><button class="btn btn-accent" data-next="student-2">Далее →</button><div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></div>
+<div class="screen" id="student-2"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Что такое mischenko.edu?</h2><p>Это твой учебный центр в Telegram. Всё нужное — в одном месте.</p><ul><li>Пройди тест — узнаешь, какое направление твоё</li><li>Выбери курс: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li><li>Твой личный кабинет: трекер, домашки, шпаргалки</li><li>Бонусы за старт</li></ul></div><button class="btn btn-accent" data-next="student-3">Далее →</button><div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div></div>
+<div class="screen" id="student-3"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Как проходят занятия?</h2><p>Онлайн — в Яндекс.Телемосте или Telegram. Ты и я, один на один 👩‍💻</p><ul><li>Живое общение, без скучных лекций</li><li>После урока — домашка с проверкой</li><li>Личный кабинет: прогресс, оценки, расписание</li><li>Шпаргалки и полезные материалы</li><li>Поддержка между занятиями</li></ul></div><button class="btn btn-accent" data-next="student-4">Далее →</button><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div></div>
+<div class="screen" id="student-4"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Я на связи 🤙</h2><p>Напиши мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p><p>Там можно спросить что угодно, записаться на занятие, узнать расписание.</p></div><button class="btn btn-accent" id="btn-student-to-menu">← В главное меню</button></div>
 
-<!-- ==================== УЧЕНИК: РЕГИСТРАЦИЯ ==================== -->
+<!-- УЧЕНИК: РЕГИСТРАЦИЯ -->
 <div class="screen" id="student-reg">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Регистрация</h2>
+    <div class="card"><h2>Регистрация</h2>
         <p>Войди по номеру телефона, затем придумай имя и пароль.</p>
         <button class="btn btn-blue" id="btn-student-reg-phone">📱 Войти по номеру телефона</button>
         <div id="student-reg-form" style="display:none;">
@@ -208,11 +133,10 @@
     <button class="btn btn-ghost" id="btn-student-reg-back">← В главное меню</button>
 </div>
 
-<!-- ==================== УЧЕНИК: ВХОД ==================== -->
+<!-- УЧЕНИК: ВХОД -->
 <div class="screen" id="student-login">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Вход</h2>
+    <div class="card"><h2>Вход</h2>
         <p>Войди по номеру телефона, затем введи пароль.</p>
         <button class="btn btn-blue" id="btn-student-login-phone">📱 Войти по номеру телефона</button>
         <div id="student-login-form" style="display:none;">
@@ -224,66 +148,16 @@
     <button class="btn btn-ghost" id="btn-student-login-back">← В главное меню</button>
 </div>
 
-<!-- ==================== РОДИТЕЛЬ: ЗНАКОМСТВО ==================== -->
-<div class="screen" id="parent-1">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <div class="emoji-big">👋</div>
-        <h2>Здравствуйте! Я Екатерина</h2>
-        <p>Я преподаватель информатики с 8-летним опытом.</p>
-        <p>Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel. Более 650 учеников.</p>
-        <p>Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
-        <p>Строю программу индивидуально под каждого ребёнка — без «общего потока».</p>
-    </div>
-    <button class="btn btn-accent" data-next="parent-2">Далее →</button>
-    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-</div>
-<div class="screen" id="parent-2">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Что такое mischenko.edu?</h2>
-        <p>Это моя образовательная платформа. Всё нужное — в Telegram.</p>
-        <ul>
-            <li>Тест для подбора курса</li>
-            <li>6 направлений: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
-            <li>Личный кабинет с отчётами</li>
-            <li>Понятные цены и пакеты</li>
-        </ul>
-    </div>
-    <button class="btn btn-accent" data-next="parent-3">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
-</div>
-<div class="screen" id="parent-3">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Как проходят занятия?</h2>
-        <p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один.</p>
-        <ul>
-            <li>Индивидуальный подход</li>
-            <li>Домашние задания с проверкой</li>
-            <li>Ежемесячные отчёты для родителей</li>
-            <li>Личный кабинет: прогресс, оценки, расписание</li>
-        </ul>
-    </div>
-    <button class="btn btn-accent" data-next="parent-4">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
-</div>
-<div class="screen" id="parent-4">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Я на связи</h2>
-        <p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
-        <p>Там можно задать вопрос, договориться о пробном занятии, уточнить расписание.</p>
-    </div>
-    <button class="btn btn-accent" id="btn-parent-to-menu">← В главное меню</button>
-</div>
+<!-- РОДИТЕЛЬ: ЗНАКОМСТВО -->
+<div class="screen" id="parent-1"><div class="logo">mischenko<span>.edu</span></div><div class="card"><div class="emoji-big">👋</div><h2>Здравствуйте! Я Екатерина</h2><p>Я преподаватель информатики с 8-летним опытом.</p><p>Работала в школах, Skyeng и Pixel. Более 650 учеников. Средний балл ЕГЭ — 86.</p><p>Строю программу индивидуально под каждого ребёнка.</p></div><button class="btn btn-accent" data-next="parent-2">Далее →</button><div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div></div>
+<div class="screen" id="parent-2"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Что такое mischenko.edu?</h2><p>Это моя образовательная платформа. Всё нужное — в Telegram.</p><ul><li>Тест для подбора курса</li><li>6 направлений</li><li>Личный кабинет с отчётами</li><li>Понятные цены и пакеты</li></ul></div><button class="btn btn-accent" data-next="parent-3">Далее →</button><div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div></div>
+<div class="screen" id="parent-3"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Как проходят занятия?</h2><p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один.</p><ul><li>Индивидуальный подход</li><li>Домашки с проверкой</li><li>Ежемесячные отчёты</li><li>Личный кабинет</li></ul></div><button class="btn btn-accent" data-next="parent-4">Далее →</button><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div></div>
+<div class="screen" id="parent-4"><div class="logo">mischenko<span>.edu</span></div><div class="card"><h2>Я на связи</h2><p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p><p>Там можно задать вопрос, договориться о занятии.</p></div><button class="btn btn-accent" id="btn-parent-to-menu">← В главное меню</button></div>
 
-<!-- ==================== РОДИТЕЛЬ: ПОДОБРАТЬ КУРС ==================== -->
+<!-- РОДИТЕЛЬ: ПОДОБРАТЬ КУРС -->
 <div class="screen" id="parent-course">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Подобрать курс</h2>
-        <p>Выберите направление для ребёнка:</p>
+    <div class="card"><h2>Подобрать курс</h2><p>Выберите направление для ребёнка:</p>
         <button class="btn btn-accent" style="margin-bottom:6px;">🎓 ЕГЭ информатика</button>
         <button class="btn btn-accent" style="margin-bottom:6px;">📋 ОГЭ информатика</button>
         <button class="btn btn-accent" style="margin-bottom:6px;">🐍 Python с нуля</button>
@@ -298,24 +172,11 @@
 <!-- ПОМОЩЬ -->
 <div class="screen" id="screen-help">
     <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>💬 Помощь</h2>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Зачем нужен выбор роли? <span>▾</span></div>
-            <div class="faq-a">Для родителя — курсы, стоимость, отчёты. Для ученика — тест, трекер, домашки.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Что будет после выбора? <span>▾</span></div>
-            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — регистрация или вход.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Это бесплатно? <span>▾</span></div>
-            <div class="faq-a">Приложение — да. Занятия — платные. Первое со скидкой 5%. От 800 до 2 000 ₽/час.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div>
-            <div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div>
-        </div>
+    <div class="card"><h2>💬 Помощь</h2>
+        <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Зачем нужен выбор роли? <span>▾</span></div><div class="faq-a">Для родителя — курсы, стоимость, отчёты. Для ученика — тест, трекер, домашки.</div></div>
+        <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Что будет после выбора? <span>▾</span></div><div class="faq-a">Короткое знакомство со мной и платформой. Затем — регистрация или вход.</div></div>
+        <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Это бесплатно? <span>▾</span></div><div class="faq-a">Приложение — да. Занятия — платные. Первое со скидкой 5%. От 800 до 2 000 ₽/час.</div></div>
+        <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div><div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div></div>
     </div>
     <button class="btn btn-ghost" id="btn-help-back">← Назад</button>
 </div>
@@ -324,13 +185,9 @@
     (function() {
         const API = 'https://mischenko-edu-api.onrender.com/api';
         const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
-        let phone = null;
-        let prevScreen = 'screen-0';
+        let phone = null, prevScreen = 'screen-0';
 
-        function show(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+        function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
         // Помощь
         document.getElementById('help-link').addEventListener('click', () => { prevScreen = 'screen-0'; show('screen-help'); });
@@ -340,12 +197,10 @@
         document.getElementById('btn-parent').addEventListener('click', () => show('parent-menu'));
         document.getElementById('btn-student').addEventListener('click', () => show('student-menu'));
 
-        // Кнопки "Далее"
-        document.querySelectorAll('[data-next]').forEach(btn => {
-            btn.addEventListener('click', function() { show(this.getAttribute('data-next')); });
-        });
+        // Далее
+        document.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', function() { show(this.getAttribute('data-next')); }));
 
-        // Ученик: из меню
+        // Ученик: меню
         document.getElementById('btn-student-intro').addEventListener('click', () => show('student-1'));
         document.getElementById('btn-student-reg').addEventListener('click', () => show('student-reg'));
         document.getElementById('btn-student-login').addEventListener('click', () => show('student-login'));
@@ -353,26 +208,28 @@
         document.getElementById('btn-student-reg-back').addEventListener('click', () => show('student-menu'));
         document.getElementById('btn-student-login-back').addEventListener('click', () => show('student-menu'));
 
-        // Родитель: из меню
+        // Родитель: меню
         document.getElementById('btn-parent-intro').addEventListener('click', () => show('parent-1'));
         document.getElementById('btn-parent-course').addEventListener('click', () => show('parent-course'));
-        document.getElementById('btn-parent-login').addEventListener('click', () => { /* переход в кабинет */ });
+        document.getElementById('btn-parent-login').addEventListener('click', () => show('student-login'));
         document.getElementById('btn-parent-to-menu').addEventListener('click', () => show('parent-menu'));
         document.getElementById('btn-parent-course-back').addEventListener('click', () => show('parent-menu'));
 
-        // Ученик: регистрация — запрос телефона
-        document.getElementById('btn-student-reg-phone').addEventListener('click', async () => {
+        // 📱 Запрос телефона (общий)
+        async function requestPhone() {
             try {
                 const result = await window.Telegram.WebApp.requestContact();
-                if (result && result.contact && result.contact.phone_number) phone = result.contact.phone_number;
-            } catch(e) {
-                phone = prompt('Введите номер телефона (+79001234567):');
-                if (!phone) return;
-            }
-            if (phone) {
-                document.getElementById('btn-student-reg-phone').style.display = 'none';
-                document.getElementById('student-reg-form').style.display = 'block';
-            }
+                if (result && result.contact && result.contact.phone_number) return result.contact.phone_number;
+            } catch(e) {}
+            return prompt('Введите номер телефона:');
+        }
+
+        // Ученик: регистрация — телефон
+        document.getElementById('btn-student-reg-phone').addEventListener('click', async () => {
+            phone = await requestPhone();
+            if (!phone) return;
+            document.getElementById('btn-student-reg-phone').style.display = 'none';
+            document.getElementById('student-reg-form').style.display = 'block';
         });
 
         // Ученик: регистрация — отправка
@@ -395,19 +252,12 @@
             } catch(e) { errEl.textContent = e.message; errEl.classList.add('show'); }
         });
 
-        // Ученик: вход — запрос телефона
+        // Ученик: вход — телефон
         document.getElementById('btn-student-login-phone').addEventListener('click', async () => {
-            try {
-                const result = await window.Telegram.WebApp.requestContact();
-                if (result && result.contact && result.contact.phone_number) phone = result.contact.phone_number;
-            } catch(e) {
-                phone = prompt('Введите номер телефона (+79001234567):');
-                if (!phone) return;
-            }
-            if (phone) {
-                document.getElementById('btn-student-login-phone').style.display = 'none';
-                document.getElementById('student-login-form').style.display = 'block';
-            }
+            phone = await requestPhone();
+            if (!phone) return;
+            document.getElementById('btn-student-login-phone').style.display = 'none';
+            document.getElementById('student-login-form').style.display = 'block';
         });
 
         // Ученик: вход — отправка
