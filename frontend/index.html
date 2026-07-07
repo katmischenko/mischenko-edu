@@ -16,7 +16,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+            font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -30,13 +30,8 @@
             max-width: 400px;
             width: 100%;
             text-align: center;
-            animation: fadeIn 0.3s ease;
         }
         .screen.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         .logo {
             font-size: 28px;
             font-weight: 800;
@@ -88,21 +83,21 @@
             cursor: pointer;
             border: none;
             font-family: inherit;
-            transition: all 0.2s;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn-accent {
             background: rgba(74, 222, 128, 0.12);
             border: 1px solid rgba(74, 222, 128, 0.2);
             color: var(--accent);
         }
-        .btn-accent:active { background: rgba(74, 222, 128, 0.2); }
+        .btn-accent:active { background: rgba(74, 222, 128, 0.25); }
         .btn-blue {
             background: rgba(96, 165, 250, 0.12);
             border: 1px solid rgba(96, 165, 250, 0.2);
             color: #60a5fa;
         }
-        .btn-blue:active { background: rgba(96, 165, 250, 0.2); }
+        .btn-blue:active { background: rgba(96, 165, 250, 0.25); }
         .btn-ghost {
             background: transparent;
             border: 1px solid var(--border);
@@ -119,63 +114,16 @@
             width: 8px; height: 8px;
             border-radius: 50%;
             background: var(--border);
-            transition: all 0.2s;
         }
         .dot.active { background: var(--accent); }
         .help-link {
+            display: block;
             margin-top: 20px;
             font-size: 13px;
             color: var(--text-dim);
             cursor: pointer;
-        }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 10;
-            justify-content: center;
-            align-items: flex-end;
-        }
-        .modal-overlay.open { display: flex; }
-        .modal {
-            background: #0d1528;
-            border: 1px solid var(--border);
-            border-radius: var(--radius) var(--radius) 0 0;
-            padding: 24px 20px 30px;
-            width: 100%;
-            max-width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-        .modal h3 { font-size: 18px; margin-bottom: 16px; text-align: center; }
-        .faq-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-        .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
-        .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.5; }
-        .faq-item.open .faq-a { display: block; }
-        .modal-btn {
-            display: block; width: 100%; padding: 14px; margin-top: 12px;
-            border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none;
-            font-family: inherit; text-align: center;
-            background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent);
-        }
-        .modal-close {
-            display: block; width: 100%; padding: 12px; margin-top: 8px;
-            background: transparent; border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text-dim); font-size: 14px; cursor: pointer; font-family: inherit;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
         .emoji-big { font-size: 40px; margin-bottom: 10px; }
     </style>
@@ -183,15 +131,15 @@
 <body>
 
 <!-- ЭКРАН 0: ВЫБОР РОЛИ -->
-<div class="screen active" id="screen-role">
+<div class="screen active" id="screen-0">
     <div class="logo">mischenko<span>.edu</span></div>
     <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
     <div class="card">
         <h2>Кто вы?</h2>
-        <button class="btn btn-blue" onclick="startIntro('parent')">👨‍👩‍👧 Я родитель</button>
-        <button class="btn btn-accent" onclick="startIntro('student')">🧑 Я ученик</button>
+        <button class="btn btn-blue" id="btn-parent">👨‍👩‍👧 Я родитель</button>
+        <button class="btn btn-accent" id="btn-student">🧑 Я ученик</button>
     </div>
-    <span class="help-link" onclick="openHelp()">💬 Помощь</span>
+    <span class="help-link" id="help-link">💬 Помощь</span>
 </div>
 
 <!-- ЭКРАН 1: ЗНАКОМСТВО -->
@@ -202,7 +150,7 @@
         <h2 id="s1-title"></h2>
         <p id="s1-text"></p>
     </div>
-    <button class="btn btn-accent" onclick="nextScreen(2)">Далее →</button>
+    <button class="btn btn-accent" id="btn-to-2">Далее →</button>
     <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
 
@@ -221,7 +169,7 @@
         </ul>
         <p>Всё просто, прозрачно и с душой ✨</p>
     </div>
-    <button class="btn btn-accent" onclick="nextScreen(3)">Далее →</button>
+    <button class="btn btn-accent" id="btn-to-3">Далее →</button>
     <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
 
@@ -239,7 +187,7 @@
             <li>Поддержка между занятиями — пиши, если что-то непонятно</li>
         </ul>
     </div>
-    <button class="btn btn-accent" onclick="nextScreen(4)">Далее →</button>
+    <button class="btn btn-accent" id="btn-to-4">Далее →</button>
     <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
 </div>
 
@@ -256,80 +204,58 @@
             <li>Уточнить расписание</li>
         </ul>
     </div>
-    <button class="btn btn-accent" onclick="goNext()" id="btn-next"></button>
-    <button class="btn btn-ghost" onclick="openCabinet()">🚀 Личный кабинет</button>
+    <button class="btn btn-accent" id="btn-courses">🧭 Подобрать курс</button>
+    <button class="btn btn-ghost" id="btn-cabinet">🚀 Личный кабинет</button>
     <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ПОМОЩИ -->
-<div class="modal-overlay" id="helpModal">
-    <div class="modal">
-        <h3>💬 Помощь</h3>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
-            <div class="faq-a">Для родителя — курсы, стоимость, отчёты. Для ученика — тест, трекер, домашки, бонусы.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Что будет после выбора? <span>▾</span></div>
-            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — тест или выбор курса.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Это бесплатно? <span>▾</span></div>
-            <div class="faq-a">Приложение — да. Занятия — платные. Первое со скидкой 5%. От 800 до 2 000 ₽/час.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div>
-            <div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div>
-        </div>
-        <button class="modal-btn" onclick="window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko')">💬 Написать в Telegram</button>
-        <button class="modal-close" onclick="document.getElementById('helpModal').classList.remove('open')">Закрыть</button>
-    </div>
-</div>
-
 <script>
-    const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
-    let role = '';
-    let current = 0;
+    (function() {
+        const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+        let role = '';
 
-    function show(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        current = parseInt(id.split('-')[1]) || 0;
-    }
-
-    function openHelp() {
-        document.getElementById('helpModal').classList.add('open');
-    }
-
-    function startIntro(r) {
-        role = r;
-        const title = document.getElementById('s1-title');
-        const text = document.getElementById('s1-text');
-
-        if (role === 'student') {
-            title.textContent = 'Привет! Я Екатерина 👋';
-            text.innerHTML = 'Я преподаватель информатики. 8 лет учу ребят программировать так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.<br><br>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.<br><br>Строю программу под каждого — без скучных шаблонов. Будет интересно и понятно, обещаю!';
-            document.getElementById('btn-next').textContent = '🧭 Подобрать курс';
-        } else {
-            title.textContent = 'Здравствуйте! Я Екатерина 👋';
-            text.innerHTML = 'Я преподаватель информатики с 8-летним опытом. Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel.<br><br>Более 650 учеников. Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.<br><br>Строю программу индивидуально под каждого ребёнка — без «общего потока».';
-            document.getElementById('btn-next').textContent = '🧭 Подобрать курс';
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+            document.getElementById(id).classList.add('active');
         }
 
-        show('screen-1');
-    }
+        // Экран 0: кнопки роли
+        document.getElementById('btn-parent').addEventListener('click', function() {
+            role = 'parent';
+            document.getElementById('s1-title').textContent = 'Здравствуйте! Я Екатерина 👋';
+            document.getElementById('s1-text').innerHTML = 'Я преподаватель информатики с 8-летним опытом. Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel.<br><br>Более 650 учеников. Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.<br><br>Строю программу индивидуально под каждого ребёнка — без «общего потока».';
+            show('screen-1');
+        });
 
-    function nextScreen(n) {
-        show('screen-' + n);
-    }
+        document.getElementById('btn-student').addEventListener('click', function() {
+            role = 'student';
+            document.getElementById('s1-title').textContent = 'Привет! Я Екатерина 👋';
+            document.getElementById('s1-text').innerHTML = 'Я преподаватель информатики. 8 лет учу ребят программировать так, что они сами пишут ботов, сайты и сдают ЕГЭ на 86 баллов.<br><br>Работала в школе, потом в Skyeng и Pixel. Через мои уроки прошли больше 650 учеников.<br><br>Строю программу под каждого — без скучных шаблонов. Будет интересно и понятно, обещаю!';
+            show('screen-1');
+        });
 
-    function goNext() {
-        window.location.href = BASE + '/courses.html';
-    }
+        // Помощь
+        document.getElementById('help-link').addEventListener('click', function() {
+            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
+        });
 
-    function openCabinet() {
-        window.location.href = BASE + '/student.html';
-    }
+        // Кнопки Далее
+        document.getElementById('btn-to-2').addEventListener('click', function() { show('screen-2'); });
+        document.getElementById('btn-to-3').addEventListener('click', function() { show('screen-3'); });
+        document.getElementById('btn-to-4').addEventListener('click', function() { show('screen-4'); });
+
+        // Подобрать курс
+        document.getElementById('btn-courses').addEventListener('click', function() {
+            window.location.href = BASE + '/courses.html';
+        });
+
+        // Личный кабинет
+        document.getElementById('btn-cabinet').addEventListener('click', function() {
+            window.location.href = BASE + '/student.html';
+        });
+
+    })();
 </script>
+
 </body>
 </html>
