@@ -77,7 +77,6 @@
         .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
         .error.show { display: block; }
 
-        /* Дашборд */
         .greeting { margin-bottom: 16px; }
         .greeting .name { font-size: 24px; font-weight: 800; display: block; }
         .greeting .sub { font-size: 13px; color: var(--text-dim); }
@@ -100,7 +99,6 @@
         .menu-item:active { background: rgba(255,255,255,0.05); }
         .menu-item .m-icon { font-size: 24px; margin-bottom: 4px; display: block; }
 
-        /* Разделы */
         .section-header {
             display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 8px;
         }
@@ -167,7 +165,6 @@
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Вход</h2>
-        <div class="input-group"><label>Имя</label><input type="text" id="login-name" placeholder="Твоё имя"></div>
         <div class="input-group"><label>Пароль</label><input type="password" id="login-pass" placeholder="Твой пароль"></div>
         <div class="error" id="login-error"></div>
     </div>
@@ -213,6 +210,23 @@
     (function() {
         const API = 'https://mischenko-edu-api.onrender.com/api';
         let user = null;
+        let telegram_id = null;
+
+        // Получаем telegram_id из WebApp
+        try {
+            const initData = window.Telegram.WebApp.initDataUnsafe;
+            if (initData && initData.user) {
+                telegram_id = initData.user.id;
+            }
+        } catch(e) {
+            console.log('Не в Telegram WebApp');
+        }
+
+        if (!telegram_id) {
+            telegram_id = parseInt(localStorage.getItem('tg_id')) || 0;
+        } else {
+            localStorage.setItem('tg_id', telegram_id);
+        }
 
         function show(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -231,11 +245,12 @@
             const errEl = document.getElementById('reg-error');
             errEl.classList.remove('show');
             if (!name || !pass) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
+            if (!telegram_id) { errEl.textContent = 'Ошибка: не удалось получить Telegram ID'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, course: 'Индивидуальный курс', password: pass })
+                    body: JSON.stringify({ telegram_id, name, course: 'Индивидуальный курс', password: pass })
                 });
                 if (!res.ok) {
                     const errData = await res.json().catch(() => ({}));
@@ -243,6 +258,7 @@
                 }
                 const data = await res.json();
                 user = data.user;
+                localStorage.setItem('user_id', user.id);
                 loadDashboard();
                 show('screen-dashboard');
             } catch(e) {
@@ -253,23 +269,24 @@
 
         // Вход
         document.getElementById('btn-login-submit').addEventListener('click', async () => {
-            const name = document.getElementById('login-name').value.trim();
             const pass = document.getElementById('login-pass').value;
             const errEl = document.getElementById('login-error');
             errEl.classList.remove('show');
-            if (!name || !pass) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
+            if (!pass) { errEl.textContent = 'Введите пароль'; errEl.classList.add('show'); return; }
+            if (!telegram_id) { errEl.textContent = 'Ошибка: не удалось получить Telegram ID'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, password: pass })
+                    body: JSON.stringify({ telegram_id, password: pass })
                 });
                 if (!res.ok) {
                     const errData = await res.json().catch(() => ({}));
-                    throw new Error(errData.detail || 'Неверное имя или пароль');
+                    throw new Error(errData.detail || 'Неверный пароль');
                 }
                 const data = await res.json();
                 user = data.user;
+                localStorage.setItem('user_id', user.id);
                 loadDashboard();
                 show('screen-dashboard');
             } catch(e) {
@@ -318,7 +335,7 @@
         document.getElementById('menu-cheatsheet').addEventListener('click', () => loadSection('📘 Шпаргалки', 'cheatsheet'));
         document.getElementById('menu-reports').addEventListener('click', () => loadSection('📊 Отчёты', 'reports'));
         document.getElementById('menu-calendar').addEventListener('click', () => loadSection('📅 Календарь', 'calendar'));
-        document.getElementById('menu-logout').addEventListener('click', () => { user = null; show('screen-welcome'); });
+        document.getElementById('menu-logout').addEventListener('click', () => { user = null; localStorage.removeItem('user_id'); show('screen-welcome'); });
         document.getElementById('btn-section-back').addEventListener('click', () => show('screen-dashboard'));
 
         function loadSection(title, type) {

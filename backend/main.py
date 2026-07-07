@@ -1,6 +1,5 @@
 import os
 
-import bcrypt
 import database as db
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -23,11 +22,12 @@ app.add_middleware(
 
 
 class LoginRequest(BaseModel):
-    name: str
+    telegram_id: int
     password: str
 
 
 class RegisterRequest(BaseModel):
+    telegram_id: int
     name: str
     course: str
     password: str
@@ -64,18 +64,17 @@ class ReportCreate(BaseModel):
 
 @app.post("/api/login")
 def login(data: LoginRequest):
-    result = db.supabase.table("users").select("*").eq("name", data.name).execute()
+    result = (
+        db.supabase.table("users")
+        .select("*")
+        .eq("telegram_id", data.telegram_id)
+        .execute()
+    )
     if not result.data:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
-    # Ищем пользователя с подходящим паролем
-    user_data = None
-    for u in result.data:
-        if u["password_hash"] == data.password:
-            user_data = u
-            break
-
-    if not user_data:
+    user_data = result.data[0]
+    if user_data["password_hash"] != data.password:
         raise HTTPException(status_code=401, detail="Неверный пароль")
 
     return {
@@ -84,13 +83,38 @@ def login(data: LoginRequest):
             "id": user_data["id"],
             "name": user_data["name"],
             "course": user_data["course"],
+            "telegram_id": user_data["telegram_id"],
         },
     }
 
 
 @app.post("/api/register")
 def register(data: RegisterRequest):
-    result = db.create_user(data.name, data.course, data.password)
+    # Проверяем, нет ли уже такого telegram_id
+    existing = (
+        db.supabase.table("users")
+        .select("*")
+        .eq("telegram_id", data.telegram_id)
+        .execute()
+    )
+    if existing.data:
+        raise HTTPException(
+            status_code=409, detail="Пользователь с таким Telegram уже существует"
+        )
+
+    result = (
+        db.supabase.table("users")
+        .insert(
+            {
+                "telegram_id": data.telegram_id,
+                "name": data.name,
+                "course": data.course,
+                "password_hash": data.password,
+            }
+        )
+        .execute()
+    )
+
     user_data = result.data[0]
     return {
         "success": True,
@@ -98,6 +122,7 @@ def register(data: RegisterRequest):
             "id": user_data["id"],
             "name": user_data["name"],
             "course": user_data["course"],
+            "telegram_id": user_data["telegram_id"],
         },
     }
 
