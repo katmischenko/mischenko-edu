@@ -37,22 +37,6 @@ async def start(message: types.Message):
     )
 
 
-@dp.message()
-async def any_message(message: types.Message):
-    await message.answer(
-        "👇 Жми на кнопку, чтобы открыть приложение!",
-        reply_markup=InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(
-                        text="🚀 Открыть приложение", web_app=WebAppInfo(url=WEBAPP_URL)
-                    )
-                ]
-            ]
-        ),
-    )
-
-
 async def main():
     await bot.delete_my_commands()
     await dp.start_polling(bot)
