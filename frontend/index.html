@@ -22,7 +22,7 @@
             --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; width: 100%; overflow: hidden; }
+       html, body { height: 100%; width: 100%; overflow: hidden; position: fixed; top: 0; left: 0; }
         body {
             font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
             background: var(--bg);
@@ -35,7 +35,7 @@
         .screen {
             display: none;
             width: 100%;
-            max-width: 400px;
+            max-width: 100%;
             text-align: center;
             max-height: 100vh;
             overflow-y: auto;
@@ -897,12 +897,15 @@
         show('screen-0');
     });
 
-    // Чат с учителем
-    document.getElementById('btn-chat').addEventListener('click', function() {
+// Чат с учителем
+document.getElementById('btn-chat').addEventListener('click', function() {
+    try {
         window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
-    });
+    } catch(e) {
+        window.open('https://t.me/katerin_mischenko', '_blank');
+    }
+});
 
-})();
 </script>
 </body>
 </html>
