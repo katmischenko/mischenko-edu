@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -71,6 +72,7 @@
             line-height: 1.8;
             padding-left: 18px;
             margin-top: 8px;
+            margin-bottom: 12px;
         }
         .card ul li { margin-bottom: 6px; }
         .btn {
@@ -127,30 +129,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         .emoji-big { font-size: 40px; margin-bottom: 10px; }
-
-        /* Модальное окно помощи */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 10;
-            justify-content: center;
-            align-items: flex-end;
-        }
-        .modal-overlay.open { display: flex; }
-        .modal {
-            background: #0d1528;
-            border: 1px solid var(--border);
-            border-radius: var(--radius) var(--radius) 0 0;
-            padding: 24px 20px 30px;
-            width: 100%;
-            max-width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        .modal h3 { font-size: 18px; margin-bottom: 16px; text-align: center; }
         .faq-item {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -162,17 +140,6 @@
         .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
         .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
         .faq-item.open .faq-a { display: block; }
-        .modal-btn {
-            display: block; width: 100%; padding: 14px; margin-top: 12px;
-            border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none;
-            font-family: inherit; text-align: center;
-            background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent);
-        }
-        .modal-close {
-            display: block; width: 100%; padding: 12px; margin-top: 8px;
-            background: transparent; border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text-dim); font-size: 14px; cursor: pointer; font-family: inherit;
-        }
     </style>
 </head>
 <body>
@@ -196,8 +163,8 @@
         <div class="emoji-big">👋</div>
         <h2>Здравствуйте! Я Екатерина</h2>
         <p>Я преподаватель информатики с 8-летним опытом.</p>
-        <p>Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel. За это время через мои уроки прошли больше 650 учеников. Средний балл ЕГЭ — 86.</p>
-        <p>Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
+        <p>Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel. За это время через мои уроки прошли больше 650 учеников.</p>
+        <p>Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
         <p>Строю программу индивидуально под каждого ребёнка — без «общего потока» и шаблонов.</p>
     </div>
     <button class="btn btn-accent" data-next="parent-2">Далее →</button>
@@ -242,12 +209,7 @@
     <div class="card">
         <h2>Я на связи</h2>
         <p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
-        <p style="margin-top:10px;">Там можно:</p>
-        <ul>
-            <li>Задать вопрос по курсу</li>
-            <li>Договориться о пробном занятии</li>
-            <li>Уточнить расписание</li>
-        </ul>
+        <p style="margin-top:10px;">Там можно задать вопрос, договориться о пробном занятии, уточнить расписание.</p>
     </div>
     <button class="btn btn-accent" id="btn-parent-test">🧭 Подобрать курс</button>
     <button class="btn btn-ghost" id="btn-parent-cabinet">🚀 Личный кабинет</button>
@@ -311,64 +273,54 @@
     <button class="btn btn-accent" id="btn-student-cabinet">🚀 Личный кабинет</button>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ПОМОЩИ -->
-<div class="modal-overlay" id="helpModal">
-    <div class="modal">
-        <h3>💬 Помощь</h3>
+<!-- ЭКРАН ПОМОЩИ -->
+<div class="screen" id="screen-help">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>💬 Помощь</h2>
         <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
-            <div class="faq-a">Для родителя — информация о курсах, стоимости, отчёты о прогрессе ребёнка. Для ученика — тест на направление, трекер, домашки, бонусы.</div>
+            <div class="faq-q">Зачем нужен выбор роли? <span>▾</span></div>
+            <div class="faq-a">Для родителя — информация о курсах, стоимости, отчёты. Для ученика — тест, трекер, домашки, бонусы.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Что будет после выбора? <span>▾</span></div>
-            <div class="faq-a">Вы познакомитесь со мной и платформой. Затем сможете перейти в личный кабинет или подобрать курс.</div>
+            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — личный кабинет.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Это бесплатно? <span>▾</span></div>
-            <div class="faq-a">Приложение — да. Занятия — платные. Первое занятие со скидкой 5%. Цены зависят от курса — от 800 до 2 000 ₽/час.</div>
+            <div class="faq-a">Приложение — да. Занятия — платные. Первое со скидкой 5%. От 800 до 2 000 ₽/час.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div>
-            <div class="faq-a">Нет. Приложение работает прямо в Telegram. Для занятий понадобится компьютер или ноутбук с интернетом.</div>
+            <div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Мои данные в безопасности? <span>▾</span></div>
-            <div class="faq-a">Да. Данные защищены, доступ к ним есть только у вас и у преподавателя. Никакие данные не передаются третьим лицам.</div>
+            <div class="faq-a">Да. Данные защищены. Доступ только у вас и преподавателя.</div>
         </div>
-        <button class="modal-btn" id="modal-chat-btn">💬 Написать в Telegram</button>
-        <button class="modal-close" id="modal-close-btn">Закрыть</button>
     </div>
+    <button class="btn btn-ghost" id="btn-help-back">← Назад</button>
 </div>
 
 <script>
     (function() {
         const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+        let prevScreen = 'screen-0';
 
         function show(id) {
             document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
             document.getElementById(id).classList.add('active');
         }
 
-        // Помощь — модальное окно
+        // Помощь
         document.getElementById('help-link').addEventListener('click', function() {
-            document.getElementById('helpModal').classList.add('open');
+            prevScreen = 'screen-0';
+            show('screen-help');
         });
 
-        // Закрыть помощь
-        document.getElementById('modal-close-btn').addEventListener('click', function() {
-            document.getElementById('helpModal').classList.remove('open');
-        });
-
-        // Написать в Telegram из модального окна
-        document.getElementById('modal-chat-btn').addEventListener('click', function() {
-            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
-        });
-
-        // Закрыть по клику на фон
-        document.getElementById('helpModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('open');
-            }
+        // Назад из помощи
+        document.getElementById('btn-help-back').addEventListener('click', function() {
+            show(prevScreen);
         });
 
         // Родитель
