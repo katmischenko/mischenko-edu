@@ -279,9 +279,15 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Помощь — открывает Telegram
-        document.getElementById('help-link').addEventListener('click', function() {
-            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
+        // Помощь — универсальная
+        document.getElementById('help-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            var url = 'https://t.me/katerin_mischenko';
+            try {
+                window.Telegram.WebApp.openTelegramLink(url);
+            } catch(err) {
+                window.open(url, '_blank');
+            }
         });
 
         // Родитель
@@ -296,7 +302,7 @@
             show('student-1');
         });
 
-        // Кнопки Далее (все)
+        // Кнопки Далее
         document.querySelectorAll('[data-next]').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 show(this.getAttribute('data-next'));
@@ -310,7 +316,8 @@
 
         // Родитель: кабинет
         document.getElementById('btn-parent-cabinet').addEventListener('click', function() {
-            window.location.href = BASE + '/student.html';
+            localStorage.setItem('role', 'parent');
+            window.location.href = BASE + '/parent.html';
         });
 
         // Ученик: курсы
@@ -320,6 +327,7 @@
 
         // Ученик: кабинет
         document.getElementById('btn-student-cabinet').addEventListener('click', function() {
+            localStorage.setItem('role', 'student');
             window.location.href = BASE + '/student.html';
         });
 
