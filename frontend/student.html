@@ -2,466 +2,146 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет — mischenko.edu</title>
+    <title>mischenko.edu — Кабинет ученика</title>
     <style>
         :root {
-            --bg: #0f0f0f;
-            --card: #1a1a1a;
-            --border: #2a2a2a;
+            --bg: #060b14;
+            --surface: rgba(12, 20, 40, 0.75);
+            --border: rgba(255, 255, 255, 0.06);
             --accent: #4ade80;
-            --red: #ef4444;
-            --blue: #60a5fa;
-            --yellow: #facc15;
-            --text: #e5e5e5;
-            --text-dim: #a3a3a3;
+            --text: #e8ecf2;
+            --text-dim: #7a8ba6;
             --radius: 14px;
-            --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
-            max-width: 420px;
-            margin: 0 auto;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .screen { display: none; padding: 20px; min-height: 100vh; }
+        .screen {
+            display: none;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
         .screen.active { display: block; }
-
-        /* ─── LOGIN ─── */
-        .login-box {
-            background: var(--card);
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+        }
+        .logo span { color: var(--accent); }
+        .card {
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 30px 24px;
-            text-align: center;
-            margin-top: 60px;
+            padding: 28px 22px;
+            backdrop-filter: blur(12px);
+            text-align: left;
+            margin-bottom: 14px;
         }
-        .login-box h1 { font-size: 22px; margin-bottom: 6px; }
-        .login-box .sub { font-size: 13px; color: var(--text-dim); margin-bottom: 24px; }
-        .input-group { margin-bottom: 14px; text-align: left; }
+        .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
+        .card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 10px; }
+        .card ul { font-size: 14px; color: var(--text-dim); line-height: 1.7; padding-left: 18px; }
+        .card ul li { margin-bottom: 4px; }
+        .input-group { margin-bottom: 12px; text-align: left; }
         .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
-        .input-group input, .input-group select {
-            width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid var(--border);
-            border-radius: var(--radius-sm); color: #fff; font-size: 15px; font-family: inherit;
+        .input-group input {
+            width: 100%; padding: 12px;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            border-radius: 10px; color: var(--text); font-size: 15px; font-family: inherit;
         }
         .btn {
-            width: 100%; padding: 14px; border-radius: var(--radius-sm); font-size: 15px;
-            font-weight: 600; cursor: pointer; border: none; margin-top: 8px; font-family: inherit;
+            display: block; width: 100%; padding: 14px; margin-top: 8px;
+            border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
+            border: none; font-family: inherit; text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
-        .btn-primary { background: var(--accent); color: #000; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        .link { color: var(--accent); font-size: 13px; cursor: pointer; margin-top: 14px; display: inline-block; }
-        .error { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
-        .error.show { display: block; }
-
-        /* ─── HEADER ─── */
-        .header {
-            background: var(--card); border-bottom: 1px solid var(--border);
-            padding: 16px 20px; display: flex; align-items: center; gap: 12px;
-            position: sticky; top: 0; z-index: 5; margin: -20px -20px 16px -20px;
-        }
-        .avatar {
-            width: 44px; height: 44px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #10b981);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 18px; color: #000; flex-shrink: 0;
-        }
-        .user-info { flex: 1; }
-        .user-name { font-weight: 700; font-size: 16px; }
-        .user-course { font-size: 12px; color: var(--text-dim); }
-        .logout-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); padding: 8px 14px; border-radius: var(--radius-sm); font-size: 13px; cursor: pointer; }
-
-        /* ─── STATS ─── */
-        .mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-        .mini-stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
-        .mini-stat .label { font-size: 11px; color: var(--text-dim); }
-        .mini-stat .value { font-size: 22px; font-weight: 700; }
-
-        /* ─── MENU ─── */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .menu-item {
-            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-            padding: 20px 16px; cursor: pointer; text-align: center; position: relative;
-        }
-        .menu-item:active { background: #222; }
-        .menu-item .icon { font-size: 28px; margin-bottom: 6px; }
-        .menu-item .label { font-size: 13px; font-weight: 600; }
-
-        /* ─── SECTION ─── */
-        .section { display: none; }
-        .section.active { display: block; }
-        .section-header {
-            background: var(--card); border-bottom: 1px solid var(--border);
-            padding: 14px 20px; display: flex; align-items: center; gap: 12px;
-            position: sticky; top: 0; z-index: 5; margin: -20px -20px 16px -20px;
-        }
-        .back-btn { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; }
-        .section-title { font-weight: 700; font-size: 17px; }
-
-        /* ─── TRACKER CARD ─── */
-        .tracker-row {
-            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-            padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
-        }
-        .tracker-bar-wrap { width: 60px; height: 6px; background: #2a2a2a; border-radius: 3px; }
-        .tracker-fill { height: 100%; border-radius: 3px; }
-        .tracker-info { flex: 1; }
-        .tracker-topic { font-size: 14px; font-weight: 500; }
-        .tracker-status { font-size: 11px; color: var(--text-dim); }
-        .tracker-pct { font-size: 12px; font-weight: 600; width: 32px; text-align: right; }
-
-        /* ─── HOMEWORK CARD ─── */
-        .hw-row {
-            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-            padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
-        }
-        .hw-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-        .hw-info { flex: 1; }
-        .hw-title { font-size: 14px; font-weight: 500; }
-        .hw-date { font-size: 11px; color: var(--text-dim); }
-        .hw-tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
-
-        /* ─── CHEATSHEET ─── */
-        .cheat-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
-        .cheat-item summary { font-weight: 600; cursor: pointer; }
-        .cheat-item pre { background: #0a0a0a; padding: 12px; border-radius: 6px; margin-top: 10px; font-size: 12px; color: var(--accent); white-space: pre-wrap; }
-
-        /* ─── REPORT ─── */
-        .report-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px; }
-        .report-month { font-weight: 700; margin-bottom: 8px; }
-        .report-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
-        .report-label { color: var(--text-dim); }
+        .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+        .error { color: #ef4444; font-size: 12px; margin-top: 6px; display: none; }
     </style>
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════ -->
-<div id="loginScreen" class="screen active">
-    <div class="login-box">
-        <h1>mischenko.edu</h1>
-        <p class="sub">Личный кабинет ученика</p>
-        <div class="input-group">
-            <label>Логин</label>
-            <input type="text" id="loginName" placeholder="Ваше имя" value="Илья">
-        </div>
-        <div class="input-group">
-            <label>Пароль</label>
-            <input type="password" id="loginPass" placeholder="Пароль" value="1234">
-        </div>
-        <div class="error" id="loginError">Неверный логин или пароль</div>
-        <button class="btn btn-primary" onclick="login()">Войти</button>
-        <span class="link" onclick="showRegister()">Регистрация</span>
+<!-- ЭКРАН ПРИВЕТСТВИЯ -->
+<div class="screen active" id="screen-welcome">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Добро пожаловать в личный кабинет!</h2>
+        <p>Здесь ты найдёшь всё для учёбы: трекер прогресса, домашние задания, шпаргалки, расписание и отчёты.</p>
+        <ul>
+            <li>📈 Следи за прогрессом по темам</li>
+            <li>📝 Получай и сдавай домашки</li>
+            <li>📘 Пользуйся шпаргалками</li>
+            <li>📅 Смотри расписание</li>
+        </ul>
     </div>
+    <button class="btn btn-accent" id="btn-register">📝 Зарегистрироваться</button>
+    <button class="btn btn-ghost" id="btn-login">🔑 У меня уже есть аккаунт</button>
 </div>
 
-<!-- ═══════════════ REGISTER ═══════════════ -->
-<div id="registerScreen" class="screen">
-    <div class="login-box">
-        <h1>Регистрация</h1>
-        <p class="sub">Создайте аккаунт</p>
+<!-- ЭКРАН РЕГИСТРАЦИИ -->
+<div class="screen" id="screen-register">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Регистрация</h2>
         <div class="input-group">
             <label>Имя</label>
-            <input type="text" id="regName" placeholder="Ваше имя">
-        </div>
-        <div class="input-group">
-            <label>Курс</label>
-            <select id="regCourse">
-                <option>ЕГЭ / ОГЭ информатика</option>
-                <option>Python с нуля</option>
-                <option>Веб-разработка HTML/CSS/JS</option>
-                <option>Scratch</option>
-                <option>Цифровая грамотность</option>
-                <option>Индивидуальный курс</option>
-            </select>
+            <input type="text" id="reg-name" placeholder="Как тебя зовут?">
         </div>
         <div class="input-group">
             <label>Пароль</label>
-            <input type="password" id="regPass" placeholder="Придумайте пароль">
+            <input type="password" id="reg-pass" placeholder="Придумай пароль">
         </div>
-        <div class="error" id="regError"></div>
-        <button class="btn btn-primary" onclick="register()">Зарегистрироваться</button>
-        <span class="link" onclick="showLogin()">Уже есть аккаунт? Войти</span>
+        <div class="error" id="reg-error"></div>
     </div>
+    <button class="btn btn-accent" id="btn-reg-submit">Зарегистрироваться</button>
+    <button class="btn btn-ghost" id="btn-reg-back">← Назад</button>
 </div>
 
-<!-- ═══════════════ DASHBOARD ═══════════════ -->
-<div id="dashboard" class="screen">
-    <div class="header">
-        <div class="avatar" id="dashAvatar">И</div>
-        <div class="user-info">
-            <div class="user-name" id="dashName">Илья</div>
-            <div class="user-course" id="dashCourse">ЕГЭ / ОГЭ</div>
+<!-- ЭКРАН ВХОДА -->
+<div class="screen" id="screen-login">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Вход</h2>
+        <div class="input-group">
+            <label>Имя</label>
+            <input type="text" id="login-name" placeholder="Твоё имя">
         </div>
-        <button class="logout-btn" onclick="logout()">Выйти</button>
+        <div class="input-group">
+            <label>Пароль</label>
+            <input type="password" id="login-pass" placeholder="Твой пароль">
+        </div>
+        <div class="error" id="login-error"></div>
     </div>
-
-    <div class="mini-stats">
-        <div class="mini-stat">
-            <div class="label">Тем пройдено</div>
-            <div class="value" id="statTopics">-</div>
-        </div>
-        <div class="mini-stat">
-            <div class="label">Домашек</div>
-            <div class="value" id="statHomework">-</div>
-        </div>
-        <div class="mini-stat">
-            <div class="label">Прогресс</div>
-            <div class="value" id="statProgress">-</div>
-        </div>
-        <div class="mini-stat">
-            <div class="label">Отчётов</div>
-            <div class="value" id="statReports">-</div>
-        </div>
-    </div>
-
-    <div class="menu-grid">
-        <div class="menu-item" onclick="showSection('trackerSection')">
-            <div class="icon">📈</div><div class="label">Трекер</div>
-        </div>
-        <div class="menu-item" onclick="showSection('homeworkSection')">
-            <div class="icon">📝</div><div class="label">Домашки</div>
-        </div>
-        <div class="menu-item" onclick="showSection('cheatsheetSection')">
-            <div class="icon">📘</div><div class="label">Шпаргалки</div>
-        </div>
-        <div class="menu-item" onclick="showSection('reportSection')">
-            <div class="icon">📊</div><div class="label">Отчёты</div>
-        </div>
-    </div>
-</div>
-
-<!-- ═══════════════ TRACKER SECTION ═══════════════ -->
-<div id="trackerSection" class="section">
-    <div class="section-header">
-        <button class="back-btn" onclick="showDashboard()">←</button>
-        <div class="section-title">📈 Трекер</div>
-    </div>
-    <div id="trackerContent" style="padding:0 20px;">Загрузка...</div>
-</div>
-
-<!-- ═══════════════ HOMEWORK SECTION ═══════════════ -->
-<div id="homeworkSection" class="section">
-    <div class="section-header">
-        <button class="back-btn" onclick="showDashboard()">←</button>
-        <div class="section-title">📝 Домашние задания</div>
-    </div>
-    <div id="homeworkContent" style="padding:0 20px;">Загрузка...</div>
-</div>
-
-<!-- ═══════════════ CHEATSHEET SECTION ═══════════════ -->
-<div id="cheatsheetSection" class="section">
-    <div class="section-header">
-        <button class="back-btn" onclick="showDashboard()">←</button>
-        <div class="section-title">📘 Шпаргалки</div>
-    </div>
-    <div id="cheatsheetContent" style="padding:0 20px;">Загрузка...</div>
-</div>
-
-<!-- ═══════════════ REPORT SECTION ═══════════════ -->
-<div id="reportSection" class="section">
-    <div class="section-header">
-        <button class="back-btn" onclick="showDashboard()">←</button>
-        <div class="section-title">📊 Отчёты</div>
-    </div>
-    <div id="reportContent" style="padding:0 20px;">Загрузка...</div>
+    <button class="btn btn-accent" id="btn-login-submit">Войти</button>
+    <button class="btn btn-ghost" id="btn-login-back">← Назад</button>
 </div>
 
 <script>
-    const API = 'https://mischenko-edu-api.onrender.com/api';
-    let currentUser = null;
-
-    // ─── NAVIGATION ───
-    function showScreen(id) {
-        document.querySelectorAll('.screen, .section').forEach(el => el.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-    function showLogin() {
-        document.getElementById('loginError').classList.remove('show');
-        showScreen('loginScreen');
-    }
-    function showRegister() { showScreen('registerScreen'); }
-    function showDashboard() {
-        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-        document.getElementById('dashboard').classList.add('active');
-    }
-    function showSection(id) {
-        document.getElementById('dashboard').classList.remove('active');
-        document.getElementById(id).classList.add('active');
-        if (id === 'trackerSection') loadTracker();
-        if (id === 'homeworkSection') loadHomework();
-        if (id === 'cheatsheetSection') loadCheatsheets();
-        if (id === 'reportSection') loadReports();
-    }
-
-    // ─── AUTH ───
-    async function login() {
-        const name = document.getElementById('loginName').value.trim();
-        const pass = document.getElementById('loginPass').value;
-        try {
-            const res = await fetch(`${API}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, password: pass })
-            });
-            if (!res.ok) throw new Error('Неверные данные');
-            const data = await res.json();
-            currentUser = data.user;
-            document.getElementById('dashName').textContent = currentUser.name;
-            document.getElementById('dashCourse').textContent = currentUser.course;
-            document.getElementById('dashAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            showScreen('dashboard');
-            loadStats();
-        } catch (e) {
-            document.getElementById('loginError').classList.add('show');
+    (function() {
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
-    }
 
-    async function register() {
-        const name = document.getElementById('regName').value.trim();
-        const course = document.getElementById('regCourse').value;
-        const pass = document.getElementById('regPass').value;
-        if (!name || !pass) return;
-        try {
-            const res = await fetch(`${API}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, course, password: pass })
-            });
-            if (!res.ok) { alert('Ошибка регистрации'); return; }
-            const data = await res.json();
-            currentUser = data.user;
-            document.getElementById('dashName').textContent = currentUser.name;
-            document.getElementById('dashCourse').textContent = currentUser.course;
-            document.getElementById('dashAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            showScreen('dashboard');
-            loadStats();
-        } catch (e) { alert('Ошибка'); }
-    }
-
-    function logout() {
-        currentUser = null;
-        showLogin();
-    }
-
-    // ─── STATS ───
-    async function loadStats() {
-        if (!currentUser) return;
-        try {
-            const tRes = await fetch(`${API}/tracker/${currentUser.id}`);
-            const tData = await tRes.json();
-            const topics = tData.data || [];
-            const done = topics.filter(t => t.status === 'Пройдено').length;
-            const total = topics.length;
-            const avg = total > 0 ? Math.round(topics.reduce((s, t) => s + t.understanding, 0) / total) : 0;
-            document.getElementById('statTopics').textContent = `${done}/${total}`;
-            document.getElementById('statProgress').textContent = `${avg}%`;
-
-            const hRes = await fetch(`${API}/homework/${currentUser.id}`);
-            const hData = await hRes.json();
-            const hw = hData.data || [];
-            const hwDone = hw.filter(h => h.status === 'Принято').length;
-            document.getElementById('statHomework').textContent = `${hwDone}/${hw.length}`;
-
-            const rRes = await fetch(`${API}/reports/${currentUser.id}`);
-            const rData = await rRes.json();
-            document.getElementById('statReports').textContent = (rData.data || []).length;
-        } catch (e) { console.error(e); }
-    }
-
-    // ─── TRACKER ───
-    async function loadTracker() {
-        const container = document.getElementById('trackerContent');
-        try {
-            const res = await fetch(`${API}/tracker/${currentUser.id}`);
-            const data = await res.json();
-            const items = data.data || [];
-            container.innerHTML = items.map(t => {
-                let barColor = '#4ade80';
-                if (t.understanding < 50) barColor = '#ef4444';
-                else if (t.understanding < 80) barColor = '#facc15';
-                return `
-                <div class="tracker-row">
-                    <span>${t.status === 'Пройдено' ? '✅' : t.status === 'В процессе' ? '🔄' : '⬜'}</span>
-                    <div class="tracker-info">
-                        <div class="tracker-topic">${t.topic}</div>
-                        <div class="tracker-status">${t.status}</div>
-                    </div>
-                    <div class="tracker-bar-wrap"><div class="tracker-fill" style="width:${t.understanding}%;background:${barColor};"></div></div>
-                    <span class="tracker-pct">${t.understanding}%</span>
-                </div>`;
-            }).join('') || 'Нет данных';
-        } catch (e) { container.innerHTML = 'Ошибка загрузки'; }
-    }
-
-    // ─── HOMEWORK ───
-    async function loadHomework() {
-        const container = document.getElementById('homeworkContent');
-        try {
-            const res = await fetch(`${API}/homework/${currentUser.id}`);
-            const data = await res.json();
-            const items = data.data || [];
-            container.innerHTML = items.map(h => {
-                let dotColor = '#4ade80';
-                let tagText = 'Принято';
-                let tagBg = '#1a2e1a';
-                let tagColor = '#4ade80';
-                if (h.status === 'В процессе') {
-                    dotColor = '#facc15'; tagText = 'В процессе'; tagBg = '#2a2a1a'; tagColor = '#facc15';
-                }
-                if (h.status === 'Просрочено') {
-                    dotColor = '#ef4444'; tagText = 'Срочно'; tagBg = '#3b1a1a'; tagColor = '#ef4444';
-                }
-                return `
-                <div class="hw-row">
-                    <span class="hw-dot" style="background:${dotColor};"></span>
-                    <div class="hw-info">
-                        <div class="hw-title">${h.title}</div>
-                        <div class="hw-date">${h.deadline || ''}</div>
-                    </div>
-                    <span class="hw-tag" style="background:${tagBg};color:${tagColor};">${tagText}</span>
-                </div>`;
-            }).join('') || 'Нет заданий';
-        } catch (e) { container.innerHTML = 'Ошибка загрузки'; }
-    }
-
-    // ─── CHEATSHEETS ───
-    async function loadCheatsheets() {
-        const container = document.getElementById('cheatsheetContent');
-        try {
-            const res = await fetch(`${API}/cheatsheets/${encodeURIComponent(currentUser.course)}`);
-            const data = await res.json();
-            const items = data.data || [];
-            container.innerHTML = items.map(c => `
-                <details class="cheat-item">
-                    <summary>${c.title}</summary>
-                    <pre>${c.content}</pre>
-                </details>
-            `).join('') || 'Нет шпаргалок';
-        } catch (e) { container.innerHTML = 'Ошибка загрузки'; }
-    }
-
-    // ─── REPORTS ───
-    async function loadReports() {
-        const container = document.getElementById('reportContent');
-        try {
-            const res = await fetch(`${API}/reports/${currentUser.id}`);
-            const data = await res.json();
-            const items = data.data || [];
-            container.innerHTML = items.map(r => `
-                <div class="report-card">
-                    <div class="report-month">📅 ${r.month}</div>
-                    <div class="report-row"><span class="report-label">Занятий</span>${r.lessons_done}</div>
-                    <div class="report-row"><span class="report-label">Домашек сдано</span>${r.homework_done}</div>
-                    <div class="report-row"><span class="report-label">Новых тем</span>${r.new_topics}</div>
-                    <div class="report-row"><span class="report-label">Балл</span>${r.score}</div>
-                    <div class="report-row"><span class="report-label">План</span>${r.plan || '-'}</div>
-                </div>
-            `).join('') || 'Нет отчётов';
-        } catch (e) { container.innerHTML = 'Ошибка загрузки'; }
-    }
+        document.getElementById('btn-register').addEventListener('click', () => show('screen-register'));
+        document.getElementById('btn-login').addEventListener('click', () => show('screen-login'));
+        document.getElementById('btn-reg-back').addEventListener('click', () => show('screen-welcome'));
+        document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
+    })();
 </script>
 
 </body>

@@ -2,6 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mischenko.edu</title>
     <style>
@@ -143,7 +146,6 @@
 </head>
 <body>
 
-<!-- ЭКРАН 0: ВЫБОР РОЛИ -->
 <div class="screen active" id="screen-0">
     <div class="logo">mischenko<span>.edu</span></div>
     <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
@@ -155,7 +157,6 @@
     <span class="help-link" id="help-link">💬 Помощь</span>
 </div>
 
-<!-- ЭКРАНЫ ЗНАКОМСТВА: РОДИТЕЛЬ -->
 <div class="screen" id="parent-1">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -214,7 +215,6 @@
     <button class="btn btn-ghost" id="btn-parent-cabinet">🚀 Личный кабинет</button>
 </div>
 
-<!-- ЭКРАНЫ ЗНАКОМСТВА: УЧЕНИК -->
 <div class="screen" id="student-1">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -272,7 +272,6 @@
     <button class="btn btn-accent" id="btn-student-cabinet">🚀 Личный кабинет</button>
 </div>
 
-<!-- ЭКРАН ПОМОЩИ -->
 <div class="screen" id="screen-help">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -311,45 +310,37 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Помощь
         document.getElementById('help-link').addEventListener('click', function() {
             prevScreen = 'screen-0';
             show('screen-help');
         });
 
-        // Назад из помощи
         document.getElementById('btn-help-back').addEventListener('click', function() {
             show(prevScreen);
         });
 
-        // Родитель
         document.getElementById('btn-parent').addEventListener('click', function() {
             show('parent-1');
         });
 
-        // Ученик
         document.getElementById('btn-student').addEventListener('click', function() {
             show('student-1');
         });
 
-        // Кнопки Далее
         document.querySelectorAll('[data-next]').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 show(this.getAttribute('data-next'));
             });
         });
 
-        // Родитель: курсы
         document.getElementById('btn-parent-test').addEventListener('click', function() {
             window.location.href = BASE + '/courses.html';
         });
 
-        // Родитель: кабинет
         document.getElementById('btn-parent-cabinet').addEventListener('click', function() {
             window.location.href = BASE + '/parent.html';
         });
 
-        // Ученик: кабинет
         document.getElementById('btn-student-cabinet').addEventListener('click', function() {
             window.location.href = BASE + '/student.html';
         });
