@@ -136,7 +136,6 @@
 </head>
 <body>
 
-<!-- ЭКРАН ПРИВЕТСТВИЯ -->
 <div class="screen active" id="screen-welcome">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -147,7 +146,6 @@
     <button class="btn btn-ghost" id="btn-login">🔑 У меня уже есть аккаунт</button>
 </div>
 
-<!-- ЭКРАН РЕГИСТРАЦИИ -->
 <div class="screen" id="screen-register">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -160,7 +158,6 @@
     <button class="btn btn-ghost" id="btn-reg-back">← Назад</button>
 </div>
 
-<!-- ЭКРАН ВХОДА -->
 <div class="screen" id="screen-login">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -172,7 +169,6 @@
     <button class="btn btn-ghost" id="btn-login-back">← Назад</button>
 </div>
 
-<!-- ЭКРАН ДАШБОРД -->
 <div class="screen" id="screen-dashboard">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="greeting">
@@ -196,7 +192,6 @@
     </div>
 </div>
 
-<!-- РАЗДЕЛЫ -->
 <div class="screen" id="screen-section">
     <div class="logo" style="margin-bottom:8px;">mischenko<span>.edu</span></div>
     <div class="section-header">
@@ -212,21 +207,23 @@
         let user = null;
         let telegram_id = null;
 
-        // Получаем telegram_id из WebApp
         try {
             const initData = window.Telegram.WebApp.initDataUnsafe;
             if (initData && initData.user) {
                 telegram_id = initData.user.id;
             }
-        } catch(e) {
-            console.log('Не в Telegram WebApp');
-        }
+        } catch(e) {}
 
         if (!telegram_id) {
             telegram_id = parseInt(localStorage.getItem('tg_id')) || 0;
-        } else {
-            localStorage.setItem('tg_id', telegram_id);
         }
+
+        if (!telegram_id) {
+            document.body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#e8ecf2;font-family:sans-serif;"><h2 style="margin-bottom:12px;">📱 Откройте через Telegram</h2><p style="color:#7a8ba6;">Нажмите кнопку <b>🚀 Открыть приложение</b> в боте<br><b>@mischenko_edu_bot</b></p></div>';
+            return;
+        }
+
+        localStorage.setItem('tg_id', telegram_id);
 
         function show(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -238,14 +235,12 @@
         document.getElementById('btn-reg-back').addEventListener('click', () => show('screen-welcome'));
         document.getElementById('btn-login-back').addEventListener('click', () => show('screen-welcome'));
 
-        // Регистрация
         document.getElementById('btn-reg-submit').addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value.trim();
             const pass = document.getElementById('reg-pass').value;
             const errEl = document.getElementById('reg-error');
             errEl.classList.remove('show');
             if (!name || !pass) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
-            if (!telegram_id) { errEl.textContent = 'Ошибка: не удалось получить Telegram ID'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/register', {
                     method: 'POST',
@@ -267,13 +262,11 @@
             }
         });
 
-        // Вход
         document.getElementById('btn-login-submit').addEventListener('click', async () => {
             const pass = document.getElementById('login-pass').value;
             const errEl = document.getElementById('login-error');
             errEl.classList.remove('show');
             if (!pass) { errEl.textContent = 'Введите пароль'; errEl.classList.add('show'); return; }
-            if (!telegram_id) { errEl.textContent = 'Ошибка: не удалось получить Telegram ID'; errEl.classList.add('show'); return; }
             try {
                 const res = await fetch(API + '/login', {
                     method: 'POST',

@@ -337,10 +337,12 @@
             window.location.href = BASE + '/courses.html';
         });
 
+        // Родитель: кабинет — открывает бота
         document.getElementById('btn-parent-cabinet').addEventListener('click', function() {
-            window.location.href = BASE + '/parent.html';
+            window.Telegram.WebApp.openTelegramLink('https://t.me/mischenko_edu_bot');
         });
 
+        // Ученик: кабинет — открывает student.html внутри WebApp
         document.getElementById('btn-student-cabinet').addEventListener('click', function() {
             window.location.href = BASE + '/student.html';
         });
