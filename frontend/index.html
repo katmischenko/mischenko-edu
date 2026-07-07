@@ -13,9 +13,13 @@
             --surface: rgba(12, 20, 40, 0.75);
             --border: rgba(255, 255, 255, 0.06);
             --accent: #4ade80;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --blue: #60a5fa;
             --text: #e8ecf2;
             --text-dim: #7a8ba6;
-            --radius: 16px;
+            --radius: 14px;
+            --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -42,102 +46,55 @@
             margin-bottom: 8px;
         }
         .logo span { color: var(--accent); }
-        .subtitle {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 24px;
-        }
+        .subtitle { font-size: 14px; color: var(--text-dim); margin-bottom: 24px; }
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 28px 22px;
+            padding: 22px 18px;
             backdrop-filter: blur(12px);
             text-align: left;
-            margin-bottom: 16px;
-        }
-        .card h2 {
-            font-size: 18px;
             margin-bottom: 14px;
-            font-weight: 700;
-            text-align: center;
         }
-        .card p {
-            font-size: 14px;
-            color: var(--text-dim);
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
-        .card ul {
-            font-size: 14px;
-            color: var(--text-dim);
-            line-height: 1.8;
-            padding-left: 18px;
-            margin-top: 8px;
-            margin-bottom: 12px;
-        }
+        .card h2 { font-size: 18px; margin-bottom: 12px; font-weight: 700; text-align: center; }
+        .card p { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 12px; }
+        .card ul { font-size: 14px; color: var(--text-dim); line-height: 1.8; padding-left: 18px; margin: 8px 0 12px; }
         .card ul li { margin-bottom: 6px; }
+        .input-group { margin-bottom: 12px; text-align: left; }
+        .input-group label { font-size: 12px; color: var(--text-dim); display: block; margin-bottom: 4px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 12px;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: var(--text); font-size: 15px;
+            font-family: inherit; outline: none;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--accent); }
         .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin-top: 8px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-            text-align: center;
+            display: block; width: 100%; padding: 14px; margin-top: 8px;
+            border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
+            border: none; font-family: inherit; text-align: center;
             -webkit-tap-highlight-color: transparent;
         }
-        .btn-accent {
-            background: rgba(74, 222, 128, 0.12);
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            color: var(--accent);
-        }
-        .btn-accent:active { background: rgba(74, 222, 128, 0.25); }
-        .btn-blue {
-            background: rgba(96, 165, 250, 0.12);
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            color: #60a5fa;
-        }
-        .btn-blue:active { background: rgba(96, 165, 250, 0.25); }
-        .btn-ghost {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-dim);
-        }
+        .btn-accent { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2); color: var(--accent); }
+        .btn-accent:active { background: rgba(74,222,128,0.25); }
+        .btn-blue { background: rgba(96,165,250,0.12); border: 1px solid rgba(96,165,250,0.2); color: var(--blue); }
+        .btn-blue:active { background: rgba(96,165,250,0.25); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
         .btn-ghost:active { border-color: rgba(255,255,255,0.2); }
-        .dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--border);
-        }
+        .error { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
+        .error.show { display: block; }
+        .dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
         .dot.active { background: var(--accent); }
         .help-link {
-            display: block;
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--text-dim);
-            cursor: pointer;
-            text-align: center;
+            display: block; margin-top: 20px; font-size: 13px;
+            color: var(--text-dim); cursor: pointer; text-align: center;
             -webkit-tap-highlight-color: transparent;
         }
         .emoji-big { font-size: 40px; margin-bottom: 10px; }
         .faq-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 8px;
-            cursor: pointer;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; padding: 14px; margin-bottom: 8px; cursor: pointer;
         }
         .faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
         .faq-a { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: none; line-height: 1.6; }
@@ -146,6 +103,7 @@
 </head>
 <body>
 
+<!-- ЭКРАН 0: ВЫБОР РОЛИ -->
 <div class="screen active" id="screen-0">
     <div class="logo">mischenko<span>.edu</span></div>
     <p class="subtitle">Образовательное пространство Мищенко Екатерины</p>
@@ -157,64 +115,29 @@
     <span class="help-link" id="help-link">💬 Помощь</span>
 </div>
 
-<div class="screen" id="parent-1">
+<!-- ==================== УЧЕНИК: МЕНЮ ==================== -->
+<div class="screen" id="student-menu">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
-        <div class="emoji-big">👋</div>
-        <h2>Здравствуйте! Я Екатерина</h2>
-        <p>Я преподаватель информатики с 8-летним опытом.</p>
-        <p>Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel. За это время через мои уроки прошли больше 650 учеников.</p>
-        <p>Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
-        <p>Строю программу индивидуально под каждого ребёнка — без «общего потока» и шаблонов.</p>
+        <h2>Выберите действие</h2>
+        <button class="btn btn-accent" id="btn-student-intro">📖 Знакомство</button>
+        <button class="btn btn-blue" id="btn-student-reg">📝 Регистрация</button>
+        <button class="btn btn-ghost" id="btn-student-login">🔑 Вход</button>
     </div>
-    <button class="btn btn-accent" data-next="parent-2">Далее →</button>
-    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
 
-<div class="screen" id="parent-2">
+<!-- ==================== РОДИТЕЛЬ: МЕНЮ ==================== -->
+<div class="screen" id="parent-menu">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
-        <h2>Что такое mischenko.edu?</h2>
-        <p>Это моя образовательная платформа. Здесь всё, что нужно для учёбы, собрано в одном месте — прямо в Telegram.</p>
-        <ul>
-            <li>Тест для подбора курса под запрос ребёнка</li>
-            <li>Выбор из 6 направлений: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
-            <li>Личный кабинет с отчётами о прогрессе</li>
-            <li>Понятные цены и пакеты занятий</li>
-        </ul>
+        <h2>Выберите действие</h2>
+        <button class="btn btn-accent" id="btn-parent-intro">📖 Знакомство</button>
+        <button class="btn btn-blue" id="btn-parent-course">🧭 Подобрать курс</button>
+        <button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button>
     </div>
-    <button class="btn btn-accent" data-next="parent-3">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
 </div>
 
-<div class="screen" id="parent-3">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Как проходят занятия?</h2>
-        <p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один с преподавателем.</p>
-        <ul>
-            <li>Индивидуальный подход — программа под ребёнка</li>
-            <li>Домашние задания с проверкой и комментариями</li>
-            <li>Ежемесячные отчёты для родителей</li>
-            <li>Личный кабинет: прогресс, оценки, расписание</li>
-            <li>Поддержка между занятиями</li>
-        </ul>
-    </div>
-    <button class="btn btn-accent" data-next="parent-4">Далее →</button>
-    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
-</div>
-
-<div class="screen" id="parent-4">
-    <div class="logo">mischenko<span>.edu</span></div>
-    <div class="card">
-        <h2>Я на связи</h2>
-        <p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
-        <p style="margin-top:10px;">Там можно задать вопрос, договориться о пробном занятии, уточнить расписание.</p>
-    </div>
-    <button class="btn btn-accent" id="btn-parent-test">🧭 Подобрать курс</button>
-    <button class="btn btn-ghost" id="btn-parent-cabinet">🚀 Личный кабинет</button>
-</div>
-
+<!-- ==================== УЧЕНИК: ЗНАКОМСТВО ==================== -->
 <div class="screen" id="student-1">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
@@ -227,62 +150,163 @@
     <button class="btn btn-accent" data-next="student-2">Далее →</button>
     <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
-
 <div class="screen" id="student-2">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Что такое mischenko.edu?</h2>
         <p>Это твой учебный центр в Telegram. Всё нужное — в одном месте.</p>
         <ul>
-            <li>Пройди тест — и узнаешь, какое направление твоё</li>
+            <li>Пройди тест — узнаешь, какое направление твоё</li>
             <li>Выбери курс: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
-            <li>Твой личный кабинет: трекер прогресса, домашки, шпаргалки</li>
-            <li>Бонусы за старт — полезные материалы сразу</li>
+            <li>Твой личный кабинет: трекер, домашки, шпаргалки</li>
+            <li>Бонусы за старт</li>
         </ul>
-        <p>Всё просто и по-честному ✨</p>
     </div>
     <button class="btn btn-accent" data-next="student-3">Далее →</button>
     <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
 </div>
-
 <div class="screen" id="student-3">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Как проходят занятия?</h2>
-        <p>Онлайн — в Яндекс.Телемосте или прямо в Telegram. Ты и я, один на один 👩‍💻</p>
+        <p>Онлайн — в Яндекс.Телемосте или Telegram. Ты и я, один на один 👩‍💻</p>
         <ul>
             <li>Живое общение, без скучных лекций</li>
-            <li>После урока — домашка, я проверю и напишу, что поправить</li>
-            <li>В личном кабинете видно: что прошли, что задано, твой прогресс</li>
-            <li>Шпаргалки и полезные материалы — всегда под рукой</li>
-            <li>Напиши мне, если что-то непонятно — я отвечу</li>
+            <li>После урока — домашка с проверкой</li>
+            <li>Личный кабинет: прогресс, оценки, расписание</li>
+            <li>Шпаргалки и полезные материалы</li>
+            <li>Поддержка между занятиями</li>
         </ul>
     </div>
     <button class="btn btn-accent" data-next="student-4">Далее →</button>
     <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
 </div>
-
 <div class="screen" id="student-4">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>Я на связи 🤙</h2>
         <p>Напиши мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
-        <p style="margin-top:10px;">Там можно спросить что угодно, записаться на занятие, узнать расписание.</p>
+        <p>Там можно спросить что угодно, записаться на занятие, узнать расписание.</p>
     </div>
-    <button class="btn btn-accent" id="btn-student-cabinet">🚀 Личный кабинет</button>
+    <button class="btn btn-accent" id="btn-student-to-menu">← В главное меню</button>
 </div>
 
+<!-- ==================== УЧЕНИК: РЕГИСТРАЦИЯ ==================== -->
+<div class="screen" id="student-reg">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Регистрация</h2>
+        <p>Войди по номеру телефона, затем придумай имя и пароль.</p>
+        <button class="btn btn-blue" id="btn-student-reg-phone">📱 Войти по номеру телефона</button>
+        <div id="student-reg-form" style="display:none;">
+            <div class="input-group"><label>Имя (ник)</label><input type="text" id="sreg-name" placeholder="Как к тебе обращаться?"></div>
+            <div class="input-group"><label>Пароль</label><input type="password" id="sreg-pass" placeholder="Придумай пароль"></div>
+            <div class="error" id="sreg-error"></div>
+            <button class="btn btn-accent" id="btn-sreg-submit">Зарегистрироваться</button>
+        </div>
+    </div>
+    <button class="btn btn-ghost" id="btn-student-reg-back">← В главное меню</button>
+</div>
+
+<!-- ==================== УЧЕНИК: ВХОД ==================== -->
+<div class="screen" id="student-login">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Вход</h2>
+        <p>Войди по номеру телефона, затем введи пароль.</p>
+        <button class="btn btn-blue" id="btn-student-login-phone">📱 Войти по номеру телефона</button>
+        <div id="student-login-form" style="display:none;">
+            <div class="input-group"><label>Пароль</label><input type="password" id="slogin-pass" placeholder="Твой пароль"></div>
+            <div class="error" id="slogin-error"></div>
+            <button class="btn btn-accent" id="btn-slogin-submit">Войти</button>
+        </div>
+    </div>
+    <button class="btn btn-ghost" id="btn-student-login-back">← В главное меню</button>
+</div>
+
+<!-- ==================== РОДИТЕЛЬ: ЗНАКОМСТВО ==================== -->
+<div class="screen" id="parent-1">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <div class="emoji-big">👋</div>
+        <h2>Здравствуйте! Я Екатерина</h2>
+        <p>Я преподаватель информатики с 8-летним опытом.</p>
+        <p>Работала в государственных школах, затем в онлайн-школах Skyeng и Pixel. Более 650 учеников.</p>
+        <p>Средний балл ЕГЭ — 86. Мои ученики поступают в МГТУ им. Баумана, ИТМО, ВШЭ.</p>
+        <p>Строю программу индивидуально под каждого ребёнка — без «общего потока».</p>
+    </div>
+    <button class="btn btn-accent" data-next="parent-2">Далее →</button>
+    <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+</div>
+<div class="screen" id="parent-2">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Что такое mischenko.edu?</h2>
+        <p>Это моя образовательная платформа. Всё нужное — в Telegram.</p>
+        <ul>
+            <li>Тест для подбора курса</li>
+            <li>6 направлений: ЕГЭ, ОГЭ, Python, веб, Scratch, цифровая грамотность</li>
+            <li>Личный кабинет с отчётами</li>
+            <li>Понятные цены и пакеты</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" data-next="parent-3">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
+</div>
+<div class="screen" id="parent-3">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Как проходят занятия?</h2>
+        <p>Онлайн — в Яндекс.Телемосте или Telegram. Один на один.</p>
+        <ul>
+            <li>Индивидуальный подход</li>
+            <li>Домашние задания с проверкой</li>
+            <li>Ежемесячные отчёты для родителей</li>
+            <li>Личный кабинет: прогресс, оценки, расписание</li>
+        </ul>
+    </div>
+    <button class="btn btn-accent" data-next="parent-4">Далее →</button>
+    <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
+</div>
+<div class="screen" id="parent-4">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Я на связи</h2>
+        <p>Напишите мне в Telegram: <b style="color:var(--accent);">@katerin_mischenko</b></p>
+        <p>Там можно задать вопрос, договориться о пробном занятии, уточнить расписание.</p>
+    </div>
+    <button class="btn btn-accent" id="btn-parent-to-menu">← В главное меню</button>
+</div>
+
+<!-- ==================== РОДИТЕЛЬ: ПОДОБРАТЬ КУРС ==================== -->
+<div class="screen" id="parent-course">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Подобрать курс</h2>
+        <p>Выберите направление для ребёнка:</p>
+        <button class="btn btn-accent" style="margin-bottom:6px;">🎓 ЕГЭ информатика</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">📋 ОГЭ информатика</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">🐍 Python с нуля</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">🌐 Веб-разработка</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">🐱 Scratch</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">💻 Цифровая грамотность</button>
+        <button class="btn btn-accent" style="margin-bottom:6px;">⭐ Индивидуальный курс</button>
+    </div>
+    <button class="btn btn-ghost" id="btn-parent-course-back">← В главное меню</button>
+</div>
+
+<!-- ПОМОЩЬ -->
 <div class="screen" id="screen-help">
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>💬 Помощь</h2>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Зачем нужен выбор роли? <span>▾</span></div>
-            <div class="faq-a">Для родителя — информация о курсах, стоимости, отчёты. Для ученика — тест, трекер, домашки, бонусы.</div>
+            <div class="faq-a">Для родителя — курсы, стоимость, отчёты. Для ученика — тест, трекер, домашки.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Что будет после выбора? <span>▾</span></div>
-            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — личный кабинет.</div>
+            <div class="faq-a">Короткое знакомство со мной и платформой. Затем — регистрация или вход.</div>
         </div>
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Это бесплатно? <span>▾</span></div>
@@ -292,59 +316,117 @@
             <div class="faq-q">Нужно ли что-то устанавливать? <span>▾</span></div>
             <div class="faq-a">Нет. Всё работает в Telegram. Для занятий — компьютер с интернетом.</div>
         </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-            <div class="faq-q">Мои данные в безопасности? <span>▾</span></div>
-            <div class="faq-a">Да. Данные защищены. Доступ только у вас и преподавателя.</div>
-        </div>
     </div>
     <button class="btn btn-ghost" id="btn-help-back">← Назад</button>
 </div>
 
 <script>
     (function() {
+        const API = 'https://mischenko-edu-api.onrender.com/api';
         const BASE = 'https://katmischenko.github.io/mischenko-edu/frontend';
+        let phone = null;
         let prevScreen = 'screen-0';
 
         function show(id) {
-            document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        document.getElementById('help-link').addEventListener('click', function() {
-            prevScreen = 'screen-0';
-            show('screen-help');
+        // Помощь
+        document.getElementById('help-link').addEventListener('click', () => { prevScreen = 'screen-0'; show('screen-help'); });
+        document.getElementById('btn-help-back').addEventListener('click', () => show(prevScreen));
+
+        // Роли → меню
+        document.getElementById('btn-parent').addEventListener('click', () => show('parent-menu'));
+        document.getElementById('btn-student').addEventListener('click', () => show('student-menu'));
+
+        // Кнопки "Далее"
+        document.querySelectorAll('[data-next]').forEach(btn => {
+            btn.addEventListener('click', function() { show(this.getAttribute('data-next')); });
         });
 
-        document.getElementById('btn-help-back').addEventListener('click', function() {
-            show(prevScreen);
+        // Ученик: из меню
+        document.getElementById('btn-student-intro').addEventListener('click', () => show('student-1'));
+        document.getElementById('btn-student-reg').addEventListener('click', () => show('student-reg'));
+        document.getElementById('btn-student-login').addEventListener('click', () => show('student-login'));
+        document.getElementById('btn-student-to-menu').addEventListener('click', () => show('student-menu'));
+        document.getElementById('btn-student-reg-back').addEventListener('click', () => show('student-menu'));
+        document.getElementById('btn-student-login-back').addEventListener('click', () => show('student-menu'));
+
+        // Родитель: из меню
+        document.getElementById('btn-parent-intro').addEventListener('click', () => show('parent-1'));
+        document.getElementById('btn-parent-course').addEventListener('click', () => show('parent-course'));
+        document.getElementById('btn-parent-login').addEventListener('click', () => { /* переход в кабинет */ });
+        document.getElementById('btn-parent-to-menu').addEventListener('click', () => show('parent-menu'));
+        document.getElementById('btn-parent-course-back').addEventListener('click', () => show('parent-menu'));
+
+        // Ученик: регистрация — запрос телефона
+        document.getElementById('btn-student-reg-phone').addEventListener('click', async () => {
+            try {
+                const result = await window.Telegram.WebApp.requestContact();
+                if (result && result.contact && result.contact.phone_number) phone = result.contact.phone_number;
+            } catch(e) {
+                phone = prompt('Введите номер телефона (+79001234567):');
+                if (!phone) return;
+            }
+            if (phone) {
+                document.getElementById('btn-student-reg-phone').style.display = 'none';
+                document.getElementById('student-reg-form').style.display = 'block';
+            }
         });
 
-        document.getElementById('btn-parent').addEventListener('click', function() {
-            show('parent-1');
+        // Ученик: регистрация — отправка
+        document.getElementById('btn-sreg-submit').addEventListener('click', async () => {
+            const name = document.getElementById('sreg-name').value.trim();
+            const pass = document.getElementById('sreg-pass').value;
+            const errEl = document.getElementById('sreg-error');
+            errEl.classList.remove('show');
+            if (!name || !pass) { errEl.textContent = 'Заполните все поля'; errEl.classList.add('show'); return; }
+            try {
+                const res = await fetch(API + '/register', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, name, course: 'Индивидуальный курс', password: pass })
+                });
+                if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка');
+                const data = await res.json();
+                localStorage.setItem('user_phone', phone);
+                localStorage.setItem('user_id', data.user.id);
+                window.location.href = BASE + '/student.html';
+            } catch(e) { errEl.textContent = e.message; errEl.classList.add('show'); }
         });
 
-        document.getElementById('btn-student').addEventListener('click', function() {
-            show('student-1');
+        // Ученик: вход — запрос телефона
+        document.getElementById('btn-student-login-phone').addEventListener('click', async () => {
+            try {
+                const result = await window.Telegram.WebApp.requestContact();
+                if (result && result.contact && result.contact.phone_number) phone = result.contact.phone_number;
+            } catch(e) {
+                phone = prompt('Введите номер телефона (+79001234567):');
+                if (!phone) return;
+            }
+            if (phone) {
+                document.getElementById('btn-student-login-phone').style.display = 'none';
+                document.getElementById('student-login-form').style.display = 'block';
+            }
         });
 
-        document.querySelectorAll('[data-next]').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                show(this.getAttribute('data-next'));
-            });
-        });
-
-        document.getElementById('btn-parent-test').addEventListener('click', function() {
-            window.location.href = BASE + '/courses.html';
-        });
-
-        // Родитель: кабинет — открывает бота
-        document.getElementById('btn-parent-cabinet').addEventListener('click', function() {
-            window.Telegram.WebApp.openTelegramLink('https://t.me/mischenko_edu_bot');
-        });
-
-        // Ученик: кабинет — открывает student.html внутри WebApp
-        document.getElementById('btn-student-cabinet').addEventListener('click', function() {
-            window.location.href = BASE + '/student.html';
+        // Ученик: вход — отправка
+        document.getElementById('btn-slogin-submit').addEventListener('click', async () => {
+            const pass = document.getElementById('slogin-pass').value;
+            const errEl = document.getElementById('slogin-error');
+            errEl.classList.remove('show');
+            if (!pass) { errEl.textContent = 'Введите пароль'; errEl.classList.add('show'); return; }
+            try {
+                const res = await fetch(API + '/login', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, password: pass })
+                });
+                if (!res.ok) throw new Error((await res.json()).detail || 'Неверный пароль');
+                const data = await res.json();
+                localStorage.setItem('user_phone', phone);
+                localStorage.setItem('user_id', data.user.id);
+                window.location.href = BASE + '/student.html';
+            } catch(e) { errEl.textContent = e.message; errEl.classList.add('show'); }
         });
 
     })();
