@@ -238,6 +238,49 @@ def update_profile(user_id: int, data: ProfileUpdate):
     return {"success": True}
 
 
+# ─── ПРОФИЛЬ С ФОТО ───
+
+import uuid
+
+from fastapi import File, UploadFile
+
+
+@app.put("/api/profile/{user_id}/full")
+async def update_full_profile(
+    user_id: int,
+    name: str = None,
+    birth_date: str = None,
+    goal: str = None,
+    file: UploadFile = File(None),
+):
+    update_data = {}
+    if name:
+        update_data["name"] = name
+    if birth_date:
+        update_data["birth_date"] = birth_date
+    if goal:
+        update_data["goal"] = goal
+
+    if file:
+        # Загружаем файл в Supabase Storage
+        file_ext = file.filename.split(".")[-1] if "." in file.filename else "jpg"
+        file_name = f"{user_id}_{uuid.uuid4().hex[:8]}.{file_ext}"
+        file_content = await file.read()
+
+        db.supabase.storage.from_("avatars").upload(
+            file_name, file_content, {"content-type": file.content_type}
+        )
+
+        # Получаем публичную ссылку
+        avatar_url = f"https://hlneekrkhnxrkptycspo.supabase.co/storage/v1/object/public/avatars/{file_name}"
+        update_data["avatar_url"] = avatar_url
+
+    if update_data:
+        db.supabase.table("users").update(update_data).eq("id", user_id).execute()
+
+    return {"success": True}
+
+
 @app.get("/api/tracker/{user_id}")
 def tracker(user_id: int):
     result = db.get_tracker(user_id)

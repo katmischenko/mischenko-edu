@@ -489,6 +489,10 @@
         <span class="sub" id="dash-hint"></span>
     </div>
     <div class="quote-box" id="quote-box"></div>
+    <div class="goal-card" id="goal-card" style="display:none;">
+    <div class="goal-title">🎯 Твоя цель</div>
+    <div class="goal-text" id="goal-text"></div>
+    </div>
     <div class="progress-bar">
         <div class="progress-fill" id="dash-progress" style="width:0%"></div>
     </div>
@@ -521,6 +525,7 @@
         <div class="menu-item" id="menu-achievements"><span class="m-icon">🏆</span>Ачивки</div>
         <div class="menu-item" id="menu-calendar"><span class="m-icon">📅</span>Календарь</div>
         <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
+        <div class="menu-item" id="menu-profile"><span class="m-icon">👤</span>Профиль</div>
     </div>
     <button class="btn btn-blue" id="btn-chat">💬 Написать учителю</button>
     <div id="section-content" style="display:none;"></div>
@@ -856,6 +861,12 @@
         else if (hour >= 12 && hour < 17) time = 'Добрый день';
         else if (hour >= 17 && hour < 23) time = 'Добрый вечер';
 
+        var goal = localStorage.getItem('user_goal');
+        if (goal) {
+        document.getElementById('goal-card').style.display = 'block';
+        document.getElementById('goal-text').textContent = goal;
+        }
+
         document.getElementById('dash-greeting').textContent = time + ', ' + user.name + '!';
         document.getElementById('dash-hint').textContent = 'Курс: ' + (user.course || 'Не выбран');
         document.getElementById('quote-box').textContent = quotes[Math.floor(Math.random() * quotes.length)];
@@ -921,6 +932,133 @@ document.getElementById('btn-chat').addEventListener('click', function() {
     } catch(e) {
         window.open('https://t.me/katerin_mischenko', '_blank');
     }
+});
+
+    // Профиль
+    document.getElementById('btn-prof-edit-back').addEventListener('click', function() {
+        show('screen-dashboard');
+        showMainMenu();
+        document.getElementById('section-content').style.display = 'none';
+    });
+
+    document.getElementById('profile-photo-change').addEventListener('click', function() {
+        document.getElementById('profile-photo-input').click();
+    });
+
+    document.getElementById('profile-avatar').addEventListener('click', function() {
+        document.getElementById('profile-photo-input').click();
+    });
+
+    document.getElementById('profile-photo-input').addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('profile-avatar-img').src = ev.target.result;
+                document.getElementById('profile-avatar-img').style.display = 'block';
+                document.getElementById('profile-avatar-text').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function loadProfile() {
+        if (!user) return;
+        document.getElementById('prof-edit-name').value = user.name || '';
+        document.getElementById('prof-edit-course').value = user.course || 'Не выбран';
+        document.getElementById('prof-edit-goal').value = localStorage.getItem('user_goal') || '';
+
+        // Загружаем фото из API
+        fetch(API + '/admin/students')
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                var students = d.data || [];
+                var found = students.find(function(s) { return s.id === user.id; });
+                if (found) {
+                    if (found.birth_date) {
+                        document.getElementById('prof-edit-birth').value = found.birth_date;
+                        updateAge(found.birth_date);
+                    }
+                    if (found.avatar_url) {
+                        document.getElementById('profile-avatar-img').src = found.avatar_url;
+                        document.getElementById('profile-avatar-img').style.display = 'block';
+                        document.getElementById('profile-avatar-text').style.display = 'none';
+                    }
+                    if (found.goal) {
+                        document.getElementById('prof-edit-goal').value = found.goal;
+                    }
+                }
+            }).catch(function() {});
+
+        show('screen-profile-edit');
+    }
+
+    function updateAge(birthDate) {
+        if (!birthDate) return;
+        var birth = new Date(birthDate);
+        var today = new Date();
+        var age = today.getFullYear() - birth.getFullYear();
+        var m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        document.getElementById('prof-edit-age').value = age + ' лет';
+    }
+
+    document.getElementById('prof-edit-birth').addEventListener('change', function() {
+        updateAge(this.value);
+    });
+
+    document.getElementById('btn-prof-edit-save').addEventListener('click', async function() {
+        var name = document.getElementById('prof-edit-name').value.trim();
+        var birth = document.getElementById('prof-edit-birth').value;
+        var goal = document.getElementById('prof-edit-goal').value.trim();
+        var err = document.getElementById('prof-edit-error');
+        err.classList.remove('show');
+
+        if (!name) {
+            err.textContent = 'Введите имя';
+            err.classList.add('show');
+            return;
+        }
+
+        // Сохраняем цель в localStorage
+        if (goal) {
+            localStorage.setItem('user_goal', goal);
+        }
+
+        // Отправляем на сервер
+        var formData = new FormData();
+        formData.append('name', name);
+        if (birth) formData.append('birth_date', birth);
+        if (goal) formData.append('goal', goal);
+
+        var photoInput = document.getElementById('profile-photo-input');
+        if (photoInput.files.length > 0) {
+            formData.append('file', photoInput.files[0]);
+        }
+
+        try {
+            var res = await fetch(API + '/profile/' + user.id + '/full', {
+                method: 'PUT',
+                body: formData
+            });
+            if (!res.ok) throw new Error('Ошибка сохранения');
+
+            // Обновляем локальные данные
+            user.name = name;
+            if (goal) user.goal = goal;
+
+            loadDashboard();
+            show('screen-dashboard');
+        } catch(e) {
+            err.textContent = e.message;
+            err.classList.add('show');
+        }
+    });
+
+    document.getElementById('menu-profile').addEventListener('click', function() {
+    loadProfile();
 });
 
 </script>
