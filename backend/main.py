@@ -1,6 +1,15 @@
+import asyncio
 import os
 
 import database as db
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import (
+    BotCommand,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    WebAppInfo,
+)
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,8 +26,85 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ============================================
+# TELEGRAM BOT
+# ============================================
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
 
-# ─── МОДЕЛИ ───
+WEBAPP_URL = "https://katmischenko.github.io/mischenko-edu/frontend/index.html"
+
+
+@dp.message(Command("start"))
+async def start(message: types.Message):
+    try:
+        await message.delete()
+    except:
+        pass
+
+    try:
+        chat_id = message.chat.id
+        updates = await bot.get_updates(offset=-10, timeout=1)
+        for update in updates:
+            if update.message and update.message.chat.id == chat_id:
+                if update.message.from_user.id == (await bot.get_me()).id:
+                    try:
+                        await bot.delete_message(chat_id, update.message.message_id)
+                    except:
+                        pass
+    except:
+        pass
+
+    await message.answer(
+        "Привет! Меня зовут Екатерина, я преподаватель информатики.\n\n"
+        "За 8 лет через мои уроки прошли больше 650 ребят. Кто-то сдал ЕГЭ на 90+, "
+        "кто-то написал первого бота, кто-то просто перестал бояться «этих ваших компьютеров».\n\n"
+        "Я верю, что программирование — это не страшно. Это интересно, логично и очень полезно.\n\n"
+        "В приложении ты найдёшь всё: от первого урока до пробника. "
+        "Выбирай свой путь и пошли!\n\n"
+        "👇 Жми на кнопку, откроется твой будущий кабинет.",
+        reply_markup=InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text="🚀 Открыть приложение", web_app=WebAppInfo(url=WEBAPP_URL)
+                    )
+                ]
+            ]
+        ),
+    )
+
+
+@dp.message()
+async def any_message(message: types.Message):
+    try:
+        await message.delete()
+    except:
+        pass
+
+    await message.answer(
+        "👇 Жми на кнопку, чтобы открыть приложение!",
+        reply_markup=InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text="🚀 Открыть приложение", web_app=WebAppInfo(url=WEBAPP_URL)
+                    )
+                ]
+            ]
+        ),
+    )
+
+
+async def start_bot():
+    await bot.delete_my_commands()
+    await dp.start_polling(bot)
+
+
+# ============================================
+# МОДЕЛИ API
+# ============================================
 
 
 class PhoneRequest(BaseModel):
@@ -69,7 +155,9 @@ class ReportCreate(BaseModel):
     plan: str = ""
 
 
-# ─── ПРОВЕРКА НОМЕРА ───
+# ============================================
+# API ЭНДПОИНТЫ
+# ============================================
 
 
 @app.post("/api/check-phone")
@@ -87,9 +175,6 @@ def check_phone(data: PhoneRequest):
             "phone": user_data["phone"],
         },
     }
-
-
-# ─── ВХОД ───
 
 
 @app.post("/api/login")
@@ -111,9 +196,6 @@ def login(data: LoginRequest):
             "phone": user_data["phone"],
         },
     }
-
-
-# ─── РЕГИСТРАЦИЯ ───
 
 
 @app.post("/api/register")
@@ -147,9 +229,6 @@ def register(data: RegisterRequest):
     }
 
 
-# ─── АНКЕТА ───
-
-
 @app.put("/api/profile/{user_id}")
 def update_profile(user_id: int, data: ProfileUpdate):
     update_data = {}
@@ -157,9 +236,6 @@ def update_profile(user_id: int, data: ProfileUpdate):
         update_data["course"] = data.course
     result = db.supabase.table("users").update(update_data).eq("id", user_id).execute()
     return {"success": True}
-
-
-# ─── ТРЕКЕР ───
 
 
 @app.get("/api/tracker/{user_id}")
@@ -174,9 +250,6 @@ def update_tracker(tracker_id: int, data: TrackerUpdate):
     return {"success": True, "data": result.data}
 
 
-# ─── ДОМАШКИ ───
-
-
 @app.get("/api/homework/{user_id}")
 def homework(user_id: int):
     result = db.get_homework(user_id)
@@ -189,16 +262,10 @@ def update_homework(hw_id: int, data: HomeworkUpdate):
     return {"success": True, "data": result.data}
 
 
-# ─── ОТЧЁТЫ ───
-
-
 @app.get("/api/reports/{user_id}")
 def reports(user_id: int):
     result = db.get_reports(user_id)
     return {"success": True, "data": result.data}
-
-
-# ─── ШПАРГАЛКИ ───
 
 
 @app.get("/api/cheatsheets/{course}")
@@ -207,16 +274,10 @@ def cheatsheets(course: str):
     return {"success": True, "data": result.data}
 
 
-# ─── БАНК ЗАДАЧ ───
-
-
 @app.get("/api/tasks")
 def tasks(course: str = None):
     result = db.get_tasks(course)
     return {"success": True, "data": result.data}
-
-
-# ─── ДИАГНОСТИКА ───
 
 
 @app.post("/api/diagnostics/{user_id}")
@@ -231,9 +292,6 @@ def save_diagnostics(user_id: int, data: DiagnosticRequest):
 def get_diagnostics(user_id: int):
     result = db.get_diagnostics(user_id)
     return {"success": True, "data": result.data}
-
-
-# ─── АДМИНКА ───
 
 
 @app.get("/api/admin/students")
@@ -264,16 +322,21 @@ def admin_create_report(data: ReportCreate):
     return {"success": True}
 
 
-# ─── ТЕСТЫ ───
-
-
 @app.get("/api/tests/{course}")
 def get_tests(course: str):
     result = db.supabase.table("tests").select("*").eq("course", course).execute()
     return {"success": True, "data": result.data}
 
 
-# ─── ЗАПУСК ───
+# ============================================
+# ЗАПУСК
+# ============================================
+
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(start_bot())
+
 
 if __name__ == "__main__":
     import uvicorn
