@@ -22,7 +22,7 @@
             --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-       html, body { height: 100vh; width: 100vw; overflow: hidden; margin: 0; padding: 0; }
+        html, body { height: 100vh; width: 100vw; overflow: hidden; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
             background: var(--bg);
@@ -34,11 +34,11 @@
             min-height: 100vh;
         }
         .screen {
-                display: none;
-                width: 100%;
-                text-align: center;
-                padding-bottom: 20px;
-            }
+            display: none;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 20px;
+        }
         .screen.active { display: block; }
         .logo {
             font-size: 28px;
@@ -183,6 +183,15 @@
             font-style: italic;
             text-align: center;
         }
+        .goal-card {
+            background: rgba(74,222,128,0.05);
+            border: 1px solid rgba(74,222,128,0.1);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 14px;
+        }
+        .goal-card .goal-title { font-size: 12px; color: var(--text-dim); }
+        .goal-card .goal-text { font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 2px; }
         .progress-bar {
             height: 6px;
             background: rgba(255,255,255,0.05);
@@ -223,8 +232,6 @@
         .section-placeholder { text-align: center; padding: 30px 20px; }
         .section-placeholder .emoji { font-size: 48px; margin-bottom: 12px; }
         .section-placeholder p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
-
-        /* Тест */
         .test-q {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -290,6 +297,7 @@
         <button class="btn btn-ghost" id="btn-parent-login">🔑 Вход</button>
     </div>
 </div>
+
 <!-- УЧЕНИК: ЗНАКОМСТВО -->
 <div class="screen" id="student-1">
     <div class="logo">mischenko<span>.edu</span></div>
@@ -347,6 +355,7 @@
     </div>
     <button class="btn btn-accent" id="btn-student-to-menu">← В главное меню</button>
 </div>
+
 <!-- РОДИТЕЛЬ: ЗНАКОМСТВО -->
 <div class="screen" id="parent-1">
     <div class="logo">mischenko<span>.edu</span></div>
@@ -480,6 +489,31 @@
     <button class="btn btn-ghost" id="btn-test-to-login">🔑 Уже есть аккаунт? Войти</button>
     <button class="btn btn-ghost" id="btn-parent-test-result-back">← В главное меню</button>
 </div>
+
+<!-- ПРОФИЛЬ (редактирование) -->
+<div class="screen" id="screen-profile-edit">
+    <div class="logo">mischenko<span>.edu</span></div>
+    <div class="card">
+        <h2>Мой профиль</h2>
+        <div style="text-align:center;margin-bottom:16px;">
+            <div id="profile-avatar" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#10b981);display:inline-flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#000;overflow:hidden;cursor:pointer;position:relative;">
+                <span id="profile-avatar-text">Я</span>
+                <img id="profile-avatar-img" src="" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;">
+            </div>
+            <input type="file" id="profile-photo-input" accept="image/*" style="display:none;">
+            <div style="margin-top:8px;font-size:12px;color:var(--text-dim);cursor:pointer;" id="profile-photo-change">Изменить фото</div>
+        </div>
+        <div class="input-group"><label>Имя (ник)</label><input type="text" id="prof-edit-name" placeholder="Как к тебе обращаться?"></div>
+        <div class="input-group"><label>Дата рождения</label><input type="date" id="prof-edit-birth"></div>
+        <div class="input-group"><label>Возраст</label><input type="text" id="prof-edit-age" disabled></div>
+        <div class="input-group"><label>Курс</label><input type="text" id="prof-edit-course" disabled></div>
+        <div class="input-group"><label>Цель</label><input type="text" id="prof-edit-goal" placeholder="Например: сдать ЕГЭ на 90+"></div>
+        <div class="error" id="prof-edit-error"></div>
+        <button class="btn btn-accent" id="btn-prof-edit-save">Сохранить</button>
+    </div>
+    <button class="btn btn-ghost" id="btn-prof-edit-back">← Назад в кабинет</button>
+</div>
+
 <!-- ДАШБОРД -->
 <div class="screen" id="screen-dashboard">
     <div class="logo">mischenko<span>.edu</span></div>
@@ -489,33 +523,17 @@
     </div>
     <div class="quote-box" id="quote-box"></div>
     <div class="goal-card" id="goal-card" style="display:none;">
-    <div class="goal-title">🎯 Твоя цель</div>
-    <div class="goal-text" id="goal-text"></div>
+        <div class="goal-title">🎯 Твоя цель</div>
+        <div class="goal-text" id="goal-text"></div>
     </div>
     <div class="progress-bar">
         <div class="progress-fill" id="dash-progress" style="width:0%"></div>
     </div>
     <div class="widget-grid">
-        <div class="widget">
-            <div class="w-icon">📈</div>
-            <div class="w-value" id="dash-topics">-</div>
-            <div class="w-label">Тем пройдено</div>
-        </div>
-        <div class="widget">
-            <div class="w-icon">📝</div>
-            <div class="w-value" id="dash-homework">-</div>
-            <div class="w-label">Домашек сдано</div>
-        </div>
-        <div class="widget">
-            <div class="w-icon">🏆</div>
-            <div class="w-value" id="dash-achievements">-</div>
-            <div class="w-label">Ачивок</div>
-        </div>
-        <div class="widget">
-            <div class="w-icon">📅</div>
-            <div class="w-value" id="dash-lessons">-</div>
-            <div class="w-label">Занятий на неделе</div>
-        </div>
+        <div class="widget"><div class="w-icon">📈</div><div class="w-value" id="dash-topics">-</div><div class="w-label">Тем пройдено</div></div>
+        <div class="widget"><div class="w-icon">📝</div><div class="w-value" id="dash-homework">-</div><div class="w-label">Домашек сдано</div></div>
+        <div class="widget"><div class="w-icon">🏆</div><div class="w-value" id="dash-achievements">-</div><div class="w-label">Ачивок</div></div>
+        <div class="widget"><div class="w-icon">📅</div><div class="w-value" id="dash-lessons">-</div><div class="w-label">Занятий на неделе</div></div>
     </div>
     <div class="menu-grid" id="main-menu-grid">
         <div class="menu-item" id="menu-tracker"><span class="m-icon">📈</span>Трекер</div>
@@ -523,8 +541,8 @@
         <div class="menu-item" id="menu-cheatsheet"><span class="m-icon">📘</span>Шпаргалки</div>
         <div class="menu-item" id="menu-achievements"><span class="m-icon">🏆</span>Ачивки</div>
         <div class="menu-item" id="menu-calendar"><span class="m-icon">📅</span>Календарь</div>
-        <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
         <div class="menu-item" id="menu-profile"><span class="m-icon">👤</span>Профиль</div>
+        <div class="menu-item" id="menu-logout"><span class="m-icon">🚪</span>Выйти</div>
     </div>
     <button class="btn btn-blue" id="btn-chat">💬 Написать учителю</button>
     <div id="section-content" style="display:none;"></div>
@@ -535,27 +553,22 @@
     <div class="logo">mischenko<span>.edu</span></div>
     <div class="card">
         <h2>💬 Помощь</h2>
-
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Зачем нужен выбор «Я родитель» и «Я ученик»? <span>▾</span></div>
             <div class="faq-a">Это помогает настроить приложение под вас. Для родителя — информация о курсах, стоимости, отчёты о прогрессе ребёнка. Для ученика — тест на направление, трекер, домашки, бонусы.</div>
         </div>
-
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Что будет после выбора? <span>▾</span></div>
             <div class="faq-a">Вы познакомитесь с платформой: кто я, как проходит обучение, чем я отличаюсь от других. Затем — тест или выбор курса.</div>
         </div>
-
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Это бесплатно? <span>▾</span></div>
             <div class="faq-a">Само приложение — да. Занятия — платные. Первое занятие со скидкой 5%. Цены зависят от курса — от 800 до 2 000 ₽/час.</div>
         </div>
-
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Нужно ли устанавливать что-то дополнительно? <span>▾</span></div>
             <div class="faq-a">Нет. Приложение работает прямо в Telegram. Для занятий понадобится компьютер или ноутбук с интернетом.</div>
         </div>
-
         <div class="faq-item" onclick="this.classList.toggle('open')">
             <div class="faq-q">Мои данные в безопасности? <span>▾</span></div>
             <div class="faq-a">Да. Данные защищены, доступ к ним есть только у вас и у преподавателя. Никакие данные не передаются третьим лицам.</div>
@@ -576,7 +589,6 @@
         '«Ты уже на шаг ближе к цели, чем вчера.»'
     ];
 
-    // Вопросы теста для родителя
     const testQuestions = [
         {
             q: '1. Сколько лет ребёнку?',
@@ -701,8 +713,8 @@
         var container = document.getElementById('test-questions');
         var q = testQuestions[testStep];
         var html = '<div class="test-q"><div class="test-q-title">' + q.q + '</div>';
-        q.opts.forEach(function(opt, i) {
-            html += '<button class="test-opt" data-opt="' + i + '">' + opt + '</button>';
+        q.opts.forEach(function(opt) {
+            html += '<button class="test-opt">' + opt + '</button>';
         });
         html += '</div>';
         container.innerHTML = html;
@@ -738,12 +750,10 @@
             document.getElementById('test-error').style.display = 'block';
             return;
         }
-        // Определяем курс
         var age = testAnswers[0];
         var interest = testAnswers[1].toLowerCase();
         var goal = testAnswers[2].toLowerCase();
         var course = 'Python с нуля';
-
         if (age.indexOf('7') !== -1 || age.indexOf('9') !== -1 || interest.indexOf('игр') !== -1) {
             course = 'Scratch';
         } else if (age.indexOf('16') !== -1 || age.indexOf('17') !== -1 || goal.indexOf('вуз') !== -1) {
@@ -755,18 +765,17 @@
         } else if (goal.indexOf('проект') !== -1) {
             course = 'Python с нуля';
         }
-
         document.getElementById('test-result-text').textContent = 'Рекомендованный курс: ' + course + '. Запишитесь на пробное занятие или войдите, если уже есть аккаунт.';
         show('parent-test-result');
     });
 
-    // Кнопки результата теста
     document.getElementById('btn-test-to-reg').addEventListener('click', function() {
         show('student-reg');
     });
     document.getElementById('btn-test-to-login').addEventListener('click', function() {
         show('student-login');
     });
+
     // Регистрация
     document.getElementById('btn-sreg-submit').addEventListener('click', async function() {
         var phone = document.getElementById('sreg-phone').value.trim();
@@ -803,6 +812,10 @@
     // Анкета
     document.getElementById('btn-prof-save').addEventListener('click', async function() {
         var course = document.getElementById('prof-course').value;
+        var goal = document.getElementById('prof-goal').value.trim();
+        if (goal) {
+            localStorage.setItem('user_goal', goal);
+        }
         try {
             await fetch(API + '/profile/' + user.id, {
                 method: 'PUT',
@@ -862,8 +875,10 @@
 
         var goal = localStorage.getItem('user_goal');
         if (goal) {
-        document.getElementById('goal-card').style.display = 'block';
-        document.getElementById('goal-text').textContent = goal;
+            document.getElementById('goal-card').style.display = 'block';
+            document.getElementById('goal-text').textContent = goal;
+        } else {
+            document.getElementById('goal-card').style.display = 'none';
         }
 
         document.getElementById('dash-greeting').textContent = time + ', ' + user.name + '!';
@@ -924,14 +939,14 @@
         show('screen-0');
     });
 
-// Чат с учителем
-document.getElementById('btn-chat').addEventListener('click', function() {
-    try {
-        window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
-    } catch(e) {
-        window.open('https://t.me/katerin_mischenko', '_blank');
-    }
-});
+    // Чат с учителем
+    document.getElementById('btn-chat').addEventListener('click', function() {
+        try {
+            window.Telegram.WebApp.openTelegramLink('https://t.me/katerin_mischenko');
+        } catch(e) {
+            window.open('https://t.me/katerin_mischenko', '_blank');
+        }
+    });
 
     // Профиль
     document.getElementById('btn-prof-edit-back').addEventListener('click', function() {
@@ -967,7 +982,6 @@ document.getElementById('btn-chat').addEventListener('click', function() {
         document.getElementById('prof-edit-course').value = user.course || 'Не выбран';
         document.getElementById('prof-edit-goal').value = localStorage.getItem('user_goal') || '';
 
-        // Загружаем фото из API
         fetch(API + '/admin/students')
             .then(function(r) { return r.json(); })
             .then(function(d) {
@@ -1021,12 +1035,10 @@ document.getElementById('btn-chat').addEventListener('click', function() {
             return;
         }
 
-        // Сохраняем цель в localStorage
         if (goal) {
             localStorage.setItem('user_goal', goal);
         }
 
-        // Отправляем на сервер
         var formData = new FormData();
         formData.append('name', name);
         if (birth) formData.append('birth_date', birth);
@@ -1044,7 +1056,6 @@ document.getElementById('btn-chat').addEventListener('click', function() {
             });
             if (!res.ok) throw new Error('Ошибка сохранения');
 
-            // Обновляем локальные данные
             user.name = name;
             if (goal) user.goal = goal;
 
@@ -1057,8 +1068,9 @@ document.getElementById('btn-chat').addEventListener('click', function() {
     });
 
     document.getElementById('menu-profile').addEventListener('click', function() {
-    loadProfile();
-});
+        loadProfile();
+    });
+
 })();
 </script>
 </body>
